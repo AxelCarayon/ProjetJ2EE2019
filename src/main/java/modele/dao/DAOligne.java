@@ -17,7 +17,6 @@ public class DAOligne {
 
     public DAOligne(DataSource dataSource) {
 	this.myDataSource = dataSource;
-        
     }
     
     public List<LigneEntity> toutesLesLignes(){
