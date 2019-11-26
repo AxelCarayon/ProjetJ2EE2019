@@ -20,6 +20,7 @@ public class ClientEntity {
     String telephone; // string pour les tirets/points dans les nums
     String fax; //idem que telephone
 
+    
     public ClientEntity(String code, String societe, String contact, String fonction, String adresse, String ville, String region, String code_postal, String pays, String telephone, String fax) {
         this.code = code;
         this.societe = societe;

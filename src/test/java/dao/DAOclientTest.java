@@ -11,10 +11,7 @@ import javax.sql.DataSource;
 import modele.dao.DAOclient;
 import modele.dao.DataSourceFactory;
 import modele.entity.ClientEntity;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -26,7 +23,7 @@ public class DAOclientTest {
     
     private DAOclient dao; // L'objet à tester
     private DataSource myDataSource; // La source de données à utiliser
-    private String code;
+    private String code; //Le code client qu'on utilise dans les jeux de tests
 	
 
     @Before
