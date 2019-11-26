@@ -14,6 +14,7 @@ import modele.entity.ClientEntity;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Ignore;
 
 /**
  *
@@ -47,6 +48,7 @@ public class DAOclientTest {
      * teste la méthode afficherClient
      * @throws SQLException 
      */
+    @Ignore
     @Test
     public void afficherClientTest() throws SQLException {
         ClientEntity client = new ClientEntity("ALFKI", "Alfreds Futterkiste", "Maria Anders", "Représentant(e)", "Obere Str. 57", "Berlin", null, "12209", "Allemagne", "030-0074321", "030-0076545");
@@ -57,6 +59,7 @@ public class DAOclientTest {
      * teste la méthode modifierSociete
      * @throws SQLException 
      */
+    @Ignore
     @Test
     public void modifierSocieteTest() throws SQLException{
         String ancien = dao.afficherClient(code).getSociete();
@@ -71,6 +74,7 @@ public class DAOclientTest {
      * teste la méthode modifierContact
      * @throws SQLException 
      */
+    @Ignore
     @Test
     public void modifierContactTest() throws SQLException{
         String ancien = dao.afficherClient(code).getContact();
@@ -85,6 +89,7 @@ public class DAOclientTest {
      * teste la méthode modifierFonction
      * @throws SQLException 
      */
+    @Ignore
     @Test
     public void modifierFonctionTest() throws SQLException{
         String ancien = dao.afficherClient(code).getFonction();
@@ -99,6 +104,7 @@ public class DAOclientTest {
      * teste la méthode modifierAdresse
      * @throws SQLException 
      */
+    @Ignore
     @Test
     public void modifierAdresseTest() throws SQLException{
         String ancien = dao.afficherClient(code).getAdresse();
@@ -113,6 +119,7 @@ public class DAOclientTest {
      * Test méthode modifierVille
      * @throws SQLException 
      */
+    @Ignore
     @Test
     public void modifierVilleTest() throws SQLException{
         String ancien = dao.afficherClient(code).getVille();
@@ -127,6 +134,7 @@ public class DAOclientTest {
      * Test méthode modifierRégion
      * @throws SQLException 
      */
+    @Ignore
     @Test
     public void modifierRegionTest() throws SQLException{
         String ancien = dao.afficherClient(code).getRegion();
@@ -141,6 +149,7 @@ public class DAOclientTest {
      * Teste méthode modifierCodePostal
      * @throws SQLException 
      */
+    @Ignore
     @Test
     public void modifierCodePostalTest() throws SQLException{
         String ancien = dao.afficherClient(code).getCode_postal();
@@ -154,6 +163,7 @@ public class DAOclientTest {
      * Test méthode modifierVille
      * @throws SQLException 
      */
+    @Ignore
     @Test
     public void modifierPaysTest() throws SQLException{
         String ancien = dao.afficherClient(code).getPays();
@@ -168,6 +178,7 @@ public class DAOclientTest {
      * Test méthode modifierTelephone
      * @throws SQLException 
      */
+    @Ignore
     @Test
     public void modifierTelephoneTest() throws SQLException{
         String ancien = dao.afficherClient(code).getPays();
@@ -182,6 +193,7 @@ public class DAOclientTest {
      * Teste méthode modifierFax
      * @throws SQLException 
      */
+    @Ignore
     @Test
     public void modifierFaxTest() throws SQLException{
         String ancien = dao.afficherClient(code).getFax();

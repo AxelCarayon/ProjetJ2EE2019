@@ -14,6 +14,7 @@ import modele.entity.CategorieEntity;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Ignore;
 
 /**
  *
@@ -35,6 +36,7 @@ public class DAOcategorieTest {
      * Teste la méthode toutesLesCategories
      * @throws SQLException 
      */
+    @Ignore
     @Test
     public void toutesLesCategoriesTest() throws SQLException {
         List<CategorieEntity> listeCatégories = dao.toutesLesCategories();
@@ -45,6 +47,7 @@ public class DAOcategorieTest {
      * Teste la méthode afficherCategorie
      * @throws SQLException 
      */
+    @Ignore
     @Test
     public void afficherCategorieTest() throws SQLException {
         CategorieEntity categorie = new CategorieEntity(1, "Boissons", "Boissons, cafés, thés, bières");
@@ -55,6 +58,7 @@ public class DAOcategorieTest {
      * Teste la méthode afficherLibelle
      * @throws SQLException 
      */
+    @Ignore
     @Test
     public void afficherLibelleTest() throws SQLException {
         assertEquals(dao.afficherLibelle(1),"Boissons");
@@ -64,6 +68,7 @@ public class DAOcategorieTest {
      * Teste la méthode afficherDescription
      * @throws SQLException 
      */
+    @Ignore
     @Test
     public void afficherDescriptionTest() throws SQLException {
         assertEquals(dao.afficherDescription(1),"Boissons, cafés, thés, bières");
