@@ -1,0 +1,17 @@
+
+body {
+  padding-top: 56px;
+}
+img.navbar-brand{
+  width: 5%;
+}
+nav .dropleft .dropdown-toggle::before{
+  display: none;
+}
+
+@media (min-width: 992px) {
+  img.navbar-brand{
+    width: 3%;
+  }
+}
+
