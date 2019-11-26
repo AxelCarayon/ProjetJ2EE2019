@@ -26,6 +26,11 @@ public class DAOcategorie {
             return null;
         }
         
+        public CategorieEntity afficherCategorie(){
+            //TODO
+            return null;
+        }
+        
         public ProduitEntity afficherProduit(int code){
             //TODO
             return null;

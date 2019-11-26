@@ -31,6 +31,10 @@ public class DAOclient {
 		this.myDataSource = dataSource;
 	}
         
+        /**
+         * @return Liste de ClientsEntity
+         * @throws SQLException 
+         */
         public List<ClientEntity> tousLesClients() throws SQLException{
             List<ClientEntity> result = new LinkedList<>();
 
@@ -57,46 +61,100 @@ public class DAOclient {
 		return result;
         }
         
+        /**
+         * Permet d'afficher un client dans la BDD
+         * @param code clef primaire d'un client
+         * @return le client sous la forme ClientEntity
+         */
         public ClientEntity afficherClient(String code){
             //TODO
             return null;
         }
         
-        public void modifierSociete(String client, String Societe){
+        /**
+         * Modifie le nom de la société d'un client
+         * @param client le code du client à modifier
+         * @param societe le nouveau nom de la societe
+         */
+        public void modifierSociete(String client, String societe){
             //TODO
         }
         
+        /**
+         * Modifie le contact d'un client
+         * @param client le code du client à modifier
+         * @param contact le nouveau contact du client
+         */
         public void modifierContact(String client, String contact){
             //TODO
         }
         
+        /**
+         * Modifie la fonction d'un client
+         * @param client le code du client à modifier
+         * @param fonction le nouveau contact d'un client
+         */
         public void modifierFonction(String client, String fonction){
             //TODO
         }
+        /**
+         * Modifie l'adresse d'un client
+         * @param client le code du client à modifier
+         * @param adresse la nouvelle adresse du client
+         */
         public void modifierAdresse(String client, String adresse){
             //TODO
         }
-        
+        /**
+         * Modifie la ville du client
+         * @param client le code du client à modifier
+         * @param ville la nouvelle ville du client
+         */
         public void modifierVille(String client, String ville){
             //TODO
         }
         
+        /**
+         * Modifie la région du client
+         * @param client le code du client à modifier
+         * @param region la nouvelle région du client
+         */
         public void modifierRegion(String client, String region){
             //TODO
         }
         
+        /**
+         * Modifie le code postal d'un client
+         * @param client le code du client à modifier
+         * @param CodePostal le nouveau code postal du client
+         */
         public void modifierCodePostal(String client, String CodePostal){
             //TODO
         }
         
+        /**
+         * Modifie le pays d'un client
+         * @param client le code du client à modifier
+         * @param pays le nouveau pays du client
+         */
         public void modifierPays(String client, String pays){
             //TODO
         }
         
+        /**
+         * Modifie le numéro de téléphone du client
+         * @param client le code du client à modifier
+         * @param telephone le nouveau numéro de téléphone
+         */
         public void modifierTelephone(String client, String telephone){
             //TODO
         }
         
+        /**
+         * Modifie le fax d'un client
+         * @param client le code du client à modifier
+         * @param fax le nouveau numéro de fax
+         */
         public void modifierFax(String client, String fax){
             //TODO
         }
