@@ -5,16 +5,22 @@
  */
 package dao;
 
+import java.io.File;
+import java.io.IOException;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 import javax.sql.DataSource;
 import modele.dao.DAOclient;
 import modele.dao.DataSourceFactory;
+import static modele.dao.DataSourceFactory.getDataSource;
 import modele.entity.ClientEntity;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Ignore;
+import org.hsqldb.cmdline.SqlFile;
+import org.hsqldb.cmdline.SqlToolError;
 
 /**
  *
@@ -24,13 +30,24 @@ public class DAOclientTest {
     
     private DAOclient dao; // L'objet à tester
     private DataSource myDataSource; // La source de données à utiliser
+    private static Connection myConnection ;
     private String code; //Le code client qu'on utilise dans les jeux de tests
 	
 
     @Before
-    public void setUp() throws SQLException {
-        myDataSource = DataSourceFactory.getDataSource();
-        dao = new DAOclient(myDataSource);
+    public void setUp() throws SQLException, IOException, SqlToolError {
+        myDataSource = getDataSource();
+	myConnection = myDataSource.getConnection();
+	// On initialise la base avec le contenu d'un fichier de test
+	String sqlFilePath = DAOclientTest.class.getResource("database.sql").getFile();
+	SqlFile sqlFile = new SqlFile(new File(sqlFilePath));
+	sqlFile.setConnection(myConnection);
+	sqlFile.execute();
+	sqlFile.closeReader();	
+	// On crée l'objet à tester
+	dao = new DAOclient(myDataSource);
+        
+        
         code = "ALFKI";
     }
     
@@ -203,4 +220,13 @@ public class DAOclientTest {
         assertEquals(nouveau,client.getFax());
         dao.modifierFax(code,ancien);
     }   
+    
+    
+    public static DataSource getDataSource() throws SQLException {
+		org.hsqldb.jdbc.JDBCDataSource ds = new org.hsqldb.jdbc.JDBCDataSource();
+		ds.setDatabase("jdbc:hsqldb:mem:testcase;shutdown=true");
+		ds.setUser("sa");
+		ds.setPassword("sa");
+		return ds;
+	}
 }
