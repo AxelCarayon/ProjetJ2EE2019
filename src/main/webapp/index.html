@@ -14,7 +14,9 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <!-- Custom styles for this template -->
   <link href="css/shop-homepage.css" rel="stylesheet">
-	<link href="css/svgicons.css" rel="stylesheet">
+  <link href="css/svgicons.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/0.8.1/mustache.min.js"></script>
+
 
 
 </head>
@@ -22,7 +24,7 @@
 <body>
 
   <!-- Navigation -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top p-0">
     <div class="container-fluid">
       <!-- Logo -->
       <img class="navbar-brand" src="images/logo.png" href="#"/>
@@ -70,6 +72,13 @@
       </div>
     </div>
   </nav>
+  
+  <!-- menu desktop catégories produit -->
+  <div class="container d-none d-lg-block">
+    <div class="row justify-content-center menuCat" id="displayMenu">
+        <!-- Template -->
+    </div>
+</div>
 
 
   <!-- Page Content -->
@@ -78,22 +87,9 @@
 
       <!-- Grid produits -->
       <div class="col-lg-9">
-        <div class="row">
+        <div class="row" id="displayProd">
           <!-- template -->
-          <div class="col-lg-4 col-md-6 mb-4">
-            <div class="card h-100">
-              <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-              <div class="card-body">
-                <h4 class="card-title">
-                  <a href="#">Item One</a>
-                </h4>
-                <h5>$24.99</h5>
-                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
-              </div>
-              <div class="card-footer">
-              </div>
-            </div>
-          </div>
+          
         </div><!-- /.row -->
       </div><!-- /.col-lg-9 -->
 
@@ -116,6 +112,36 @@
     </div>
   </footer>
 
+  
+  <!-- TEMPLATES -->
+  <!-- card of grid product -->
+  <script id="templateShowProduits" type="text/template">
+      {{#produits}}
+        <div class="col-lg-4 col-md-6 mb-4">
+              <div class="card h-100">
+                <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+                <div class="card-body">
+                  <h4 class="card-title">
+                    <a href="#">{{nom}}</a>
+                  </h4>
+                  <h5>{{prix_unitaire}}</h5>
+                  <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
+                </div>
+                <div class="card-footer">
+                </div>
+              </div>
+            </div>
+     {{/produits}}
+  </script>
+  
+  <!-- item menu catégories produit -->
+  <script id="templateMenuCat" type="text/template">
+      {{#categories}}
+        <div class="col-1 " id="{{code}}>
+            {{libelle}}
+        </div>
+      {{/categories}}
+  </script>
   <!-- Bootstrap core JavaScript -->
   <script
           src="http://code.jquery.com/jquery-3.4.1.min.js"

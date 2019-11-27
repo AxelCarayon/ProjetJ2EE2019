@@ -9,6 +9,10 @@ nav .dropleft .dropdown-toggle::before{
   display: none;
 }
 
+.row.menuCat div.col-1{
+    border: 1px solid black;
+}
+
 @media (min-width: 992px) {
   img.navbar-brand{
     width: 3%;
