@@ -5,10 +5,10 @@
  */
 package modele.dao;
 
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 import javax.sql.DataSource;
-import modele.entity.ClientEntity;
 import modele.entity.CommandeEntity;
 
 /**
@@ -27,51 +27,114 @@ public class DAOcommande {
 		this.myDataSource = dataSource;
 	}
         
+        /**
+         * Va chercher dans la BDD la liste de toutes les commandes
+         * @return List<CommandeEntity> 
+         */
         public List<CommandeEntity> toutesLesCommandes(){
             //TODO
             return null;
         }
         
-        public CommandeEntity afficherCommande(int numero){
+        /**
+         * Affiche une commande
+         * @param numero le numéro de la commande
+         * @return CommandeEntity
+         */
+        public CommandeEntity afficherCommande(int numero) throws ParseException{
             //TODO
             return null;
         }
         
-        public void ajouterCommande(String code_client, String saisiLe, String envoyeLe,
+        /**
+         * Ajoute une nouvelle commande dans la bdd
+         * @param numero le numéro de la nouvelle commande
+         * @param code_client le nouveau code client
+         * @param saisiLe date de saisie de la commande 
+         * @param envoyeLe date d'envoi de la commande
+         * @param port port de la commande
+         * @param destinataire destinataire de la commande
+         * @param adresseLivraison adresse de livraison de la commande
+         * @param villeLivraison ville de livraison de la commande
+         * @param regionLivraison region de livraison de la commande
+         * @param codePostalLivraison code postal de livraison de la commande
+         * @param paysLivraison pays de livraison de la commande
+         * @param remise % de remise de la commande
+         */
+        public void ajouterCommande(int numero, String code_client, String saisiLe, String envoyeLe,
     double port, String destinataire, String adresseLivraison, String villeLivraison,
     String regionLivraison, String codePostalLivraison, String paysLivraison, double remise){
             //TODO
         }
         
+        /**
+         * Supprime une commande de la BDD
+         * @param numero numero de la commande à supprimer
+         */
         public void supprimerCommande(int numero){
             //TODO
         }
         
-        public ClientEntity afficherClient(){
+        /**
+         * Affiche le code client lié à une commande
+         * @numero le numéro de la commande
+         * @return ClientEntity
+         */
+        public String afficherCodeClient(int numero){
             //TODO
             return null;
         }
         
+        /**
+         * Modifie le destinataire d'une commande
+         * @param numero numero de la commande à modifier
+         * @param destinataire nouveau destinataire
+         */
         public void modifierDestinataire(int numero, String destinataire){
             //TODO
         }
         
+        /**
+         * Modifie l'adresse de livraison de la commande 
+         * @param numero numero de la commande à modifier
+         * @param adresseLivraison nouvelle adresse de livraison
+         */
         public void modifierAdresseLivraison(int numero, String adresseLivraison){
             //TODO
         }
         
+        /**
+         * Modifie la région de livraison de la commande
+         * @param numero numero de la commande à modifier
+         * @param regionLivraison nouvelle region de livraison
+         */
         public void modifierRegionLivraison(int numero, String regionLivraison){
             //TODO
         }
         
+        /**
+         * Modifie le code postal de livraison d'une commande
+         * @param numero numéro de la commande à modfier
+         * @param codePostalLivraison nouveau code postal 
+         */
         public void modifierCodePostalLivraison(int numero, String codePostalLivraison){
             //TODO
         }
         
+        /**
+         * Modifie le pays de livraison d'une commande
+         * @param numero numéro de la commande à modifier
+         * @param paysLivraison nouveau pays de livraison
+         */
         public void modifierPaysLivraison(int numero, String paysLivraison){
             //TODO
         }
         
+        /**
+         * Modifie le taux de remise d'une commande
+         * @param numero numero de la commande à modifier
+         * @param remise % de remise de la commande
+         */
         public void modifierRemise(int numero, double remise){
             //TODO
         }

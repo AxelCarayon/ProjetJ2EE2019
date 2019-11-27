@@ -12,8 +12,6 @@ import java.sql.SQLException;
 import java.util.List;
 import javax.sql.DataSource;
 import modele.dao.DAOclient;
-import modele.dao.DataSourceFactory;
-import static modele.dao.DataSourceFactory.getDataSource;
 import modele.entity.ClientEntity;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,6 +19,7 @@ import static org.junit.Assert.*;
 import org.junit.Ignore;
 import org.hsqldb.cmdline.SqlFile;
 import org.hsqldb.cmdline.SqlToolError;
+import org.junit.After;
 
 /**
  *
@@ -46,9 +45,13 @@ public class DAOclientTest {
 	sqlFile.closeReader();	
 	// On crée l'objet à tester
 	dao = new DAOclient(myDataSource);
-        
-        
         code = "ALFKI";
+    }
+    
+    @After
+    public void tearDown() throws SQLException {
+        myConnection.close();		
+        dao = null; // Pas vraiment utile
     }
     
     /**
