@@ -62,12 +62,9 @@
                               c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path>
           </svg>
         </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+        <div class="dropdown-menu" id="displayMenuMob" aria-labelledby="navbarDropdownMenuLink">
           <!-- template -->
-          <a class="dropdown-item" href="#">Action</a>
-          <a class="dropdown-item" href="#">Another action</a>
-          <a class="dropdown-item" href="#">Something else here</a>
-          <!-- / -->
+          
         </div>
       </div>
     </div>
@@ -142,6 +139,14 @@
         </div>
       {{/categories}}
   </script>
+  
+  <!-- item menu mobile catégories produit  -->
+  <script id="templateMenuMobCat" type="text/template">
+      {{#categories}}
+        <a class="dropdown-item" id="{{code}} href="#">{{libelle}}</a>
+      {{/categories}}
+  </script>
+  
   <!-- Bootstrap core JavaScript -->
   <script
           src="http://code.jquery.com/jquery-3.4.1.min.js"

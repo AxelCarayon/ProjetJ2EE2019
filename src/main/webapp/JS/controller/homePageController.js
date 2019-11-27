@@ -45,7 +45,20 @@ function showCategorieForNav() {
             error: showError
     });				
 }
-
+function showCategorieForNavMob() {
+    $.ajax({
+            url: "",
+            dataType: "json",
+            success: 
+                    function(result) {
+                            var template = $('#templateMenuMobCat').html();
+                            Mustache.parse(template);
+                            var processedTemplate = Mustache.render(template, {categories: result });
+                            $('#displayMenuMob').html(processedTemplate);	
+                    },
+            error: showError
+    });				
+}
 // Fonction qui traite les erreurs de la requête
 function showError(xhr, status, message) {
         alert("Erreur: " + status + " : " + message);
