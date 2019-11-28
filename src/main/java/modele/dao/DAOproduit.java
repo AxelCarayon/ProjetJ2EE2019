@@ -22,11 +22,20 @@ public class DAOproduit {
 	this.myDataSource = dataSource;
     }
     
+    /**
+     * Affiche la liste de tous les produits
+     * @return List<ProduitEntity>
+     */
     public List<ProduitEntity> tousLesProduits(){
         //TODO
         return null;
     }
     
+    /**
+     * Affiche un produit à partir d'une référence
+     * @param reference la référence du produit
+     * @return ProduitEntity
+     */
     public ProduitEntity afficherProduit(int reference){
         //TODO
         return null;
@@ -43,46 +52,91 @@ public class DAOproduit {
         return false;
     }
     
+    /**
+     * Affiche le nom d'un produit
+     * @param reference la référence du produit
+     * @return String
+     */
     public String nomProduit(int reference){
         //TODO
         return null;
     }
     
+    /**
+     * Affiche le fournisseur d'un produit
+     * @param reference la référence du produit
+     * @return int
+     */
     public int numeroFournisseur(int reference){
         //TODO
         return 0;
     }
     
-    public CategorieEntity categorie(int reference){
+    /**
+     * Affiche le numéro de catégorie d'un produit
+     * @param reference la référence du produit
+     * @return int
+     */
+    public int numeroCategorie(int reference){
         //TODO
-        return null;
+        return 0;
     }
     
+    /**
+     * Affiche la quantité d'un produit
+     * @param reference la référence du produit
+     * @return int
+     */
     public int quantiteParUnite(int reference){
         //TODO
         return 0;
     }
     
+    /**
+     * Affiche le prix unitaire d'un produit
+     * @param reference la référence du produit
+     * @return Double
+     */
     public Double prixUnitaire(int reference){
         //TODO
         return null;
     }
     
+    /**
+     * Affiche le nombre d'unités d'un produit en stock
+     * @param reference la référence du produit
+     * @return int
+     */
     public int uniteEnStock(int reference){
         //TODO
         return 0;
     }
     
+    /**
+     * Affiche le nombre d'unités commandées d'un produit
+     * @param reference la référence du produit
+     * @return int
+     */
     public int uniteCommandes(int reference){
         //TODO
         return 0;
     }
     
+    /**
+     * Affiche le niveau de réprovisionnement d'un produit
+     * @param reference la référence du produit
+     * @return int
+     */
     public int niveauReaprovisionnement(int reference){
         //TODO
         return 0;
     }
     
+    /**
+     * Affiche si un produit est Disponible ou non
+     * @param reference la référence du produit
+     * @return Boolean
+     */
     public boolean estDisponible(int reference){
         //TODO
         return false;
