@@ -1,4 +1,4 @@
-package servlet;
+package modele.dao;
 
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
