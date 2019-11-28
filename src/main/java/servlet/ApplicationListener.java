@@ -1,4 +1,4 @@
-package modele.dao;
+package servlet;
 
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
@@ -11,6 +11,8 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 import modele.dao.DAOclient;
+import modele.dao.DAOclient;
+import modele.dao.DataSourceFactory;
 import modele.dao.DataSourceFactory;
 import modele.entity.ClientEntity;
 import org.apache.derby.tools.ij;
