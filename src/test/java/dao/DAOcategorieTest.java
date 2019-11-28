@@ -15,6 +15,7 @@ import modele.dao.DAOcategorie;
 import modele.entity.CategorieEntity;
 import org.hsqldb.cmdline.SqlFile;
 import org.hsqldb.cmdline.SqlToolError;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -43,6 +44,12 @@ public class DAOcategorieTest {
 	sqlFile.closeReader();	
 	// On crée l'objet à tester
 	dao = new DAOcategorie(myDataSource);
+    }
+    
+    @After
+    public void tearDown() throws SQLException {
+        myConnection.close();		
+        dao = null; // Pas vraiment utile
     }
     
     /**
