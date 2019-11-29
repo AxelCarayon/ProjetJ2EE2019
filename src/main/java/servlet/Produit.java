@@ -12,13 +12,17 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import com.google.gson.*;
+import java.io.FileWriter;
+import modele.entity.ProduitEntity;
+
 
 /**
  *
- * @author marie
+ * @author marie POUR TESTER LE FRONT 
  */
-@WebServlet(name = "ShowProduits", urlPatterns = {"/ShowProduits"})
-public class ShowProduits extends HttpServlet {
+@WebServlet(name = "Produit", urlPatterns = {"/Produit"})
+public class Produit extends HttpServlet {
 
     //private DiscountCodeDAO dao; // L'objet à tester
 
@@ -35,8 +39,12 @@ public class ShowProduits extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-           
+               ProduitEntity data = new ProduitEntity(1,"Orange",1,1,"1 kg",5.00,100,0,0,0);
+                
+               response.setContentType("application/json;charset=UTF-8");
+               Gson gson = new GsonBuilder().setPrettyPrinting().create();
+               String gsonData = gson.toJson(data);
+               out.println(gsonData);
         }
     }
 
