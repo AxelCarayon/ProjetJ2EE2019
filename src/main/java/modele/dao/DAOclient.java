@@ -9,7 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 import javax.sql.DataSource;
 import modele.entity.ClientEntity;
@@ -36,7 +36,7 @@ public class DAOclient {
      * @throws SQLException
      */
     public List<ClientEntity> tousLesClients() throws SQLException {
-        List<ClientEntity> result = new LinkedList<>();
+        List<ClientEntity> result = new ArrayList<>();
 
         String sql = "SELECT * FROM CLIENT";
         try (Connection connection = myDataSource.getConnection();
