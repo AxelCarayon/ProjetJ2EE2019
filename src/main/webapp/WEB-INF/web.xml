@@ -8,4 +8,9 @@
             30
         </session-timeout>
     </session-config>
+    <listener>
+        <listener-class>
+                 servlet.ApplicationListener
+        </listener-class>
+    </listener>
 </web-app>

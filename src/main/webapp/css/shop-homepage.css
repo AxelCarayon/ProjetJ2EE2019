@@ -1,0 +1,41 @@
+body {
+  padding-top: 56px;
+}
+img.navbar-brand{
+  width: 5%;
+}
+nav .dropleft .dropdown-toggle::before{
+  display: none;
+}
+
+.menuCat.navbar{
+    top : auto;
+    padding-left: 3%;
+    padding-right: 3%;
+}
+#displayMenu div.col:hover{
+    color: rgb(104,189,13);
+}
+.container.pageContent{
+    padding-top: 7%;
+}
+.cart-total {
+ display:-ms-flexbox;
+ display:flex;
+ -ms-flex-pack:justify;
+ justify-content:space-between;
+ padding:0.7rem 1rem;
+ font-size:.7875rem;
+ border-top:1px solid #e9ecef;
+ border-bottom:1px solid #e9ecef;
+ margin-top:.5rem;
+ margin-bottom:.5rem
+}
+
+
+@media (min-width: 992px) {
+  img.navbar-brand{
+    width: 3%;
+  }
+}
+
