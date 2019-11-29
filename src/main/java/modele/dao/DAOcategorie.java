@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.sql.DataSource;
 import modele.entity.CategorieEntity;
-import modele.entity.ClientEntity;
-import modele.entity.ProduitEntity;
 
 /**
  *
@@ -36,9 +34,9 @@ public class DAOcategorie {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 int code = rs.getInt("CODE");
-                String societe = rs.getString("LIBELLE");
-                String contact = rs.getString("DESCRIPTION");
-                CategorieEntity c = new CategorieEntity(code, societe, contact);
+                String libelle = rs.getString("LIBELLE");
+                String description = rs.getString("DESCRIPTION");
+                CategorieEntity c = new CategorieEntity(code, libelle, description);
                 resultat.add(c);
             }
         }
@@ -53,9 +51,9 @@ public class DAOcategorie {
             statement.setInt(1, code); // On fixe le 1° paramètre de la requête
             try (ResultSet rs = statement.executeQuery()) {
                 if (rs.next()) {
-                    String societe = rs.getString("LIBELLE");
-                    String contact = rs.getString("DESCRIPTION");
-                    categorie = new CategorieEntity(code, societe, contact);
+                    String libelle = rs.getString("LIBELLE");
+                    String description = rs.getString("DESCRIPTION");
+                    categorie = new CategorieEntity(code, libelle, description);
                 }
             }
         }

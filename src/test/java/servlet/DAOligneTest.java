@@ -13,7 +13,6 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 import javax.sql.DataSource;
-import modele.dao.DAOclient;
 import modele.dao.DAOligne;
 import modele.entity.LigneEntity;
 import org.hsqldb.cmdline.SqlFile;
@@ -58,9 +57,8 @@ public class DAOligneTest {
     /**
      * Teste la méthode afficherCommande
      */
-    @Ignore
     @Test
-    public void afficherCommandesTest(){
+    public void afficherCommandesTest() throws SQLException{
         List<LigneEntity> lcommandes = new LinkedList();
         LigneEntity l1 = new LigneEntity(10248,11,12);
         LigneEntity l2 = new LigneEntity(10248,42,10);
@@ -74,18 +72,16 @@ public class DAOligneTest {
     /**
      * Teste la méthode toutesLesLignes
      */
-    @Ignore
     @Test
-    public void toutesLesLignesTest(){
+    public void toutesLesLignesTest() throws SQLException{
         assertEquals(dao.toutesLesLignes().size(),2155);
     }
     
     /**
      * Teste la méthode afficherCodeProduits
      */
-    @Ignore
     @Test
-    public void afficherCodeProduitsTest(){
+    public void afficherCodeProduitsTest() throws SQLException{
         List<Integer> lProduits = new LinkedList<Integer>();
         lProduits.add(11);
         lProduits.add(42);
@@ -96,9 +92,8 @@ public class DAOligneTest {
     /**
      * Teste la méthode afficherQuantite
      */
-    @Ignore
     @Test
-    public void afficherQuantiteTest(){
+    public void afficherQuantiteTest() throws SQLException{
         assertEquals(12,dao.afficherQuantite(10248, 11));
     }
     
