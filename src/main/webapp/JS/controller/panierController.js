@@ -1,22 +1,13 @@
 /* global Mustache */
 
 $(document).ready(function(){
+    MonPannier = new Panier();
+    remplirPanier(MonPannier,parcourPannierHtml());
     
     $('#ajoutPanier').click(function(e){
         var id = $(this).val();
         $.get("Produit",id,ajouter,'json');;//appel ajax
     });
-    
-    $('#qtemoins').click(function(e){
-        console.log("moins");
-       
-        Panier.setArticleQte($(this).val(),-1);
-    });
-    $('#qteplus').click(function(e){
-        console.log("plus");
-        Panier.setArticleQte($(this).val(),1);
-    });
-    
 });
 
 // Objet LignePanier
@@ -26,15 +17,19 @@ function LignePanier (code,libelle, qte, prix)
     this.libelle = libelle;
     this.qteArticle = qte;
     this.prixArticle = prix;
+    this.prixLigne = this.prixArticle * this.qteArticle;
 }    
 LignePanier.prototype.setQte = function(qte)
 {
-    this.qteArticle += qte;
+    if (this.qteArticle + qte > 0){
+        this.qteArticle += qte;
+        this.prixLigne = this.prixArticle*this.qteArticle;
+    }
 };
 
 LignePanier.prototype.getPrixLigne = function()
 {
-    var resultat = this.prixArticle * this.qteArticle;
+    this.pr = this.prixArticle * this.qteArticle;
     return resultat;
 };
 
@@ -62,14 +57,17 @@ Panier.prototype.ajouterArticle = function(code, libelle,qte, prix)
 
 Panier.prototype.setArticleQte = function (code,qte){
     var index = this.getArticle(code);
-    this.liste[index].setQte(qte);
+    if (index!==-1){
+        this.liste[index].setQte(qte);
+    }
+    
 };
 
 Panier.prototype.getPrixPanier = function()
 {
     var total = 0;
     for(var i = 0 ; i < this.liste.length ; i++)
-        total += this.liste[i].getPrixLigne();
+        total += this.liste[i].prixLigne;
     return total;
 };
 
@@ -85,7 +83,14 @@ Panier.prototype.supprimerArticle = function(code)
     var index = this.getArticle(code);
     if (index > -1) this.liste.splice(index, 1);
 };
-
+// Panier panier, liste d'article [[id,nom,categorie,qte,prix]]
+function remplirPanier(panier,liste)
+{
+    for(var i = 0 ; i < liste.length  ; i++)
+        {
+            panier.ajouterArticle(parseInt(liste[i][0]), liste[i][1], parseInt(liste[i][3]), parseInt(liste[i][4]));
+        }
+} 
         
 function ajouter(dataJson)
 {
@@ -96,25 +101,17 @@ function ajouter(dataJson)
     
     if (nbrLigne > 0)
     {
-        for(var i = nbrLigne-1 ; i >= 0  ; i--)
-        {
-            monPanier.ajouterArticle(parseInt(panier[i][0]), panier[i][1], parseInt(panier[i][3]), parseInt(panier[i][4]));
-        }
+        remplirPanier(monPanier,panier);
     }
-    console.log(monPanier.getPanier());
-    // Ajout html template 
-    var template = $('#templateItemPanier').html();
-    Mustache.parse(template);
-    var processedTemplate = Mustache.render(template, {items: monPanier.getPanier() });
-    $('#displayPanier').html(processedTemplate);	
-                            
-    var templateP = $('#templatePrixTotalPanier').html();
-    Mustache.parse(templateP);
-    console.log(monPanier.getPrixPanier());
-    var processedTemplate = Mustache.render(templateP, {prix: monPanier.getPrixPanier() });
-    $('#displayprixTotal').html(processedTemplate);	
-    
-   //$('#prixTotal').innerHTML = monPanier.getPrixPanier();
+    displayPanier(monPanier);
+}
+
+function qteUpDate(id,val){
+    var monPanier = new Panier();
+    var panier = parcourPannierHtml();
+    remplirPanier(monPanier,panier);
+    monPanier.setArticleQte(id,val);
+    displayPanier(monPanier);
 }
 
 // Parcour les élément du DOM -> pannier 
@@ -136,4 +133,16 @@ function parcourPannierHtml(){
             panier.push(ligne);
     } );
     return panier;
+}
+
+function displayPanier(monPanier){
+    var template = $('#templateItemPanier').html();
+    Mustache.parse(template);
+    var processedTemplate = Mustache.render(template, {items: monPanier.getPanier()});
+    $('#displayPanier').html(processedTemplate);	 
+    
+    var templateP = $('#templatePrixTotalPanier').html();
+    Mustache.parse(templateP);
+    var processedTemplate = Mustache.render(templateP, {prix: monPanier.getPrixPanier() });
+    $('#displayprixTotal').html(processedTemplate);	
 }

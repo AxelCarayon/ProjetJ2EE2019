@@ -125,11 +125,11 @@
              <span>categorie1</span>
               <div class="input-group">
                 <span class="input-group-btn">
-                    <button type="button" value="2" id="qtemoins" class="btn btn-danger btn-number">-</button>
+                    <button type="button" onclick="qteUpDate(2,-1)" class="btn btn-danger btn-number">-</button>
                 </span>
                 <input type="text" id="quantity" name="quantity" class="form-control input-number" value="1">
                 <span class="input-group-btn">
-                    <button type="button" value="2" id="qteplus" class="btn btn-success btn-number">+</button>
+                    <button type="button" onclick="qteUpDate(2,1)" class="btn btn-success btn-number">+</button>
                 </span>
             </div>
             <div>10</div>
@@ -141,20 +141,20 @@
              <span>categorie2</span>
               <div class="input-group">
                 <span class="input-group-btn">
-                    <button type="button" value="3" id="qtemoins" class="btn btn-danger btn-number" >-</button>
+                    <button type="button" onclick="qteUpDate(3,-1)" class="btn btn-danger btn-number" >-</button>
                 </span>
                 <input type="text" id="quantity" name="quantity" class="form-control input-number" value="1">
                 <span class="input-group-btn">
-                    <button type="button" value="3" id="qteplus" class="btn btn-success btn-number">+</button>
+                    <button type="button" onclick="qteUpDate(3,1)" class="btn btn-success btn-number">+</button>
                 </span>
             </div>
             <div>20</div>
           </div>
+        </div>
           <!-- total price-->
           <div class="cart-total"><span class="text-uppercase text-muted">Total</span><strong class="text-uppercase" id="displayprixTotal"><!--template--></strong>€</div>
-        </div>
-      </div>
-    </div>
+       </div>
+     </div>
   </div>
 
   <!-- Footer -->
@@ -216,14 +216,14 @@
              <span>{{categorie}}</span>
               <div class="input-group">
                 <span class="input-group-btn">
-                    <button type="button" value="{{codeArticle}}" id="qtemoins" class="btn btn-danger btn-number"  data-type="minus" data-field="">-</button>
+                    <button type="button" onclick="qteUpDate({{codeArticle}},-1)"  class="btn btn-danger btn-number"  data-type="minus" data-field="">-</button>
                 </span>
                 <input type="text" id="quantity" name="quantity" class="form-control input-number" value="{{qteArticle}}">
                 <span class="input-group-btn">
-                    <button type="button" value="{{codeArticle}}" id="qteplus" class="btn btn-success btn-number" data-type="plus" data-field="">+</button>
+                    <button type="button" onclick="qteUpDate({{codeArticle}},1)"  class="btn btn-success btn-number" data-type="plus" data-field="">+</button>
                 </span>
             </div>
-            <div>{{getPrixLigne}}</div>
+            <div>{{prixArticle}}</div><div>{{prixLigne}}</div>
      </div>
      {{/items}}
   </script>
