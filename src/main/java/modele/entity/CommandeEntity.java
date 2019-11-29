@@ -27,10 +27,14 @@ public class CommandeEntity {
     public CommandeEntity(int numero, String code_client, String saisiLe, String envoyeLe, double port, String destinataire, String adresseLivraison, String villeLivraison, String regionLivraison, String codePostalLivraison, String paysLivraison, double remise) throws ParseException {
         this.numero = numero;
         this.code_client = code_client;
-        SimpleDateFormat formatageSaisie = new SimpleDateFormat("yyyy-MM-dd");
-        this.saisiLe = formatageSaisie.parse(saisiLe);
-        SimpleDateFormat formatageEnvoi = new SimpleDateFormat("yyyy-MM-dd");
-        this.envoyeLe = formatageEnvoi.parse(envoyeLe);
+        try{ SimpleDateFormat formatageSaisie = new SimpleDateFormat("yyyy-MM-dd");
+        this.saisiLe = formatageSaisie.parse(saisiLe);}catch(Exception e){
+            this.saisiLe = null;
+        }
+        try{SimpleDateFormat formatageEnvoi = new SimpleDateFormat("yyyy-MM-dd");
+        this.envoyeLe = formatageEnvoi.parse(envoyeLe);}catch(Exception e){
+            this.envoyeLe = null;
+        }
         this.port = port;
         this.destinataire = destinataire;
         this.adresseLivraison = adresseLivraison;

@@ -7,7 +7,6 @@ package modele.dao;
 
 import java.util.List;
 import javax.sql.DataSource;
-import modele.entity.CategorieEntity;
 import modele.entity.ProduitEntity;
 
 /**

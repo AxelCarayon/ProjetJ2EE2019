@@ -59,19 +59,16 @@ public class DAOcommandeTest {
     /**
      * Teste la méthode toutesLesCommandes
      */
-    @Ignore 
     @Test
-    public void toutesLesCommandesTest(){
-       List<CommandeEntity> listeCommandes = dao.toutesLesCommandes();
-       assertEquals(830,listeCommandes.size());
+    public void toutesLesCommandesTest() throws SQLException, ParseException{
+       assertEquals(830,dao.toutesLesCommandes().size());
     }
     
     /**
      * Teste la méthodes afficherCommande
      */
-    @Ignore
     @Test
-    public void afficherCommandeTest() throws ParseException{
+    public void afficherCommandeTest() throws ParseException, SQLException{
         CommandeEntity commande = new CommandeEntity(10248, "VINET", "1994-08-04", "1994-08-16", 161.00, "Vins et alcools Chevalier", "59 rue de l'Abbaye", "Reims", null, "51100", "France", 0.00);
         assertEquals(commande,dao.afficherCommande(code));
     }
@@ -80,9 +77,8 @@ public class DAOcommandeTest {
      * Teste la méthode ajouterCommande
      * @throws ParseException 
      */
-    @Ignore
     @Test
-    public void ajouterCommandeTest() throws ParseException{
+    public void ajouterCommandeTest() throws ParseException, SQLException{
         CommandeEntity commande = new CommandeEntity(11078, "VINET", "2019-11-01","2019-11-15",400.00,"Magasin osef","51 rue du chat","Albi", "Occitanie","81000","France",0.00);
         try{
             dao.ajouterCommande(11078, "VINET", "2019-11-01","2019-11-15",400.00,"Magasin osef","51 rue du chat","Albi", "Occitanie","81000","France",0.00);
@@ -95,15 +91,15 @@ public class DAOcommandeTest {
     /**
      * Teste la méthode supprimerCommande
      */
-    @Ignore
     @Test
-    public void supprimerCommandeTest(){
-        boolean supprime = false;
-        dao.supprimerCommande(11078);
+    public void supprimerCommandeTest() throws SQLException{
+        boolean supprime;
         try{
             dao.afficherCommande(11078);
-        }catch(Exception e){
             supprime = true;
+        }catch(Exception e){
+            System.out.println(e);
+            supprime = false;
         }
         assertTrue(supprime);
     }
@@ -111,18 +107,16 @@ public class DAOcommandeTest {
     /**
      * Teste la méthode afficherCodeClient
      */
-    @Ignore
     @Test
-    public void afficherCodeClientTest(){ 
+    public void afficherCodeClientTest() throws SQLException{ 
         assertEquals("VINET",dao.afficherCodeClient(code));
     }
     
     /**
      * Teste la méthode modifierDestinataire
      */
-    @Ignore
     @Test
-    public void modifierDestinataireTest() throws ParseException{
+    public void modifierDestinataireTest() throws ParseException, SQLException{
         dao.modifierDestinataire(code,"Philippe");
         assertEquals(dao.afficherCommande(code).getDestinataire(),"Philippe");
     }
@@ -131,30 +125,31 @@ public class DAOcommandeTest {
      * Teste la méthode modifierAdresseLivraison
      * @throws ParseException 
      */
-    public void modifierAdresseLivraisonTest() throws ParseException{
+    public void modifierAdresseLivraisonTest() throws ParseException, SQLException{
         dao.modifierAdresseLivraison(code,"Rue Pablo Neruda");
         assertEquals(dao.afficherCommande(code).getAdresseLivraison(),"Rue Pablo Neruda");
     }
     
-    @Ignore
+    /**
+     * Teste la méthode modifierRegionLivraison
+     * @throws ParseException 
+     */
     @Test
-    public void modifierRegionLivraisonTest() throws ParseException{
+    public void modifierRegionLivraisonTest() throws ParseException, SQLException{
         dao.modifierRegionLivraison(code,"Bretagne");
         assertEquals(dao.afficherCommande(code).getRegionLivraison(),"Bretagne");
     }
-    
-    @Ignore
+
     @Test
-    public void modifierPaysTest() throws ParseException{
+    public void modifierPaysTest() throws ParseException, SQLException{
         dao.modifierPaysLivraison(code,"Syrie");
         assertEquals(dao.afficherCommande(code).getPaysLivraison(),"Syrie");
     }
     
-    @Ignore
     @Test
-    public void modifierRemise() throws ParseException{
+    public void modifierRemise() throws ParseException, SQLException{
         dao.modifierRemise(code, 10.00);
-        assertEquals(10.00, dao.afficherCommande(code).getRemise());
+        assertEquals(10.00, dao.afficherCommande(code).getRemise(), 0);
     }
     
     public static DataSource getDataSource() throws SQLException {
