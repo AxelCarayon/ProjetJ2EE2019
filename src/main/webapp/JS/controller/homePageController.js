@@ -6,9 +6,11 @@
 
 /* global Mustache */
 
-$(document).ready(// Exécuté à la fin du chargement de la page
+$(document).ready(
     function () {
-        showProduitByCategorie(1);
+        //showProduitByCategorie(1);
+        showCategorieForNav();
+        showCategorieForNavMob();
     }
 );
 
@@ -33,21 +35,22 @@ function showProduitByCategorie(cat) {
 }
 function showCategorieForNav() {
     $.ajax({
-            url: "",
+            url: "CategorieServlet",
             dataType: "json",
             success: 
                     function(result) {
+                            console.log(result);
                             var template = $('#templateMenuCat').html();
                             Mustache.parse(template);
                             var processedTemplate = Mustache.render(template, {categories: result });
-                            $('#displayProd').html(processedTemplate);	
+                            $('#displayMenu').html(processedTemplate);	
                     },
             error: showError
     });				
 }
 function showCategorieForNavMob() {
     $.ajax({
-            url: "",
+            url: "CategorieServlet",
             dataType: "json",
             success: 
                     function(result) {

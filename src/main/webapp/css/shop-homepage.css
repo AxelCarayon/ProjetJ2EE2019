@@ -8,10 +8,17 @@ nav .dropleft .dropdown-toggle::before{
   display: none;
 }
 
-.row.menuCat div.col-1{
-    border: 1px solid black;
+.menuCat.navbar{
+    top : auto;
+    padding-left: 3%;
+    padding-right: 3%;
 }
-
+#displayMenu div.col:hover{
+    color: rgb(104,189,13);
+}
+.container.pageContent{
+    padding-top: 7%;
+}
 .cart-total {
  display:-ms-flexbox;
  display:flex;
