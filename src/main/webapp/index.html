@@ -14,15 +14,21 @@
   <!-- Custom styles for this template -->
   <link href="css/shop-homepage.css" rel="stylesheet">
   <link href="css/svgicons.css" rel="stylesheet">
+  
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/0.8.1/mustache.min.js"></script>
   <script
-        src="http://code.jquery.com/jquery-3.4.1.min.js"
+        src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
         crossorigin="anonymous"></script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-  <script src="JS/controller/panierController.js"></script>
+<script
+        src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+        integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+        crossorigin="anonymous">
+</script>  
+<script src="JS/controller/panierController.js"></script>
   <script src="JS/controller/homePageController.js"></script>
 
 
@@ -42,7 +48,7 @@
       </form>
       <!-- user -->
       <div class="nav-item">
-        <a href="#" class="navbar-icon-link">
+        <a href="views/connexion.html" class="navbar-icon-link">
           <svg class="svg-icon" viewBox="0 0 20 20">
             <path d="M12.075,10.812c1.358-0.853,2.242-2.507,2.242-4.037c0-2.181-1.795-4.618-4.198-4.618S5.921,4.594,5.921,6.775c0,1.53,0.884,3.185,2.242,4.037c-3.222,0.865-5.6,3.807-5.6,7.298c0,0.23,0.189,0.42,0.42,0.42h14.273c0.23,0,0.42-0.189,0.42-0.42C17.676,14.619,15.297,11.677,12.075,10.812 M6.761,6.775c0-2.162,1.773-3.778,3.358-3.778s3.359,1.616,3.359,3.778c0,2.162-1.774,3.778-3.359,3.778S6.761,8.937,6.761,6.775 M3.415,17.69c0.218-3.51,3.142-6.297,6.704-6.297c3.562,0,6.486,2.787,6.705,6.297H3.415z"></path>
           </svg>
@@ -121,35 +127,35 @@
         <div class="list-group" id="displayPanier">
           <!-- template -->
           <div class="list-group-item">
-            <div class="d-none">2</div> 
-             <span>Test1</span> 
-             <span>categorie1</span>
+            <div class="info d-none">2</div> 
+             <span class="info">Test1</span> 
+             <span class="info">categorie1</span>
               <div class="input-group">
                 <span class="input-group-btn">
                     <button type="button" onclick="qteUpDate(2,-1)" class="btn btn-danger btn-number">-</button>
                 </span>
-                <input type="text" id="quantity" name="quantity" class="form-control input-number" value="1">
+                <input type="text" id="quantity" name="quantity" class="info form-control input-number" value="1">
                 <span class="input-group-btn">
                     <button type="button" onclick="qteUpDate(2,1)" class="btn btn-success btn-number">+</button>
                 </span>
             </div>
-            <div>10</div>
+            <div class="info">10</div>
           </div>
           
           <div class="list-group-item">
-              <div class="d-none" >3</div> 
-             <span>Test2</span> 
-             <span>categorie2</span>
+              <div class="info d-none" >3</div> 
+             <span class="info">Test2</span> 
+             <span class="info">categorie2</span>
               <div class="input-group">
                 <span class="input-group-btn">
                     <button type="button" onclick="qteUpDate(3,-1)" class="btn btn-danger btn-number" >-</button>
                 </span>
-                <input type="text" id="quantity" name="quantity" class="form-control input-number" value="1">
+                <input type="text" id="quantity" name="quantity" class="info form-control input-number" value="1">
                 <span class="input-group-btn">
                     <button type="button" onclick="qteUpDate(3,1)" class="btn btn-success btn-number">+</button>
                 </span>
             </div>
-            <div>20</div>
+            <div class="info">20</div>
           </div>
         </div>
           <!-- total price-->
@@ -212,19 +218,19 @@
       {{#items}}
       
       <div class="list-group-item">
-            <div class="d-none">{{codeArticle}}</div> 
-             <span>{{libelle}}</span> 
-             <span>{{categorie}}</span>
+            <div class="info d-none">{{codeArticle}}</div> 
+             <span class="info">{{libelle}}</span> 
+             <span class="info">{{categorie}}</span>
               <div class="input-group">
                 <span class="input-group-btn">
                     <button type="button" onclick="qteUpDate({{codeArticle}},-1)"  class="btn btn-danger btn-number"  data-type="minus" data-field="">-</button>
                 </span>
-                <input type="text" id="quantity" name="quantity" class="form-control input-number" value="{{qteArticle}}">
+                <input type="text" id="quantity" name="quantity" class="info form-control input-number" value="{{qteArticle}}">
                 <span class="input-group-btn">
                     <button type="button" onclick="qteUpDate({{codeArticle}},1)"  class="btn btn-success btn-number" data-type="plus" data-field="">+</button>
                 </span>
             </div>
-            <div>{{prixArticle}}</div><div>{{prixLigne}}</div>
+            <div class="info">{{prixArticle}}</div><div>{{prixLigne}}</div>
      </div>
      {{/items}}
   </script>

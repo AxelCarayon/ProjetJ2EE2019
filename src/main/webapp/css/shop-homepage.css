@@ -31,7 +31,16 @@ nav .dropleft .dropdown-toggle::before{
  margin-top:.5rem;
  margin-bottom:.5rem
 }
-
+.dialogstyleperso{
+    border-radius: 10px;
+    border: 1px #212529 solid;
+    padding: 10px;
+    background: #f8f9fa;
+    box-shadow: 10px 5px 5px rgba(0, 0, 0, .2);
+}
+.dialogstyleperso .btn.btn-dark{
+    margin-right: 10px;
+}
 
 @media (min-width: 992px) {
   img.navbar-brand{
