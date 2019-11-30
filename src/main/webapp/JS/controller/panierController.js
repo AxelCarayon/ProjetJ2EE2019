@@ -21,10 +21,8 @@ function LignePanier (code,libelle, qte, prix)
 }    
 LignePanier.prototype.setQte = function(qte)
 {
-    if (this.qteArticle + qte > 0){
         this.qteArticle += qte;
         this.prixLigne = this.prixArticle*this.qteArticle;
-    }
 };
 
 LignePanier.prototype.getCode = function() 
@@ -52,9 +50,11 @@ Panier.prototype.ajouterArticle = function(code, libelle,qte, prix)
 Panier.prototype.setArticleQte = function (code,qte){
     var index = this.getArticle(code);
     if (index!==-1){
-        this.liste[index].setQte(qte);
+        var article = this.liste[index];
+        if (article.qteArticle+qte === 0){
+            afficherPopupConfirmationSup("Souhaitez-vous supprimer le produit "+ article.libelle +" de votre panier ?",this,code);
+        }else article.setQte(qte);
     }
-    
 };
 
 Panier.prototype.getPrixPanier = function()
@@ -124,4 +124,33 @@ function displayPanier(monPanier){
     Mustache.parse(templateP);
     var processedTemplate = Mustache.render(templateP, {prix: monPanier.getPrixPanier() });
     $('#displayprixTotal').html(processedTemplate);	
+}
+
+function afficherPopupConfirmationSup(question,panier,article) {
+    $('body').append('<div id="popupconfirmation" title="Confirmation"></div>');
+    $("#popupconfirmation").html(question);
+    var popup = $("#popupconfirmation").dialog({
+        autoOpen: true,
+        width: 400,
+        dialogClass: 'dialogstyleperso',
+        hide: "fade",
+        buttons: [{
+                text: "Oui",
+                class: "btn btn-dark",
+                click: function () {
+                    $(this).dialog("close");
+                    $("#popupconfirmation").remove();
+                    panier.supprimerArticle(article);
+                    displayPanier(panier);
+                }},
+            {
+                text: "Non",
+                class: "btn btn-dark",
+                click: function () {
+                    $(this).dialog("close");
+                    $("#popupconfirmation").remove();
+            }}]
+    });
+    $("#popupconfirmation").prev().addClass('ui-state-question');
+    return popup;
 }
