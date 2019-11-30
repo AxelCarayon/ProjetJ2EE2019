@@ -121,35 +121,35 @@
         <div class="list-group" id="displayPanier">
           <!-- template -->
           <div class="list-group-item">
-            <div class="d-none">2</div> 
-             <span>Test1</span> 
-             <span>categorie1</span>
+            <div class="info d-none">2</div> 
+             <span class="info">Test1</span> 
+             <span class="info">categorie1</span>
               <div class="input-group">
                 <span class="input-group-btn">
                     <button type="button" onclick="qteUpDate(2,-1)" class="btn btn-danger btn-number">-</button>
                 </span>
-                <input type="text" id="quantity" name="quantity" class="form-control input-number" value="1">
+                <input type="text" id="quantity" name="quantity" class="info form-control input-number" value="1">
                 <span class="input-group-btn">
                     <button type="button" onclick="qteUpDate(2,1)" class="btn btn-success btn-number">+</button>
                 </span>
             </div>
-            <div>10</div>
+            <div class="info">10</div>
           </div>
           
           <div class="list-group-item">
-              <div class="d-none" >3</div> 
-             <span>Test2</span> 
-             <span>categorie2</span>
+              <div class="info d-none" >3</div> 
+             <span class="info">Test2</span> 
+             <span class="info">categorie2</span>
               <div class="input-group">
                 <span class="input-group-btn">
                     <button type="button" onclick="qteUpDate(3,-1)" class="btn btn-danger btn-number" >-</button>
                 </span>
-                <input type="text" id="quantity" name="quantity" class="form-control input-number" value="1">
+                <input type="text" id="quantity" name="quantity" class="info form-control input-number" value="1">
                 <span class="input-group-btn">
                     <button type="button" onclick="qteUpDate(3,1)" class="btn btn-success btn-number">+</button>
                 </span>
             </div>
-            <div>20</div>
+            <div class="info">20</div>
           </div>
         </div>
           <!-- total price-->
@@ -212,19 +212,19 @@
       {{#items}}
       
       <div class="list-group-item">
-            <div class="d-none">{{codeArticle}}</div> 
-             <span>{{libelle}}</span> 
-             <span>{{categorie}}</span>
+            <div class="info d-none">{{codeArticle}}</div> 
+             <span class="info">{{libelle}}</span> 
+             <span class="info">{{categorie}}</span>
               <div class="input-group">
                 <span class="input-group-btn">
                     <button type="button" onclick="qteUpDate({{codeArticle}},-1)"  class="btn btn-danger btn-number"  data-type="minus" data-field="">-</button>
                 </span>
-                <input type="text" id="quantity" name="quantity" class="form-control input-number" value="{{qteArticle}}">
+                <input type="text" id="quantity" name="quantity" class="info form-control input-number" value="{{qteArticle}}">
                 <span class="input-group-btn">
                     <button type="button" onclick="qteUpDate({{codeArticle}},1)"  class="btn btn-success btn-number" data-type="plus" data-field="">+</button>
                 </span>
             </div>
-            <div>{{prixArticle}}</div><div>{{prixLigne}}</div>
+            <div class="info">{{prixArticle}}</div><div>{{prixLigne}}</div>
      </div>
      {{/items}}
   </script>
