@@ -87,9 +87,41 @@ public class DAOclient {
                     String fax = rs.getString("FAX");
                     client = new ClientEntity(code, societe, contact, fonction, adresse, ville, region, code_postal, pays, telephone, fax);
                 }
+            } catch (Exception e) {
+                throw e;
             }
         }
         return client;
+    }
+
+    /**
+     * Renvoie si un couple username/password existe dans la base de donnée
+     * @param username le nom d'utilisateur entré
+     * @param password le mot de passé entré
+     * @return 0 si le login est incorrect/n'existe pas, 1 si le login existe et il s'agit d'un client,
+     * 2 si le login existe et il s'agit de l'administrateur.
+     * @throws SQLException 
+     */
+    public int loginExiste(String username, String password) throws SQLException {
+        int resultat = 0;
+        if (username.equals("admin") && password.equals("admin")) {
+            resultat = 2;
+        } else {
+            String sql = "SELECT * FROM CLIENT WHERE CONTACT = ? AND CODE = ?";
+            try (Connection myConnection = myDataSource.getConnection();
+                    PreparedStatement statement = myConnection.prepareStatement(sql)) {
+                statement.setString(1, username);
+                statement.setString(2, password);
+                try (ResultSet rs = statement.executeQuery()) {
+                    if (rs.next()) {
+                        resultat = 1;
+                    }
+                }
+            }
+
+        }
+
+        return resultat;
     }
 
     /**
@@ -99,14 +131,14 @@ public class DAOclient {
      * @param societe le nouveau nom de la societe
      */
     public void modifierSociete(String client, String societe) throws SQLException {
-        
-        String sql = "UPDATE CLIENT SET SOCIETE=? WHERE CODE=?" ;
+
+        String sql = "UPDATE CLIENT SET SOCIETE=? WHERE CODE=?";
         try (Connection myConnection = myDataSource.getConnection();
-            PreparedStatement statement = myConnection.prepareStatement(sql)) {
+                PreparedStatement statement = myConnection.prepareStatement(sql)) {
             statement.setString(1, societe);
-            statement.setString(2,client);
+            statement.setString(2, client);
             statement.executeUpdate();
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
     }
@@ -118,13 +150,13 @@ public class DAOclient {
      * @param contact le nouveau contact du client
      */
     public void modifierContact(String client, String contact) {
-        String sql = "UPDATE CLIENT SET CONTACT=? WHERE CODE=?" ;
+        String sql = "UPDATE CLIENT SET CONTACT=? WHERE CODE=?";
         try (Connection myConnection = myDataSource.getConnection();
-            PreparedStatement statement = myConnection.prepareStatement(sql)) {
+                PreparedStatement statement = myConnection.prepareStatement(sql)) {
             statement.setString(1, contact);
-            statement.setString(2,client);
+            statement.setString(2, client);
             statement.executeUpdate();
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
     }
@@ -136,13 +168,13 @@ public class DAOclient {
      * @param fonction le nouveau contact d'un client
      */
     public void modifierFonction(String client, String fonction) {
-        String sql = "UPDATE CLIENT SET FONCTION=? WHERE CODE=?" ;
+        String sql = "UPDATE CLIENT SET FONCTION=? WHERE CODE=?";
         try (Connection myConnection = myDataSource.getConnection();
-            PreparedStatement statement = myConnection.prepareStatement(sql)) {
+                PreparedStatement statement = myConnection.prepareStatement(sql)) {
             statement.setString(1, fonction);
-            statement.setString(2,client);
+            statement.setString(2, client);
             statement.executeUpdate();
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
     }
@@ -154,13 +186,13 @@ public class DAOclient {
      * @param adresse la nouvelle adresse du client
      */
     public void modifierAdresse(String client, String adresse) {
-        String sql = "UPDATE CLIENT SET ADRESSE=? WHERE CODE=?" ;
+        String sql = "UPDATE CLIENT SET ADRESSE=? WHERE CODE=?";
         try (Connection myConnection = myDataSource.getConnection();
-            PreparedStatement statement = myConnection.prepareStatement(sql)) {
+                PreparedStatement statement = myConnection.prepareStatement(sql)) {
             statement.setString(1, adresse);
-            statement.setString(2,client);
+            statement.setString(2, client);
             statement.executeUpdate();
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
     }
@@ -172,13 +204,13 @@ public class DAOclient {
      * @param ville la nouvelle ville du client
      */
     public void modifierVille(String client, String ville) {
-        String sql = "UPDATE CLIENT SET VILLE=? WHERE CODE=?" ;
+        String sql = "UPDATE CLIENT SET VILLE=? WHERE CODE=?";
         try (Connection myConnection = myDataSource.getConnection();
-            PreparedStatement statement = myConnection.prepareStatement(sql)) {
+                PreparedStatement statement = myConnection.prepareStatement(sql)) {
             statement.setString(1, ville);
-            statement.setString(2,client);
+            statement.setString(2, client);
             statement.executeUpdate();
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
     }
@@ -190,13 +222,13 @@ public class DAOclient {
      * @param region la nouvelle région du client
      */
     public void modifierRegion(String client, String region) {
-        String sql = "UPDATE CLIENT SET REGION=? WHERE CODE=?" ;
+        String sql = "UPDATE CLIENT SET REGION=? WHERE CODE=?";
         try (Connection myConnection = myDataSource.getConnection();
-            PreparedStatement statement = myConnection.prepareStatement(sql)) {
+                PreparedStatement statement = myConnection.prepareStatement(sql)) {
             statement.setString(1, region);
-            statement.setString(2,client);
+            statement.setString(2, client);
             statement.executeUpdate();
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
     }
@@ -208,13 +240,13 @@ public class DAOclient {
      * @param CodePostal le nouveau code postal du client
      */
     public void modifierCodePostal(String client, String codePostal) {
-        String sql = "UPDATE CLIENT SET CODE_POSTAL=? WHERE CODE=?" ;
+        String sql = "UPDATE CLIENT SET CODE_POSTAL=? WHERE CODE=?";
         try (Connection myConnection = myDataSource.getConnection();
-            PreparedStatement statement = myConnection.prepareStatement(sql)) {
+                PreparedStatement statement = myConnection.prepareStatement(sql)) {
             statement.setString(1, codePostal);
-            statement.setString(2,client);
+            statement.setString(2, client);
             statement.executeUpdate();
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
     }
@@ -226,13 +258,13 @@ public class DAOclient {
      * @param pays le nouveau pays du client
      */
     public void modifierPays(String client, String pays) {
-        String sql = "UPDATE CLIENT SET PAYS=? WHERE CODE=?" ;
+        String sql = "UPDATE CLIENT SET PAYS=? WHERE CODE=?";
         try (Connection myConnection = myDataSource.getConnection();
-            PreparedStatement statement = myConnection.prepareStatement(sql)) {
+                PreparedStatement statement = myConnection.prepareStatement(sql)) {
             statement.setString(1, pays);
-            statement.setString(2,client);
+            statement.setString(2, client);
             statement.executeUpdate();
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
     }
@@ -244,13 +276,13 @@ public class DAOclient {
      * @param telephone le nouveau numéro de téléphone
      */
     public void modifierTelephone(String client, String telephone) {
-        String sql = "UPDATE CLIENT SET TELEPHONE=? WHERE CODE=?" ;
+        String sql = "UPDATE CLIENT SET TELEPHONE=? WHERE CODE=?";
         try (Connection myConnection = myDataSource.getConnection();
-            PreparedStatement statement = myConnection.prepareStatement(sql)) {
+                PreparedStatement statement = myConnection.prepareStatement(sql)) {
             statement.setString(1, telephone);
-            statement.setString(2,client);
+            statement.setString(2, client);
             statement.executeUpdate();
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
     }
@@ -262,13 +294,13 @@ public class DAOclient {
      * @param fax le nouveau numéro de fax
      */
     public void modifierFax(String client, String fax) {
-        String sql = "UPDATE CLIENT SET FAX=? WHERE CODE=?" ;
+        String sql = "UPDATE CLIENT SET FAX=? WHERE CODE=?";
         try (Connection myConnection = myDataSource.getConnection();
-            PreparedStatement statement = myConnection.prepareStatement(sql)) {
+                PreparedStatement statement = myConnection.prepareStatement(sql)) {
             statement.setString(1, fax);
-            statement.setString(2,client);
+            statement.setString(2, client);
             statement.executeUpdate();
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
     }

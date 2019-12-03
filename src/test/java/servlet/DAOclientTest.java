@@ -194,7 +194,29 @@ public class DAOclientTest {
         dao.modifierFax(code, nouveau);
         ClientEntity client = dao.afficherClient(code);
         assertEquals(nouveau,client.getFax());
-    }   
+    }
+    
+    /**
+     * Teste la méthode loginExiste
+     * @throws SQLException 
+     */
+    @Test
+    public void loginExisteTest() throws SQLException{
+        String username = "Maria Anders";
+        String password = "ALFKI";
+        
+        //on teste l'admin
+        assertEquals(2,dao.loginExiste("admin", "admin"));
+        
+        //on teste un utlisateur
+        assertEquals(1,dao.loginExiste(username,password));
+        
+        //on teste un utilisateur incorrect
+        assertEquals(0,dao.loginExiste("machin", "bidule"));
+        
+        //on teste un utilisateur correct mais pas le bon mot de passe
+        assertEquals(0,dao.loginExiste(username, "incorrect"));
+    }
     
     
     public static DataSource getDataSource() throws SQLException {
