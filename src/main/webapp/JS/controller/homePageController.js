@@ -8,16 +8,22 @@
 
 $(document).ready(
     function () {
-        //showProduitByCategorie(1);
+        showProduitByCategorie(1);
         showCategorieForNav();
         showCategorieForNavMob();
+        
+        $(document).on('click', '.elemtMenuCat', function () {
+            showProduitByCategorie($(this).attr('id'));
+        });
+        $('#menu_connexion').click(function(){
+        });
     }
 );
 
 function showProduitByCategorie(cat) {
     $.ajax({
-            url: "ShowProduits",
-            data: cat,
+            url: "ProduitsCategorieServlet",
+            data: {categorie: cat},
             dataType: "json",
             success: // La fonction qui traite les résultats
                     // La fonction qui traite les résultats
@@ -33,6 +39,7 @@ function showProduitByCategorie(cat) {
             error: showError
     });				
 }
+
 function showCategorieForNav() {
     $.ajax({
             url: "CategorieServlet",

@@ -1,14 +1,14 @@
 /* global Mustache, Storage */
 
 $(document).ready(function(){
-    //--Pour les tests
-    var MonPanier = new Panier();
-    remplirPanierAvecHtml(MonPanier);
-    localStorage.setItem('MonPanier',JSON.stringify(MonPanier.liste));
-    //--
-    $('#ajoutPanier').click(function(e){
+    var panier = new Panier();
+    remplirPanierAvecStorage(panier);
+    displayPanier(panier);
+    
+    $(document).on('click', '.ajoutPanier', function () {
         var id = $(this).val();
-        $.get("Produit",id,ajouter,'json');;//appel ajax
+        console.log(id);
+        $.get("ProduitServlet",{reference:id},ajouter,'json');;//appel ajax
     });
 });
 
@@ -95,27 +95,6 @@ function qteUpDate(id,val){
     monPanier.setArticleQte(id,val);
     displayPanier(monPanier);
     localStorage.setItem("MonPanier",JSON.stringify(monPanier.liste));
-}
-
-//E : Panier panier
-// Parcour les élément du DOM -> panier 
-// ajoute les articles à panier
-// S : panier
-function remplirPanierAvecHtml(panier){
-    $('.list-group-item').each( function(){
-            var kids = $(this).children();
-            var ligne = [];
-            kids.each(function (){
-                if ($(this).hasClass( "info" )){
-                    ligne.push( $(this).text());
-                }
-                if ($(this).hasClass("input-group")){
-                    ligne.push($(this).children(".info").val());
-                }
-            });
-            panier.ajouterArticle(parseInt(ligne[0]), ligne[1], parseInt(ligne[3]), parseInt(ligne[4]));
-    });
-    return panier;
 }
 
 //E : Panier panier
