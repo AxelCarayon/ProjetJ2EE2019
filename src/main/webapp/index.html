@@ -47,15 +47,13 @@
         <!--<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>-->
       </form>
       <!-- user -->
-      <div class="nav-item">
-        <a href="views/connexion.html" class="navbar-icon-link">
+      <div class="nav-item" id="menu_connexion">
           <svg class="svg-icon" viewBox="0 0 20 20">
             <path d="M12.075,10.812c1.358-0.853,2.242-2.507,2.242-4.037c0-2.181-1.795-4.618-4.198-4.618S5.921,4.594,5.921,6.775c0,1.53,0.884,3.185,2.242,4.037c-3.222,0.865-5.6,3.807-5.6,7.298c0,0.23,0.189,0.42,0.42,0.42h14.273c0.23,0,0.42-0.189,0.42-0.42C17.676,14.619,15.297,11.677,12.075,10.812 M6.761,6.775c0-2.162,1.773-3.778,3.358-3.778s3.359,1.616,3.359,3.778c0,2.162-1.774,3.778-3.359,3.778S6.761,8.937,6.761,6.775 M3.415,17.69c0.218-3.51,3.142-6.297,6.704-6.297c3.562,0,6.486,2.787,6.705,6.297H3.415z"></path>
           </svg>
         <!--   <span class="text-sm ml-2 ml-lg-0 text-uppercase text-sm font-weight-bold d-none d-sm-inline d-lg-none"></span>-->
        <!-- your badge -->
         <!-- <span class="badge badge-pill badge-primary" style="float:right;margin-bottom:-10px;">1</span> -->
-        </a>
       </div>
 
       <!-- Mobile -->
@@ -96,28 +94,6 @@
       <div class="col-lg-9">
         <div class="row" id="displayProd">
           <!-- template -->
-          
-          
-          <div class="col-lg-4 col-md-6 mb-4">
-            <div class="card h-100">
-              <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-              <div class="card-body">
-                <h4 class="card-title">
-                  <a href="#">Orange</a>
-                </h4>
-                <h5>5</h5>
-              </div>
-              <div class="card-footer">
-                  <button class="btn btn-light" type="button" value="1" id="ajoutPanier"> 
-                      <svg class="svg-icon" viewBox="0 0 20 20">
-                          <path fill="none" d="M7.93,4.509H9.62v1.689c0,0.233,0.189,0.422,0.422,0.422s0.422-0.189,0.422-0.422V4.509h1.689c0.233,0,0.423-0.189,0.423-0.422s-0.189-0.422-0.423-0.422h-1.689V1.975c0-0.233-0.189-0.422-0.422-0.422S9.62,1.742,9.62,1.975v1.689H7.93c-0.233,0-0.422,0.189-0.422,0.422S7.697,4.509,7.93,4.509 M18.489,8.311H1.595c-0.466,0-0.845,0.378-0.845,0.845V10c0,0.466,0.378,0.845,0.845,0.845h0.169l1.533,7.282l0.007-0.001c0.046,0.183,0.205,0.321,0.402,0.321h12.67c0.198,0,0.356-0.139,0.403-0.321l0.007,0.001l1.533-7.282h0.169c0.466,0,0.845-0.379,0.845-0.845V9.155C19.334,8.689,18.955,8.311,18.489,8.311 M2.626,10.845H5.53l0.266,1.689H2.982L2.626,10.845z M3.16,13.379h2.769l0.267,1.689H3.515L3.16,13.379z M4.049,17.603l-0.355-1.689h2.636l0.267,1.689H4.049z M9.62,17.603H7.441l-0.267-1.689H9.62V17.603z M9.62,15.068H7.041l-0.267-1.689H9.62V15.068z M9.62,12.534H6.641l-0.266-1.689H9.62V12.534z M12.644,17.603h-2.179v-1.689h2.446L12.644,17.603zM13.043,15.068h-2.579v-1.689h2.845L13.043,15.068z M10.464,12.534v-1.689h3.245l-0.266,1.689H10.464z M16.035,17.603h-2.548l0.268-1.689h2.636L16.035,17.603z M16.569,15.068h-2.682l0.267-1.689h2.77L16.569,15.068z M17.103,12.534h-2.814l0.267-1.689h2.903L17.103,12.534z M18.489,10H1.595V9.155h16.895V10z"></path>
-                      </svg>
-                  </button>
-              </div>
-            </div>
-        </div>
-          
-          
         </div>
       </div>
 
@@ -126,37 +102,6 @@
         <h1 class="my-4">Panier</h1>
         <div class="list-group" id="displayPanier">
           <!-- template -->
-          <div class="list-group-item">
-            <div class="info d-none">2</div> 
-             <span class="info">Test1</span> 
-             <span class="info">categorie1</span>
-              <div class="input-group">
-                <span class="input-group-btn">
-                    <button type="button" onclick="qteUpDate(2,-1)" class="btn btn-danger btn-number">-</button>
-                </span>
-                <input type="text" id="quantity" name="quantity" class="info form-control input-number" value="1">
-                <span class="input-group-btn">
-                    <button type="button" onclick="qteUpDate(2,1)" class="btn btn-success btn-number">+</button>
-                </span>
-            </div>
-            <div class="info">10</div>
-          </div>
-          
-          <div class="list-group-item">
-              <div class="info d-none" >3</div> 
-             <span class="info">Test2</span> 
-             <span class="info">categorie2</span>
-              <div class="input-group">
-                <span class="input-group-btn">
-                    <button type="button" onclick="qteUpDate(3,-1)" class="btn btn-danger btn-number" >-</button>
-                </span>
-                <input type="text" id="quantity" name="quantity" class="info form-control input-number" value="1">
-                <span class="input-group-btn">
-                    <button type="button" onclick="qteUpDate(3,1)" class="btn btn-success btn-number">+</button>
-                </span>
-            </div>
-            <div class="info">20</div>
-          </div>
         </div>
           <!-- total price-->
           <div class="cart-total"><span class="text-uppercase text-muted">Total</span><strong class="text-uppercase" id="displayprixTotal"><!--template--></strong>€</div>
@@ -178,7 +123,7 @@
       {{#produits}}
         <div class="col-lg-4 col-md-6 mb-4">
             <div class="card h-100">
-              <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+              <a href="#"><img class="card-img-top" src="https://placehold.it/700x400" alt=""></a>
               <div class="card-body">
                 <h4 class="card-title">
                   <a href="#">{{nom}}</a>
@@ -186,7 +131,7 @@
                 <h5>{{prix_unitaire}}</h5>
               </div>
               <div class="card-footer">
-                  <button type="button" value="{{reference}}" id="ajoutPanier"> 
+                  <button class="btn btn-light ajoutPanier" type="button" value="{{reference}}" > 
                       <svg class="svg-icon" viewBox="0 0 20 20">
                           <path fill="none" d="M7.93,4.509H9.62v1.689c0,0.233,0.189,0.422,0.422,0.422s0.422-0.189,0.422-0.422V4.509h1.689c0.233,0,0.423-0.189,0.423-0.422s-0.189-0.422-0.423-0.422h-1.689V1.975c0-0.233-0.189-0.422-0.422-0.422S9.62,1.742,9.62,1.975v1.689H7.93c-0.233,0-0.422,0.189-0.422,0.422S7.697,4.509,7.93,4.509 M18.489,8.311H1.595c-0.466,0-0.845,0.378-0.845,0.845V10c0,0.466,0.378,0.845,0.845,0.845h0.169l1.533,7.282l0.007-0.001c0.046,0.183,0.205,0.321,0.402,0.321h12.67c0.198,0,0.356-0.139,0.403-0.321l0.007,0.001l1.533-7.282h0.169c0.466,0,0.845-0.379,0.845-0.845V9.155C19.334,8.689,18.955,8.311,18.489,8.311 M2.626,10.845H5.53l0.266,1.689H2.982L2.626,10.845z M3.16,13.379h2.769l0.267,1.689H3.515L3.16,13.379z M4.049,17.603l-0.355-1.689h2.636l0.267,1.689H4.049z M9.62,17.603H7.441l-0.267-1.689H9.62V17.603z M9.62,15.068H7.041l-0.267-1.689H9.62V15.068z M9.62,12.534H6.641l-0.266-1.689H9.62V12.534z M12.644,17.603h-2.179v-1.689h2.446L12.644,17.603zM13.043,15.068h-2.579v-1.689h2.845L13.043,15.068z M10.464,12.534v-1.689h3.245l-0.266,1.689H10.464z M16.035,17.603h-2.548l0.268-1.689h2.636L16.035,17.603z M16.569,15.068h-2.682l0.267-1.689h2.77L16.569,15.068z M17.103,12.534h-2.814l0.267-1.689h2.903L17.103,12.534z M18.489,10H1.595V9.155h16.895V10z"></path>
                       </svg>
@@ -200,8 +145,8 @@
   <!-- item menu catégories produit -->
   <script id="templateMenuCat" type="text/template">
       {{#categories}}
-        <div class="col" id="{{code}}">
-            {{libelle}}
+        <div class="col">
+            <a class="elemtMenuCat" id="{{code}}">{{libelle}}</a>
         </div>
       {{/categories}}
   </script>
@@ -209,7 +154,7 @@
   <!-- item menu mobile catégories produit  -->
   <script id="templateMenuMobCat" type="text/template">
       {{#categories}}
-        <a class="dropdown-item" id="{{code}} href="#">{{libelle}}</a>
+        <a class="dropdown-item elemtMenuCat" id="{{code}}">{{libelle}}</a>
       {{/categories}}
   </script>
   

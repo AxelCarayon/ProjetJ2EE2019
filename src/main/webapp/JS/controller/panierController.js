@@ -1,12 +1,14 @@
-/* global Mustache */
+/* global Mustache, Storage */
 
 $(document).ready(function(){
-    MonPanier = new Panier();
-    remplirPanierAvecHtml(MonPanier);
+    var panier = new Panier();
+    remplirPanierAvecStorage(panier);
+    displayPanier(panier);
     
-    $('#ajoutPanier').click(function(e){
+    $(document).on('click', '.ajoutPanier', function () {
         var id = $(this).val();
-        $.get("Produit",id,ajouter,'json');;//appel ajax
+        console.log(id);
+        $.get("ProduitServlet",{reference:id},ajouter,'json');;//appel ajax
     });
 });
 
@@ -82,48 +84,52 @@ function ajouter(dataJson)
 {
     var monPanier = new Panier();
     monPanier.ajouterArticle(dataJson.reference,dataJson.nom, 1, dataJson.prix_unitaire);
-    remplirPanierAvecHtml(monPanier);
+    remplirPanierAvecStorage(monPanier);
     displayPanier(monPanier);
+    localStorage.setItem("MonPanier",JSON.stringify(monPanier.liste));
 }
 
 function qteUpDate(id,val){
     var monPanier = new Panier();
-    remplirPanierAvecHtml(monPanier);
+    remplirPanierAvecStorage(monPanier);
     monPanier.setArticleQte(id,val);
     displayPanier(monPanier);
+    localStorage.setItem("MonPanier",JSON.stringify(monPanier.liste));
 }
 
 //E : Panier panier
 // Parcour les élément du DOM -> panier 
 // ajoute les articles à panier
 // S : panier
-function remplirPanierAvecHtml(panier){
-    $('.list-group-item').each( function(){
-            var kids = $(this).children();
-            var ligne = [];
-            kids.each(function (){
-                if ($(this).hasClass( "info" )){
-                    ligne.push( $(this).text());
-                }
-                if ($(this).hasClass("input-group")){
-                    ligne.push($(this).children(".info").val());
-                }
-            });
-            panier.ajouterArticle(parseInt(ligne[0]), ligne[1], parseInt(ligne[3]), parseInt(ligne[4]));
-    });
+function remplirPanierAvecStorage(panier){
+    if(localStorage.getItem('MonPanier')!==null){
+        var listeJSON=localStorage.getItem('MonPanier');
+        var obj = JSON.parse(listeJSON);
+        for (var i = 0; i<obj.length;i++){
+            panier.ajouterArticle(obj[i].codeArticle,obj[i].libelle,obj[i].qteArticle,obj[i].prixArticle);
+        }
+    }
     return panier;
 }
 
 function displayPanier(monPanier){
-    var template = $('#templateItemPanier').html();
-    Mustache.parse(template);
-    var processedTemplate = Mustache.render(template, {items: monPanier.getPanier()});
+    var templateItem = $('#templateItemPanier').html();
+    Mustache.parse(templateItem);
+    var processedTemplate = Mustache.render(templateItem, {items: monPanier.getPanier()});
     $('#displayPanier').html(processedTemplate);	 
-    
+
     var templateP = $('#templatePrixTotalPanier').html();
     Mustache.parse(templateP);
     var processedTemplate = Mustache.render(templateP, {prix: monPanier.getPrixPanier() });
-    $('#displayprixTotal').html(processedTemplate);	
+    $('#displayprixTotal').html(processedTemplate);
+    
+//    var templateMob = $('#templatePanierMob').html();
+//    Mustache.parse(templateMob);
+//    var processedTemplate = Mustache.render(templateMob, {
+//    liste: templateItem,items: monPanier.getPanier()
+//    });
+//    $('#displayShopMob').html(processedTemplate);	 
+
 }
 
 function afficherPopupConfirmationSup(question,panier,article) {
@@ -142,6 +148,7 @@ function afficherPopupConfirmationSup(question,panier,article) {
                     $("#popupconfirmation").remove();
                     panier.supprimerArticle(article);
                     displayPanier(panier);
+                    localStorage.setItem("MonPanier",JSON.stringify(panier.liste));
                 }},
             {
                 text: "Non",

@@ -185,6 +185,43 @@ public class DAOcommande {
         }
         return resultat;
     }
+    
+    /**
+     * Renvoies toutes les commandes d'un client
+     * @param client le client dont on veut les commandes
+     * @return ArrayList<CommandeEntity>
+     * @throws SQLException
+     * @throws ParseException 
+     */
+    public List<CommandeEntity> listeCommandesClient(String client) throws SQLException, ParseException {
+        List<CommandeEntity> resultat = new ArrayList<CommandeEntity>();
+        String sql = "SELECT * FROM COMMANDE WHERE CLIENT = ?";
+        try (Connection connection = myDataSource.getConnection();
+                PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, client);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                int code = rs.getInt("NUMERO");
+                String saisiLe = rs.getString("SAISIE_LE");
+                String envoyeLe = rs.getString("ENVOYEE_LE");
+                double port = rs.getDouble("PORT");
+                String destinataire = rs.getString("DESTINATAIRE");
+                String adresseLivraison = rs.getString("ADRESSE_LIVRAISON");
+                String villeLivraison = rs.getString("VILLE_LIVRAISON");
+                String regionLivraison = rs.getString("REGION_LIVRAISON");
+                String codePostalLivraison = rs.getString("CODE_POSTAL_LIVRAIS");
+                String paysLivraison = rs.getString("PAYS_LIVRAISON");
+                double remise = rs.getDouble("REMISE");
+                CommandeEntity c = new CommandeEntity(code, client, saisiLe, envoyeLe, port,
+                        destinataire, adresseLivraison, villeLivraison, regionLivraison,
+                        codePostalLivraison, paysLivraison, remise);
+                resultat.add(c);
+            }
+        } catch (Exception e) {
+            throw e;
+        }
+        return resultat;
+    }
 
     /**
      * Modifie le destinataire d'une commande

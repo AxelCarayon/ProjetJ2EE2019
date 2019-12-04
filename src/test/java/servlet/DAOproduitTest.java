@@ -9,6 +9,8 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.sql.DataSource;
 import modele.dao.DAOproduit;
 import modele.entity.ProduitEntity;
@@ -59,27 +61,24 @@ public class DAOproduitTest {
     /**
      * Teste la méthode tousLesProduits
      */
-    @Ignore
     @Test
-    public void tousLesProduitsTest(){
-        assertEquals(dao.tousLesProduits().size(),77);
+    public void tousLesProduitsTest() throws SQLException{
+        assertEquals(77,dao.tousLesProduits().size());
     }
     
     /**
      * Teste la méthode afficherProduit
      */
-    @Ignore
     @Test
-    public void afficherProduitTest(){
+    public void afficherProduitTest() throws SQLException{
         assertEquals(produit,dao.afficherProduit(1));
     }
     
     /**
      * Teste la méthode modifierUnitesCommandees
      */
-    @Ignore
     @Test
-    public void modifierUnitesCommandeesTest(){
+    public void modifierUnitesCommandeesTest() throws SQLException{
         Boolean erreurTransaction = false;
         try{
             dao.modifierUnitesCommandees(code,40);
@@ -91,86 +90,113 @@ public class DAOproduitTest {
         }
         
         dao.modifierUnitesCommandees(code, 1);
-        assertEquals(dao.afficherProduit(code).getQuantite_par_unite(),38);
+        assertEquals(dao.afficherProduit(code).getUnites_en_stock(),38);
     }
     
     /**
      * Teste la méthode nomProduit
      */
-    @Ignore
     @Test
-    public void nomProduitTest(){
+    public void nomProduitTest() throws SQLException{
         assertEquals(dao.nomProduit(code),"Chai");
     }
     
     /**
      * Teste la méthode numeroFournisseur
      */
-    @Ignore
     @Test
-    public void numeroFournisseurTest(){
+    public void numeroFournisseurTest() throws SQLException{
         assertEquals(dao.numeroFournisseur(code),1);
     }
     
     /**
      * Teste la méthode numeroCategorie
      */
-    @Ignore
     @Test
-    public void numeroCategorieTest(){
+    public void numeroCategorieTest() throws SQLException{
         assertEquals(dao.numeroCategorie(code),1);
     }
     
     /**
      * Teste la méthode quantiteParUnite
      */
-    @Ignore
     @Test
-    public void quantiteParUniteTest(){
+    public void quantiteParUniteTest() throws SQLException{
         assertEquals(dao.quantiteParUnite(code),"10 boîtes x 20 sacs");
     }
     
     /**
      * Teste la méthode prixUnitaire
      */
-    @Ignore
     @Test
-    public void prixUnitaireTest(){
+    public void prixUnitaireTest() throws SQLException{
         assertEquals(dao.prixUnitaire(code),90.00,0);
     }
     
     /**
      * Teste la méthode uniteEnStock
      */
-    @Ignore
     @Test
-    public void uniteEnStockTest(){
-        assertEquals(dao.uniteEnStock(code),38);
+    public void uniteEnStockTest() throws SQLException{
+        assertEquals(dao.uniteEnStock(code),39);
     }
     
     /**
      * Teste la méthode unitesCommandees
      */
-    public void unitesCommandeesTest(){
-        assertEquals(dao.uniteCommandes(code),1);
+    @Test
+    public void unitesCommandeesTest() throws SQLException{
+        
+        assertEquals(dao.uniteCommandes(code),0);
     }
     
     /**
      * Teste la méthode niveauReaprovisionnement
      */
-    @Ignore
     @Test
-    public void niveauReaprovisionnementTest(){
+    public void niveauReaprovisionnementTest() throws SQLException{
         assertEquals(dao.niveauReaprovisionnement(code),10);
     }
     
     /**
      * Teste la méthode estDisponible
      */
-    @Ignore
     @Test
-    public void estDisponibleTest(){
-        assertTrue(dao.estDisponible(code));
+    public void estIndisponibleTest() throws SQLException{
+        assertFalse(dao.estIndisponible(code));
+    }
+    
+    @Test
+    public void listeProduitsCategorieTest() throws SQLException{
+        ProduitEntity p1 = dao.afficherProduit(1);
+        ProduitEntity p2 = dao.afficherProduit(2);
+        ProduitEntity p3 = dao.afficherProduit(24);
+        ProduitEntity p4 = dao.afficherProduit(34);
+        ProduitEntity p5 = dao.afficherProduit(35);
+        ProduitEntity p6 = dao.afficherProduit(38);
+        ProduitEntity p7 = dao.afficherProduit(39);
+        ProduitEntity p8 = dao.afficherProduit(43);
+        ProduitEntity p9 = dao.afficherProduit(67);
+        ProduitEntity p10 = dao.afficherProduit(70);
+        ProduitEntity p11 = dao.afficherProduit(75);
+        ProduitEntity p12 = dao.afficherProduit(76);
+        
+        List<ProduitEntity> resultat = new ArrayList<ProduitEntity>();
+        resultat.add(p1);
+        resultat.add(p2);
+        resultat.add(p3);
+        resultat.add(p4);
+        resultat.add(p5);
+        resultat.add(p6);
+        resultat.add(p7);
+        resultat.add(p8);
+        resultat.add(p9);
+        resultat.add(p10);
+        resultat.add(p11);
+        resultat.add(p12);
+        
+        assertEquals(resultat,dao.listeProduitsCategorie(1));
+        
     }
     
     
