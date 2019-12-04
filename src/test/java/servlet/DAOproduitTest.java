@@ -9,6 +9,8 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.sql.DataSource;
 import modele.dao.DAOproduit;
 import modele.entity.ProduitEntity;
@@ -162,6 +164,39 @@ public class DAOproduitTest {
     @Test
     public void estIndisponibleTest() throws SQLException{
         assertFalse(dao.estIndisponible(code));
+    }
+    
+    @Test
+    public void listeProduitsCategorieTest() throws SQLException{
+        ProduitEntity p1 = dao.afficherProduit(1);
+        ProduitEntity p2 = dao.afficherProduit(2);
+        ProduitEntity p3 = dao.afficherProduit(24);
+        ProduitEntity p4 = dao.afficherProduit(34);
+        ProduitEntity p5 = dao.afficherProduit(35);
+        ProduitEntity p6 = dao.afficherProduit(38);
+        ProduitEntity p7 = dao.afficherProduit(39);
+        ProduitEntity p8 = dao.afficherProduit(43);
+        ProduitEntity p9 = dao.afficherProduit(67);
+        ProduitEntity p10 = dao.afficherProduit(70);
+        ProduitEntity p11 = dao.afficherProduit(75);
+        ProduitEntity p12 = dao.afficherProduit(76);
+        
+        List<ProduitEntity> resultat = new ArrayList<ProduitEntity>();
+        resultat.add(p1);
+        resultat.add(p2);
+        resultat.add(p3);
+        resultat.add(p4);
+        resultat.add(p5);
+        resultat.add(p6);
+        resultat.add(p7);
+        resultat.add(p8);
+        resultat.add(p9);
+        resultat.add(p10);
+        resultat.add(p11);
+        resultat.add(p12);
+        
+        assertEquals(resultat,dao.listeProduitsCategorie(1));
+        
     }
     
     

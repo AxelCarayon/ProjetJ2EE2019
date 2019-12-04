@@ -90,6 +90,42 @@ public class DAOproduit {
         }
         return resultat;
     }
+    
+    /**
+     * Renvoie la liste de tous les produits d'une catégorie
+     * @param categorie la catégorie dont on souhaite voir les produits
+     * @return ArrayList<ProduitEntity>
+     * @throws SQLException 
+     */
+    public List<ProduitEntity> listeProduitsCategorie(int categorie) throws SQLException{
+        List<ProduitEntity> resultat = new ArrayList<ProduitEntity>();
+        
+        String sql = "SELECT * FROM PRODUIT WHERE CATEGORIE = ?";
+        try (Connection connection = myDataSource.getConnection();
+                PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, categorie);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                int reference = rs.getInt("REFERENCE");
+                String nom = rs.getString("NOM");
+                int fournisseur = rs.getInt("FOURNISSEUR");
+                String quantite_par_unite = rs.getString("QUANTITE_PAR_UNITE");
+                Double prix_unitaire = rs.getDouble("PRIX_UNITAIRE");
+                int unite_en_stock = rs.getInt("UNITES_EN_STOCK");
+                int unite_commandees = rs.getInt("UNITES_COMMANDEES");
+                int niveau_de_reappro = rs.getInt("NIVEAU_DE_REAPPRO");
+                int indisponible = rs.getInt("INDISPONIBLE");
+                ProduitEntity p = new ProduitEntity(reference,nom,fournisseur,
+                categorie,quantite_par_unite,prix_unitaire,unite_en_stock,
+                unite_commandees,niveau_de_reappro,indisponible);
+                resultat.add(p);
+            }
+        }catch(Exception e){
+            throw e;
+        }
+        return resultat;
+        
+    }
     /**
      * Met à jour le nombre d'unités commandées si le stock est suffisant et modifie
      * la disponibilité du produit si besoin et les unités commandées après la transaction
