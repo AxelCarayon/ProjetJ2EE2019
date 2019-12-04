@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.sql.DataSource;
 import modele.dao.DAOcommande;
@@ -150,6 +151,20 @@ public class DAOcommandeTest {
     public void modifierRemise() throws ParseException, SQLException{
         dao.modifierRemise(code, 10.00);
         assertEquals(10.00, dao.afficherCommande(code).getRemise(), 0);
+    }
+    
+    @Test
+    public void listeCommandesClientTest() throws ParseException, SQLException{
+        CommandeEntity c1 = dao.afficherCommande(10702);
+        CommandeEntity c2 = dao.afficherCommande(10835);
+        CommandeEntity c3 = dao.afficherCommande(10952);
+        CommandeEntity c4 = dao.afficherCommande(11011);
+        List<CommandeEntity> commandes = new ArrayList<CommandeEntity>();
+        commandes.add(c1);
+        commandes.add(c2);
+        commandes.add(c3);
+        commandes.add(c4);
+        assertEquals(commandes,dao.listeCommandesClient("ALFKI"));
     }
     
     public static DataSource getDataSource() throws SQLException {
