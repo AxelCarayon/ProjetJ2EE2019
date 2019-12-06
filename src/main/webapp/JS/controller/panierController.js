@@ -1,15 +1,32 @@
 /* global Mustache, Storage */
 
 $(document).ready(function(){
-    var panier = new Panier();
-    remplirPanierAvecStorage(panier);
-    displayPanier(panier);
+    if (localStorage.getItem('acces')=== 'succes'|| localStorage.getItem('acces')=== 'admin'){
+        $('#displayProd').parent().removeClass('col-lg-12');
+
+        // Affichage block panier 
+        var templateP = $('#templateBlockPanier').html();
+        Mustache.parse(templateP);
+        var processedTemplate = Mustache.render(templateP);
+        $('#displayBlockPanier').html(processedTemplate);
+        
+        var panier = new Panier();
+        remplirPanierAvecStorage(panier);
+        displayPanier(panier);
+        console.log("coucou");
+
+        $(document).on('click', '.ajoutPanier', function () {
+            var id = $(this).val();
+            $.get("ProduitServlet",{reference:id},ajouter,'json');;//appel ajax
+        });
+    }
+    else{
+        $('#displayProd').parent().addClass('col-lg-12');
+         $(document).on('click', '.ajoutPanier', function () {
+             alert("Vous devez être connecté.");
+         });
+    }
     
-    $(document).on('click', '.ajoutPanier', function () {
-        var id = $(this).val();
-        console.log(id);
-        $.get("ProduitServlet",{reference:id},ajouter,'json');;//appel ajax
-    });
 });
 
 // Objet LignePanier

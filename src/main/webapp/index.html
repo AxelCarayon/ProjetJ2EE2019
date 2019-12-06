@@ -90,34 +90,49 @@
   <!-- Page Content -->
   <div class="container pageContent">
     <div class="row">
-      <!-- Grid produits -->
+       <!--Grid produits--> 
       <div class="col-lg-9">
         <div class="row" id="displayProd">
-          <!-- template -->
+           <!--template--> 
         </div>
       </div>
 
-      <!-- Block pannier -->
-      <div class="col-lg-3 d-none d-lg-block">
-        <h1 class="my-4">Panier</h1>
-        <div class="list-group" id="displayPanier">
-          <!-- template -->
-        </div>
-          <!-- total price-->
-          <div class="cart-total"><span class="text-uppercase text-muted">Total</span><strong class="text-uppercase" id="displayprixTotal"><!--template--></strong>€</div>
-       </div>
+       <!--Block pannier--> 
+      <div class="col-lg-3 d-none d-lg-block" id='displayBlockPanier'>
      </div>
   </div>
-
+  </div>
   <!-- Footer -->
   <footer class="py-5 bg-dark">
     <div class="container">
       <p class="m-0 text-center text-white">Copyright &copy; Your Website 2019</p>
     </div>
   </footer>
-
   
   <!-- TEMPLATES -->
+  <!-- homepage -->
+    <script id="templateHomePage" type="text/template">
+
+        <div class="row">
+            <!-- Grid produits -->
+            <div class="col-lg-9">
+              <div class="row" id="displayProd">
+                <!-- template -->
+              </div>
+            </div>
+
+            <!-- Block pannier -->
+            <div class="col-lg-3 d-none d-lg-block">
+              <h1 class="my-4">Panier</h1>
+              <div class="list-group" id="displayPanier">
+                <!-- template -->
+              </div>
+                <!-- total price-->
+                <div class="cart-total"><span class="text-uppercase text-muted">Total</span><strong class="text-uppercase" id="displayprixTotal"><!--template--></strong>€</div>
+             </div>
+           </div>
+    </script>
+
   <!-- card of grid product -->
   <script id="templateShowProduits" type="text/template">
       {{#produits}}
@@ -157,7 +172,18 @@
         <a class="dropdown-item elemtMenuCat" id="{{code}}">{{libelle}}</a>
       {{/categories}}
   </script>
-  
+  <!-- Block panier -->
+    <script id="templateBlockPanier" type="text/template">
+
+        <h1 class="my-4">Panier</h1>
+              <div class="list-group" id="displayPanier">
+                 <!--template--> 
+              </div>
+                 <!--total price-->
+                <div class="cart-total"><span class="text-uppercase text-muted">Total</span><strong class="text-uppercase" id="displayprixTotal"></strong>€</div>
+             </div>
+    </script>
+
   <!-- item panier  -->
   <script id="templateItemPanier" type="text/template">
       {{#items}}
@@ -179,8 +205,10 @@
      </div>
      {{/items}}
   </script>
+  <!-- Prix total panier -->
     <script id="templatePrixTotalPanier" type="text/template">
             {{prix}}
-</script>
+    </script>
+
   </body>
 </html>
