@@ -2,8 +2,8 @@
   --input-padding-x: 1.5rem;
   --input-padding-y: .75rem;
 }
-
-body {
+/*//body*/
+.formconnexion {
   background: #007bff;
   background: linear-gradient(to right, #8DC63F, #007BFF);
 }

@@ -1,7 +1,7 @@
 /* global Mustache, Storage */
 
 $(document).ready(function(){
-    if (localStorage.getItem('acces')=== 'succes'|| localStorage.getItem('acces')=== 'admin'){
+    if (localStorage.getItem('acces')=== 'true'|| localStorage.getItem('acces')=== 'admin'){
         $('#displayProd').parent().removeClass('col-lg-12');
 
         // Affichage block panier 
@@ -13,7 +13,6 @@ $(document).ready(function(){
         var panier = new Panier();
         remplirPanierAvecStorage(panier);
         displayPanier(panier);
-        console.log("coucou");
 
         $(document).on('click', '.ajoutPanier', function () {
             var id = $(this).val();

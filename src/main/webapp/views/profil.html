@@ -6,7 +6,7 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>TODO supply a title</title>
+        <title>Profil</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -21,7 +21,7 @@ and open the template in the editor.
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
+        <script src='../JS/controller/connexionController.js'></script>
     </head>
     <body>
         <!-- Navigation -->
@@ -47,15 +47,20 @@ and open the template in the editor.
             </div>
           </div>
         </nav>
-        <div class="container">
-          <div class="row">
+        <div class="container" id="pageContent">
+            
+        </div>
+        
+         <!-- Block formulaire de connexion -->
+    <script id="templateFormConnexion" type="text/template">
+        <div class="row formconnexion">
             <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
               <div class="card card-signin my-5">
                 <div class="card-body">
                   <h5 class="card-title text-center">Sign In</h5>
-                  <form class="form-signin">
+                  <form class="form-signin" id="connexion">
                     <div class="form-label-group">
-                      <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+                      <input  id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
                       <label for="inputEmail">Email address</label>
                     </div>
 
@@ -68,13 +73,19 @@ and open the template in the editor.
                       <input type="checkbox" class="custom-control-input" id="customCheck1">
                       <label class="custom-control-label" for="customCheck1">Remember password</label>
                     </div>
-                    <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Sign in</button>
+                      <input class="action d-none" value="connexion">
+                    <button  class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Sign in</button>
                    </form>
                 </div>
               </div>
             </div>
           </div>
+    </script>
+    <script id="templateWelcome" type="text/template">
+        <div class="row">
+            <p> Bonjour {{#user}}{{contact}}{{/user}} </p>
+            <button onclick="deconnexionClient()" class="btn btn-primary" type="button">Se déconnecter</button>
         </div>
+    </script>
     </body>
-
 </html>

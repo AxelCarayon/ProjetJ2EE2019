@@ -8,10 +8,16 @@
 
 $(document).ready(
     function () {
+//         Show homePage
+//        var template = $('#templateHomePage').html();
+//        Mustache.parse(template);
+//        var processedTemplate = Mustache.render(template);
+//        $('.pageContent').html(processedTemplate);	
+                            
         showProduitByCategorie(1);
         showCategorieForNav();
         showCategorieForNavMob();
-        
+ 
         $(document).on('click', '.elemtMenuCat', function () {
             showProduitByCategorie($(this).attr('id'));
         });
@@ -46,7 +52,6 @@ function showCategorieForNav() {
             dataType: "json",
             success: 
                     function(result) {
-                            console.log(result);
                             var template = $('#templateMenuCat').html();
                             Mustache.parse(template);
                             var processedTemplate = Mustache.render(template, {categories: result });
