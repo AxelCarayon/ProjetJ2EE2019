@@ -49,7 +49,7 @@ public class LignesCommandeServlet extends HttpServlet {
         dao = new DAOligne(dataSource);
         int commande = 0;
         try{
-            commande = Integer.parseInt(request.getParameter("commande"));
+                commande = Integer.parseInt(request.getParameter("commande"));
         }catch(Exception e){
         }
         

@@ -138,23 +138,3 @@ function afficheInformationUser(){
             });		
     }
 }
-function afficheListeCommandeUser(){
-    if (localStorage.getItem('acces') === 'true'){
-        $.ajax({
-                url: "../CommandesClientServlet",
-                xhrFields: {
-                    withCredentials: true
-                },
-                dataType: "json",
-                success: 
-                        function(result) {
-                            console.log(result);
-                            var template = $('#templateListeCommandeUser').html();
-                            Mustache.parse(template);
-                            var processedTemplate = Mustache.render(template, {commandes: result });
-                            $('#pageContentProfil').html(processedTemplate);	
-                        },
-                error: function(){console.log("erreur");}
-            });		
-    }
-}

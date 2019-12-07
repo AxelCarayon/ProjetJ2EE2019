@@ -24,6 +24,7 @@ and open the template in the editor.
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
         <script src='../JS/controller/connexionController.js'></script>
         <script src='../JS/sb-admin-2.min.js'></script>
+        <script src="../JS/controller/commandeController.js"></script>
 
     </head>
     <body>
@@ -273,6 +274,7 @@ and open the template in the editor.
                       <th>Adresse</th>
                       <th>Port</th>
                       <th>Total</th>
+                      <th></th>
                     </tr>
                   </tfoot>
                   <tbody>
@@ -284,9 +286,60 @@ and open the template in the editor.
                       <td>{{adresseLivraison}} {{codePostalLivraison}}</td>
                       <td>{{port}}</td>
                       <td>{{prix}}</td>
-                      <td><button class="btn btn-success">Éditer</button></td>
+                      <td><button class="btn btn-success" onclick="afficheLigneCommande({{numero}})">Éditer</button></td>
                     </tr>
                     {{/commandes}}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+</script> 
+    <!--Block liste ligne-->      
+    <script id="templateListeLigne" type="text/template">
+       
+    <!-- DataTales Example -->
+          <div class="card shadow mb-4 col-12">
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">Bon de commande</h6>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                  <thead>
+                    <tr>
+                      <th>Produit</th>
+                      <th>Catégorie</th>
+                      <th>Prix unitaire</th>
+                      <th>Promo</th>
+                      <th>Quantité</th>
+                      <th>Total</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tfoot>
+                    <tr>
+                     <th>Produit</th>
+                      <th>Catégorie</th>
+                      <th>Prix unitaire</th>
+                      <th>Promo</th>
+                      <th>Quantité</th>
+                      <th>Total</th>
+                      <th></th>
+                    </tr>
+                  </tfoot>
+                  <tbody>
+                  {{#lignes}}
+                    <tr>
+                      <td>{{produit}}</td>
+                      <td>{{categorie}}</td>
+                      <td>{{prixUnitaire}}</td>
+                      <td>{{remise}}</td>
+                      <td><input type="number" onchange="" value="{{quantite}}"></input></td>
+                      <td>{{total}}</td>
+                      <td><button class="btn btn-danger" onclick="">Supprimer</button></td>
+                    </tr>
+                    {{/lignes}}
                   </tbody>
                 </table>
               </div>
