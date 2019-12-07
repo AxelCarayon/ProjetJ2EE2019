@@ -5,6 +5,10 @@ $(document).ready(function () {
         e.preventDefault();
         connexionClient($('#inputEmail').val(),$('#inputPassword').val(),$(".action").val());
     });
+    
+    $('#profilInformation').click(function(){
+        console.log("coucou");
+    });
 });
 function isConnected(){
     $.ajax({
@@ -89,7 +93,7 @@ function afficherPage(){
                         var template = $('#templateWelcome').html();
                         Mustache.parse(template);
                         var processedTemplate = Mustache.render(template, {user: result });
-                        $('#pageContent').html(processedTemplate);	
+                        $('body').html(processedTemplate);	
                     },
             error: function(){console.log("erreur");}
         });		
@@ -107,9 +111,30 @@ function afficherPage(){
                         var template = $('#templateWelcome').html();
                         Mustache.parse(template);
                         var processedTemplate = Mustache.render(template, {user: result });
-                        $('#pageContent').html(processedTemplate);	
+                        $('#body').html(processedTemplate);	
                     },
             error: function(){console.log("erreur");}
         });		
+    }
+}
+
+function afficheInformationUser(){
+    if (localStorage.getItem('acces') === 'true'){
+        $.ajax({
+                url: "../SessionActiveServlet",
+                xhrFields: {
+                    withCredentials: true
+                },
+                data: {  "action":"getuser"},
+                dataType: "json",
+                success: 
+                        function(result) {
+                            var template = $('#templateFormInfoUser').html();
+                            Mustache.parse(template);
+                            var processedTemplate = Mustache.render(template, {user: result });
+                            $('#pageContentProfil').html(processedTemplate);	
+                        },
+                error: function(){console.log("erreur");}
+            });		
     }
 }
