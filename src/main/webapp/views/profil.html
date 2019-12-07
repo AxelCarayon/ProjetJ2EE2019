@@ -110,7 +110,7 @@ and open the template in the editor.
       <!-- Divider -->
       <hr class="sidebar-divider">
         <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" onclick="afficheListeCommandeUser()" href="#">
              <span>Bon de commande</span></a>
          </li>
       <!-- Divider -->
@@ -241,5 +241,57 @@ and open the template in the editor.
                 <button type="submit" class="btn btn-primary">Modifier</button>
             </form>
         </script>
+         
+         
+    <!--Block liste commande-->      
+    <script id="templateListeCommandeUser" type="text/template">
+       
+    <!-- DataTales Example -->
+          <div class="card shadow mb-4 col-12">
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">Bon de commande</h6>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                  <thead>
+                    <tr>
+                      <th>Numéro</th>
+                      <th>Saisie le</th>
+                      <th>Envoyée le</th>
+                      <th>Adresse</th>
+                      <th>Port</th>
+                      <th>Total</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tfoot>
+                    <tr>
+                     <th>Numéro</th>
+                      <th>Saisie le</th>
+                      <th>Envoyée le</th>
+                      <th>Adresse</th>
+                      <th>Port</th>
+                      <th>Total</th>
+                    </tr>
+                  </tfoot>
+                  <tbody>
+                  {{#commandes}}
+                    <tr>
+                      <td>{{numero}}</td>
+                      <td>{{saisiLe}}</td>
+                      <td>{{envoyeLe}}</td>
+                      <td>{{adresseLivraison}} {{codePostalLivraison}}</td>
+                      <td>{{port}}</td>
+                      <td>{{prix}}</td>
+                      <td><button class="btn btn-success">Éditer</button></td>
+                    </tr>
+                    {{/commandes}}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+</script> 
     </body>
 </html>

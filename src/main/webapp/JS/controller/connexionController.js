@@ -74,7 +74,7 @@ function deconnexionClient() {
 
 function afficherPage(){
     isAdmin();
-    if (localStorage.getItem('acces') === 'false'){
+    if (localStorage.getItem('acces') === 'false' || localStorage.getItem('acces') == null){
         var template = $('#templateFormConnexion').html();
         Mustache.parse(template);
         var processedTemplate = Mustache.render(template);
@@ -132,6 +132,26 @@ function afficheInformationUser(){
                             var template = $('#templateFormInfoUser').html();
                             Mustache.parse(template);
                             var processedTemplate = Mustache.render(template, {user: result });
+                            $('#pageContentProfil').html(processedTemplate);	
+                        },
+                error: function(){console.log("erreur");}
+            });		
+    }
+}
+function afficheListeCommandeUser(){
+    if (localStorage.getItem('acces') === 'true'){
+        $.ajax({
+                url: "../CommandesClientServlet",
+                xhrFields: {
+                    withCredentials: true
+                },
+                dataType: "json",
+                success: 
+                        function(result) {
+                            console.log(result);
+                            var template = $('#templateListeCommandeUser').html();
+                            Mustache.parse(template);
+                            var processedTemplate = Mustache.render(template, {commandes: result });
                             $('#pageContentProfil').html(processedTemplate);	
                         },
                 error: function(){console.log("erreur");}
