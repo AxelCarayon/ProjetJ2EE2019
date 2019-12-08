@@ -167,6 +167,11 @@ public class DAOcommandeTest {
         assertEquals(commandes,dao.listeCommandesClient("ALFKI"));
     }
     
+    @Test
+    public void afficherRemiseTest() throws ParseException,SQLException{
+        assertEquals(0.00,dao.afficherRemise(code),0);
+    }
+    
     public static DataSource getDataSource() throws SQLException {
 	org.hsqldb.jdbc.JDBCDataSource ds = new org.hsqldb.jdbc.JDBCDataSource();
 	ds.setDatabase("jdbc:hsqldb:mem:testcase;shutdown=true");

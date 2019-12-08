@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import javax.sql.DataSource;
@@ -59,10 +60,25 @@ public class DAOligneTest {
      */
     @Test
     public void afficherCommandesTest() throws SQLException{
-        List<LigneEntity> lcommandes = new LinkedList();
-        LigneEntity l1 = new LigneEntity(10248,11,12);
-        LigneEntity l2 = new LigneEntity(10248,42,10);
-        LigneEntity l3 = new LigneEntity(10248,72,5);
+        List lcommandes = new ArrayList();
+        List l1 = new ArrayList();
+        l1.add("Queso Cabrales");
+        l1.add(105.0);
+        l1.add(0.0);
+        l1.add(1260.0);
+        l1.add("Produit laitiers");
+        List l2 = new ArrayList();
+        l2.add("Singaporean Hokkien Fried Mee");
+        l2.add(70.0);
+        l2.add(0.0);
+        l2.add(700.0);
+        l2.add("Pâtes et céréales");
+        List l3 = new ArrayList();
+        l3.add("Mozzarella di Giovanni");
+        l3.add(174.0);
+        l3.add(0.0);
+        l3.add(870.0);
+        l3.add("Produit laitiers");
         lcommandes.add(l1);
         lcommandes.add(l2);
         lcommandes.add(l3);
@@ -82,7 +98,7 @@ public class DAOligneTest {
      */
     @Test
     public void afficherCodeProduitsTest() throws SQLException{
-        List<Integer> lProduits = new LinkedList<Integer>();
+        List<Integer> lProduits = new ArrayList<Integer>();
         lProduits.add(11);
         lProduits.add(42);
         lProduits.add(72);

@@ -49,18 +49,31 @@ public class DAOligne {
      * @param commande la commande à afficher
      * @return Liste de toutes les LigneEntity d'une commande
      */
-    public List<LigneEntity> afficherCommande(int commande) throws SQLException {
-        List<LigneEntity> resultat = new ArrayList<LigneEntity>();
+    public List afficherCommande(int commande) throws SQLException {
+        List resultat = new ArrayList();
         String sql = "SELECT * FROM LIGNE WHERE COMMANDE = ?";
         try (Connection connection = myDataSource.getConnection();
                 PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1,commande);
             ResultSet rs = stmt.executeQuery();
+            DAOproduit daoProduit = new DAOproduit(this.myDataSource);
+            DAOcategorie daoCategorie = new DAOcategorie(this.myDataSource);
+            DAOcommande daoCommande = new DAOcommande(this.myDataSource);
             while (rs.next()) {
                 int produit = rs.getInt("PRODUIT");
                 int quantite = rs.getInt("QUANTITE");
-                LigneEntity l = new LigneEntity(commande, produit, quantite);
-                resultat.add(l);
+                String nom = daoProduit.nomProduit(produit);
+                Double prixUnitaire = daoProduit.prixUnitaire(produit);
+                Double remise = (daoCommande.afficherRemise(commande));
+                Double prixTotal = (prixUnitaire * quantite) * 1.-remise;
+                String nomCategorie = daoCategorie.afficherLibelle(daoProduit.numeroCategorie(produit));
+                ArrayList ligne = new ArrayList();
+                ligne.add(nom);
+                ligne.add(prixUnitaire);
+                ligne.add(remise);
+                ligne.add(prixTotal);
+                ligne.add(nomCategorie);
+                resultat.add(ligne);
             }
         }
         return resultat;
@@ -106,4 +119,5 @@ public class DAOligne {
         }
         return resultat;
     }
+    
 }

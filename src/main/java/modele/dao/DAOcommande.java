@@ -186,6 +186,22 @@ public class DAOcommande {
         return resultat;
     }
     
+    public double afficherRemise(int commande) throws SQLException{
+        double remise = 0.;
+        String sql = "SELECT REMISE FROM COMMANDE WHERE REMISE = ?";
+        try (Connection connection = myDataSource.getConnection();
+                PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, commande);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                remise = rs.getDouble("CLIENT");
+            }
+        } catch (SQLException e) {
+            throw e;
+        }
+        return remise;
+    }
+    
     /**
      * Renvoies toutes les commandes d'un client
      * @param client le client dont on veut les commandes
