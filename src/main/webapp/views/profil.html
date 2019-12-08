@@ -58,6 +58,8 @@ and open the template in the editor.
         <script src='../JS/sb-admin-2.min.js'></script>
         <script src="../JS/controller/commandeController.js"></script>
         <script src="../JS/controller/userController.js"></script>
+        <script src="../JS/controller/adminController.js"></script>
+
          <!-- Block formulaire de connexion -->
         <script id="templateFormConnexion" type="text/template">
             <div class="row formconnexion">
@@ -260,7 +262,7 @@ and open the template in the editor.
         <!-- DataTales Example -->
               <div class="card shadow mb-4 col-12">
                 <div class="card-header py-3">
-                  <h6 class="m-0 font-weight-bold text-primary">Bon de commande</h6>
+                  <h6 class="m-0 font-weight-bold text-primary">{{title}}</h6>
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
@@ -342,7 +344,7 @@ and open the template in the editor.
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
               <!-- Heading -->
-            <div class="sidebar-heading" onclick="displayCatForAdmin()">
+            <div class="sidebar-heading">
               Produits
             </div> 
             <div id="menuListeCategorie"></div>
@@ -350,12 +352,31 @@ and open the template in the editor.
          <!-- Block menu catégorie admin -->
         <script id="templateMenuCatAdmin" type="text/template">
                 {{#categories}}    
-               <li class="nav-item">
-                <a class="nav-link" onclick="f({{code}})" href="#">
+               <li class="nav-item ">
+                <a class="nav-link nav-link-cat" id="{{code}}" href="#">
                  <i class="fas fa-edit"></i>
                  <span>{{libelle}}</span></a>
              </li> 
              {{/categories}}
         </script>
+
+        <!--Ligne tab produit Admin-->
+        <script id="templateTbodyLigneProduitAdmin" type="text/template">
+            {{#lignes}}
+                    <tr>
+                      <td>{{reference}}</td>
+                      <td>{{nom}}</td>
+                      <td>{{unites_en_stock}}</td>
+                      <td>{{unites_commandes}}</td>
+                      <td>{{niveau_reaprovis}}</td>
+                      <td>{{prix_unitaire}}</td>
+                      <td>{{indisponible}}</td>
+                      
+                      <td><a  id="{{reference}}" href="#">
+                        <i class="fas fa-edit"></i>
+                      </td>
+                    </tr>
+            {{/lignes}}    
+    </script>   
     </body>
 </html>

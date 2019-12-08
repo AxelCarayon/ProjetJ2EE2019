@@ -13,7 +13,7 @@ function afficheListeCommandeUser(){
                             var template = $('#templateTable').html();
                             Mustache.parse(template);
                             var tab = [{titre:"Numéro"},{titre:"Saisie le"},{titre:"Envoyée le"},{titre:"Adresse"},{titre:"Port"},{titre:"Total"}];
-                            var processedTemplate = Mustache.render(template, {ths: tab });
+                            var processedTemplate = Mustache.render(template, {ths: tab,title:"Bon de commande"});
                             $('#pageContentProfil').html(processedTemplate);
                             
                             var template = $('#templateLigneCommandeUser').html();
@@ -40,7 +40,7 @@ function afficheLigneCommande(id){
                             var template = $('#templateTable').html();
                             Mustache.parse(template);
                             var tab = [{titre:"Produit"},{titre:"Catégorie"},{titre:"Prix unitaire"},{titre:"Promo"},{titre:"Quantité"},{titre:"Total"}];
-                            var processedTemplate = Mustache.render(template, {ths:tab,id:id});
+                            var processedTemplate = Mustache.render(template, {ths:tab,id:id,title:"Détails de la commande n°"+id});
                             $('#pageContentProfil').html(processedTemplate);	
                             
                             var template = $('#templateTbodyLigneCommandeUser').html();
