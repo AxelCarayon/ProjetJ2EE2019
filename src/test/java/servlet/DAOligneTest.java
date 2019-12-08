@@ -118,7 +118,7 @@ public class DAOligneTest {
     
     @Test
     public void supprimerLigneTest() throws SQLException{
-        dao.supprimerLigne(10248, 11, 12);
+        dao.supprimerLigne(10248, 11);
         assertEquals(dao.toutesLesLignes().size(),2154);
     }
     
