@@ -8,12 +8,6 @@
 
 $(document).ready(
     function () {
-//         Show homePage
-//        var template = $('#templateHomePage').html();
-//        Mustache.parse(template);
-//        var processedTemplate = Mustache.render(template);
-//        $('.pageContent').html(processedTemplate);	
-                            
         showProduitByCategorie(1);
         showCategorieForNav();
         showCategorieForNavMob();

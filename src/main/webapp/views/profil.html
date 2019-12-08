@@ -13,19 +13,11 @@ and open the template in the editor.
         <link href="../css/svgicons.css" rel="stylesheet">
          <link href="../css/connexionPage.css" rel="stylesheet">
          <link href="../css/sb-admin-2.min.css" rel="stylesheet">
+        <!-- Custom fonts for this template -->
+        <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+         <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/0.8.1/mustache.min.js"></script>
-        <script
-        src="https://code.jquery.com/jquery-3.4.1.min.js"
-        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-        crossorigin="anonymous"></script>
-
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-        <script src='../JS/controller/connexionController.js'></script>
-        <script src='../JS/sb-admin-2.min.js'></script>
-        <script src="../JS/controller/commandeController.js"></script>
-        <script src="../JS/controller/userController.js"></script>
+       
 
     </head>
     <body>
@@ -53,245 +45,388 @@ and open the template in the editor.
             <div class="container" id="pageContent">
             </div>
         </div>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/0.8.1/mustache.min.js"></script>
+        <script
+        src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script src='../JS/controller/connexionController.js'></script>
+        <script src='../JS/sb-admin-2.min.js'></script>
+        <script src="../JS/controller/commandeController.js"></script>
+        <script src="../JS/controller/userController.js"></script>
          <!-- Block formulaire de connexion -->
-    <script id="templateFormConnexion" type="text/template">
-        <div class="row formconnexion">
-            <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
-              <div class="card card-signin my-5">
-                <div class="card-body">
-                  <h5 class="card-title text-center">Sign In</h5>
-                  <form class="form-signin" id="connexion">
-                    <div class="form-label-group">
-                      <input  id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-                      <label for="inputEmail">Email address</label>
-                    </div>
+        <script id="templateFormConnexion" type="text/template">
+            <div class="row formconnexion">
+                <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+                  <div class="card card-signin my-5">
+                    <div class="card-body">
+                      <h5 class="card-title text-center">Sign In</h5>
+                      <form class="form-signin" id="connexion">
+                        <div class="form-label-group">
+                          <input  id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+                          <label for="inputEmail">Email address</label>
+                        </div>
 
-                    <div class="form-label-group">
-                      <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-                      <label for="inputPassword">Password</label>
-                    </div>
+                        <div class="form-label-group">
+                          <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+                          <label for="inputPassword">Password</label>
+                        </div>
 
-                    <div class="custom-control custom-checkbox mb-3">
-                      <input type="checkbox" class="custom-control-input" id="customCheck1">
-                      <label class="custom-control-label" for="customCheck1">Remember password</label>
+                        <div class="custom-control custom-checkbox mb-3">
+                          <input type="checkbox" class="custom-control-input" id="customCheck1">
+                          <label class="custom-control-label" for="customCheck1">Remember password</label>
+                        </div>
+                          <input class="action d-none" value="connexion">
+                        <button  class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Sign in</button>
+                       </form>
                     </div>
-                      <input class="action d-none" value="connexion">
-                    <button  class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Sign in</button>
-                   </form>
+                  </div>
                 </div>
               </div>
+        </script>
+
+     <!--Block profil user-->
+        <script id="templateWelcome" type="text/template">
+            <div class="row">
+
             </div>
-          </div>
-    </script>
-    
- <!--Block profil user-->
-    <script id="templateWelcome" type="text/template">
-        <div class="row">
-            
-        </div>
-        <!-- Page Wrapper -->
-  <div id="wrapper">
+            <!-- Page Wrapper -->
+      <div id="wrapper">
 
-    <!-- Sidebar -->
-    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
-      <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/ProjetJ2EE2019">
-      <img class="navbar-brand" src="../images/logo.png" />
-      </a>
+          <!-- Sidebar - Brand -->
+          <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/ProjetJ2EE2019">
+          <img class="navbar-brand" src="../images/logo.png" />
+          </a>
 
-      <!-- Divider -->
-      <hr class="sidebar-divider my-0">
+          <!-- Divider -->
+          <hr class="sidebar-divider my-0">
 
-      <!-- Nav Item - Dashboard -->
-      <li class="nav-item active">
-        <a class="nav-link" href="#" id="profilInformation" onclick="afficheInformationUser()" >
-          <span>Mes informations</span></a>
-      </li>
+          <!-- Nav Item - Dashboard -->
+          <li class="nav-item active">
+            <a class="nav-link" href="#" id="profilInformation" onclick="afficheInformationUser()" >
+             <i class="far fa-address-card"></i>
+              <span>Mes informations</span></a>
+          </li>
 
-      <!-- Divider -->
-      <hr class="sidebar-divider">
-        <li class="nav-item">
-            <a class="nav-link" onclick="afficheListeCommandeUser()" href="#">
-             <span>Bon de commande</span></a>
-         </li>
-      <!-- Divider -->
-      <hr class="sidebar-divider d-none d-md-block">
+          <!-- Divider -->
+          <hr class="sidebar-divider">
+            <li class="nav-item">
+                <a class="nav-link" onclick="afficheListeCommandeUser()" href="#">
+                 <i class="fas fa-shopping-cart"></i>
+                 <span>Bon de commande</span></a>
+             </li>
+          <!-- Divider -->
+          <hr class="sidebar-divider d-none d-md-block">
 
-    </ul>
-    <!-- End of Sidebar -->
+        </ul>
+        <!-- End of Sidebar -->
 
-    <!-- Content Wrapper -->
-    <div id="content-wrapper" class="d-flex flex-column">
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
 
-      <!-- Main Content -->
-      <div id="content">
+          <!-- Main Content -->
+          <div id="content">
 
-        <!-- Topbar -->
-        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+            <!-- Topbar -->
+            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
-          <!-- Sidebar Toggle (Topbar) -->
-          <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-            <i class="fa fa-bars"></i>
-          </button>
+              <!-- Sidebar Toggle (Topbar) -->
+              <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                <i class="fa fa-bars"></i>
+              </button>
 
-          <!-- Topbar Search -->
-          <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-            <div class="input-group">
-              <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-              <div class="input-group-append">
-                <button class="btn btn-primary" type="button">
-                  <i class="fas fa-search fa-sm"></i>
-                </button>
+              <!-- Topbar Search -->
+              <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                <div class="input-group">
+                  <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                  <div class="input-group-append">
+                    <button class="btn btn-primary" type="button">
+                      <i class="fas fa-search fa-sm"></i>
+                    </button>
+                  </div>
+                </div>
+              </form>
+
+              <!-- Topbar Navbar -->
+              <ul class="navbar-nav ml-auto">
+              <li class="nav-item"><a class="nav-link" href="#" onclick="deconnexionClient()">Se déconnecter</a></li>
+                <div class="topbar-divider d-none d-sm-block"></div>
+
+                <!-- Nav Item - User Information -->
+                <li class="nav-item dropdown no-arrow">
+                  <a class="nav-link" href="#">
+                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">
+                    Bonjour {{#user}}{{contact}}{{/user}} 
+                </span>
+                    <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
+                  </a>
+                </li>
+              </ul>
+            </nav>
+            <!-- End of Topbar -->
+
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+
+              <!-- Page Heading -->
+              <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                <h1 class="h3 mb-0 text-gray-800">Votre espace client</h1>
               </div>
+              <!-- Content Row -->
+              <div class="row" id="pageContentProfil"></div>
+
             </div>
-          </form>
+        </div>
+             </div>
+             </div>
+             </div>
 
-          <!-- Topbar Navbar -->
-          <ul class="navbar-nav ml-auto">
-          <li class="nav-item"><a class="nav-link" href="#" onclick="deconnexionClient()">Se déconnecter</a></li>
-            <div class="topbar-divider d-none d-sm-block"></div>
+        </script>
 
-            <!-- Nav Item - User Information -->
-            <li class="nav-item dropdown no-arrow">
-              <a class="nav-link" href="#">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">
-                Bonjour {{#user}}{{contact}}{{/user}} 
-            </span>
-                <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
-              </a>
+
+        <!--Block admin-->
+        <script id="templateAdmin" type="text/template">
+            <div class="row">
+
+            </div>
+            <!-- Page Wrapper -->
+      <div id="wrapper">
+
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/ProjetJ2EE2019">
+            <img class="navbar-brand" src="../images/logo.png" />
+            </a>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+
+              <!-- Heading -->
+            <div class="sidebar-heading">
+              Statistiques
+            </div>
+
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item">
+              <a class="nav-link" href="#" onclick="" >
+                <i class="fas fa-chart-pie"></i>
+                <span>C.A by catégorie</span></a>
             </li>
-          </ul>
-        </nav>
-        <!-- End of Topbar -->
+            <li class="nav-item">
+                <a class="nav-link" onclick="" href="#">
+                 <i class="fas fa-chart-pie"></i>
+                 <span>C.A by pays</span></a>
+             </li>
+             <li class="nav-item">
+                <a class="nav-link" onclick="" href="#">
+                 <i class="fas fa-chart-pie"></i>
+                 <span>C.A by client</span></a>
+             </li>
 
-        <!-- Begin Page Content -->
-        <div class="container-fluid">
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+              <!-- Heading -->
+            <div class="sidebar-heading" onclick="displayCatForAdmin()">
+              Produits
+            </div> 
+            <div id="menuListeCategorie"></div>
 
-          <!-- Page Heading -->
-          <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Votre espace client</h1>
-          </div>
-          <!-- Content Row -->
-          <div class="row" id="pageContentProfil"></div>
-          
+          <!-- Divider -->
+          <hr class="sidebar-divider d-none d-md-block">
+
+        </ul>
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+          <!-- Main Content -->
+          <div id="content">
+
+            <!-- Topbar -->
+            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+              <!-- Sidebar Toggle (Topbar) -->
+              <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                <i class="fa fa-bars"></i>
+              </button>
+
+              <!-- Topbar Search -->
+              <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                <div class="input-group">
+                  <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                  <div class="input-group-append">
+                    <button class="btn btn-primary" type="button">
+                      <i class="fas fa-search fa-sm"></i>
+                    </button>
+                  </div>
+                </div>
+              </form>
+
+              <!-- Topbar Navbar -->
+              <ul class="navbar-nav ml-auto">
+              <li class="nav-item"><a class="nav-link" href="#" onclick="deconnexionClient()">Se déconnecter</a></li>
+                <div class="topbar-divider d-none d-sm-block"></div>
+
+                <!-- Nav Item - User Information -->
+                <li class="nav-item dropdown no-arrow">
+                  <a class="nav-link" href="#">
+                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">
+                    Bonjour {{#user}}{{contact}}{{/user}} 
+                </span>
+                    <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
+                  </a>
+                </li>
+              </ul>
+            </nav>
+            <!-- End of Topbar -->
+
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+
+              <!-- Page Heading -->
+              <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                <h1 class="h3 mb-0 text-gray-800">Votre espace Administration</h1>
+              </div>
+              <!-- Content Row -->
+              <div class="row" id="pageContentProfil"></div>
+
+            </div>
         </div>
-    </div>
-         </div>
-         </div>
-         </div>
-         
-    </script>
-         
-     <!-- Block formulaire de info perso -->
-    <script id="templateFormInfoUser" type="text/template">
-          <form id="fromInfoUser">
-            {{#user}}
-                <div class="form-row">
-                  <div class="form-group col-md-6">
-                    <label for="inputEmail4">Nom</label>
-                    <input class="form-control" id="inputEmail4" placeholder="{{contact}}">
+             </div>
+             </div>
+             </div>
+
+        </script>
+
+         <!-- Block formulaire de info perso -->
+        <script id="templateMenuCatAdmin" type="text/template">
+                {{#categories}}    
+               <li class="nav-item">
+                <a class="nav-link" onclick="f({{code}})" href="#">
+                 <i class="fas fa-edit"></i>
+                 <span>{{libelle}}</span></a>
+             </li> 
+             {{/categories}}
+        </script>
+         <!-- Block formulaire de info perso -->
+        <script id="templateFormInfoUser" type="text/template">
+            <form id="fromInfoUser">
+              {{#user}}
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label for="inputEmail4">Nom</label>
+                      <input class="form-control" id="inputEmail4" placeholder="{{contact}}">
+                    </div>
+                    <div class="form-group col-md-6 ">
+                      <label for="inputAddress">Adresse</label>
+                      <input type="text" class="form-control" id="inputAddress" placeholder="{{adresse}}">
+                    </div>
                   </div>
-                  <div class="form-group col-md-6 ">
-                    <label for="inputAddress">Adresse</label>
-                    <input type="text" class="form-control" id="inputAddress" placeholder="{{adresse}}">
+                  <div class="form-row">
+                    <div class="form-group col-md-4">
+                      <label for="inputCity">Ville</label>
+                      <input type="text" class="form-control" id="inputCity" placeholder="{{ville}}">
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label for="inputRegion">Region</label>
+                      <input type="text" class="form-control" id="inputRegion" placeholder="{{region}}">
+                    </div>
+                    <div class="form-group col-md-2">
+                      <label for="inputCp">Cp</label>
+                      <input type="text" class="form-control" id="inputCp" placeholder="{{code_postal}}">
+                    </div>
+                    <div class="form-group col-md-2">
+                      <label for="inputPays">Pays</label>
+                      <input type="text" class="form-control" id="inputPays" placeholder="{{pays}}">
+                    </div>
                   </div>
-                </div>
-                <div class="form-row">
-                  <div class="form-group col-md-4">
-                    <label for="inputCity">Ville</label>
-                    <input type="text" class="form-control" id="inputCity" placeholder="{{ville}}">
-                  </div>
-                  <div class="form-group col-md-4">
-                    <label for="inputRegion">Region</label>
-                    <input type="text" class="form-control" id="inputRegion" placeholder="{{region}}">
-                  </div>
-                  <div class="form-group col-md-2">
-                    <label for="inputCp">Cp</label>
-                    <input type="text" class="form-control" id="inputCp" placeholder="{{code_postal}}">
-                  </div>
-                  <div class="form-group col-md-2">
-                    <label for="inputPays">Pays</label>
-                    <input type="text" class="form-control" id="inputPays" placeholder="{{pays}}">
-                  </div>
-                </div>
-                <div class="form-row">
-                  <div class="form-group col-md-6">
-                    <label for="inputTel">Téléphone</label>
-                    <input type="number" class="form-control" id="inputTel" placeholder="{{telephone}}">
-                  </div>
-                  <div class="form-group col-md-6">
-                    <label for="inputFax">Fax</label>
-                    <input type="text" class="form-control" id="inputFax" placeholder="{{fax}}">
-                  </div>
-                </div>  
-                <div class="form-row">
-                  <div class="form-group col-md-6">
-                    <label for="inputSociete">Société</label>
-                    <input type="text" class="form-control" id="inputSociete" placeholder="{{societe}}">
-                  </div>
-                  <div class="form-group col-md-6">
-                    <label for="inputFonction">Fonction</label>
-                    <input type="text" class="form-control" id="inputFonction" placeholder="{{fonction}}">
-                  </div>
-                </div>  
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label for="inputTel">Téléphone</label>
+                      <input type="number" class="form-control" id="inputTel" placeholder="{{telephone}}">
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label for="inputFax">Fax</label>
+                      <input type="text" class="form-control" id="inputFax" placeholder="{{fax}}">
+                    </div>
+                  </div>  
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label for="inputSociete">Société</label>
+                      <input type="text" class="form-control" id="inputSociete" placeholder="{{societe}}">
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label for="inputFonction">Fonction</label>
+                      <input type="text" class="form-control" id="inputFonction" placeholder="{{fonction}}">
+                    </div>
+                  </div>  
                 {{/user}}
                 <button type="button" onclick="modifierInfoUser()" class="btn btn-primary">Modifier</button>
             </form>
         </script>
-         
-         
-    <!--Block liste commande-->      
-    <script id="templateListeCommandeUser" type="text/template">
-       
-    <!-- DataTales Example -->
-          <div class="card shadow mb-4 col-12">
-            <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">Bon de commande</h6>
-            </div>
-            <div class="card-body">
-              <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                  <thead>
-                    <tr>
-                      <th>Numéro</th>
-                      <th>Saisie le</th>
-                      <th>Envoyée le</th>
-                      <th>Adresse</th>
-                      <th>Port</th>
-                      <th>Total</th>
-                      <th></th>
-                    </tr>
-                  </thead>
-                  <tfoot>
-                    <tr>
-                     <th>Numéro</th>
-                      <th>Saisie le</th>
-                      <th>Envoyée le</th>
-                      <th>Adresse</th>
-                      <th>Port</th>
-                      <th>Total</th>
-                      <th></th>
-                    </tr>
-                  </tfoot>
-                  <tbody>
-                  {{#commandes}}
-                    <tr>
-                      <td>{{numero}}</td>
-                      <td>{{saisiLe}}</td>
-                      <td>{{envoyeLe}}</td>
-                      <td>{{adresseLivraison}} {{codePostalLivraison}}</td>
-                      <td>{{port}}</td>
-                      <td>{{prix}}</td>
-                      <td><button class="btn btn-success" onclick="afficheLigneCommande({{numero}})">Éditer</button></td>
-                    </tr>
-                    {{/commandes}}
-                  </tbody>
-                </table>
+
+
+        <!--Block liste commande-->      
+        <script id="templateListeCommandeUser" type="text/template">
+
+        <!-- DataTales Example -->
+              <div class="card shadow mb-4 col-12">
+                <div class="card-header py-3">
+                  <h6 class="m-0 font-weight-bold text-primary">Bon de commande</h6>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                      <thead>
+                        <tr>
+                          <th>Numéro</th>
+                          <th>Saisie le</th>
+                          <th>Envoyée le</th>
+                          <th>Adresse</th>
+                          <th>Port</th>
+                          <th>Total</th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tfoot>
+                        <tr>
+                         <th>Numéro</th>
+                          <th>Saisie le</th>
+                          <th>Envoyée le</th>
+                          <th>Adresse</th>
+                          <th>Port</th>
+                          <th>Total</th>
+                          <th></th>
+                        </tr>
+                      </tfoot>
+                      <tbody>
+                      {{#commandes}}
+                        <tr>
+                          <td>{{numero}}</td>
+                          <td>{{saisiLe}}</td>
+                          <td>{{envoyeLe}}</td>
+                          <td>{{adresseLivraison}} {{codePostalLivraison}}</td>
+                          <td>{{port}}</td>
+                          <td>{{prix}}</td>
+                          <td><button class="btn btn-success" onclick="afficheLigneCommande({{numero}})">Éditer</button></td>
+                        </tr>
+                        {{/commandes}}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-</script> 
+    </script> 
     <!--Block liste ligne-->      
     <script id="templateListeLigne" type="text/template">
        
