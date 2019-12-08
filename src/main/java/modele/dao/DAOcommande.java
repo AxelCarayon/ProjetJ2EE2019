@@ -172,7 +172,7 @@ public class DAOcommande {
      */
     public String afficherCodeClient(int numero) throws SQLException {
         String resultat = null;
-        String sql = "SELECT * FROM COMMANDE WHERE NUMERO = ?";
+        String sql = "SELECT CLIENT FROM COMMANDE WHERE NUMERO = ?";
         try (Connection connection = myDataSource.getConnection();
                 PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, numero);
