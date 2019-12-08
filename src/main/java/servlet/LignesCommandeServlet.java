@@ -47,12 +47,14 @@ public class LignesCommandeServlet extends HttpServlet {
         response.setContentType("application/json;charset=UTF-8");
         dataSource = DataSourceFactory.getDataSource();
         dao = new DAOligne(dataSource);
-        int commande = 0;
-        try{
-                commande = Integer.parseInt(request.getParameter("commande"));
-        }catch(Exception e){
-        }
         
+        int commande = Integer.parseInt(request.getParameter("commande"));
+        
+        if ( actionIs(request, "majQte")){
+            int produit = Integer.parseInt(request.getParameter("produit"));
+            int qte = Integer.parseInt(request.getParameter("quantite"));
+            dao.modifierQuantiteLigne(commande, produit, qte);
+        }
         try (PrintWriter out = response.getWriter()) {
             List<LigneCommandeEntity> data = dao.afficherCommande(commande);
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -60,7 +62,10 @@ public class LignesCommandeServlet extends HttpServlet {
             out.println(gsonData);
         }
     }
-
+    
+    private boolean actionIs(HttpServletRequest request, String action) {
+            return action.equals(request.getParameter("action"));
+    }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
