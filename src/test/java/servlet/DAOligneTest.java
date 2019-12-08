@@ -15,6 +15,7 @@ import java.util.LinkedList;
 import java.util.List;
 import javax.sql.DataSource;
 import modele.dao.DAOligne;
+import modele.entity.LigneCommandeEntity;
 import modele.entity.LigneEntity;
 import org.hsqldb.cmdline.SqlFile;
 import org.hsqldb.cmdline.SqlToolError;
@@ -60,25 +61,10 @@ public class DAOligneTest {
      */
     @Test
     public void afficherCommandesTest() throws SQLException{
-        List lcommandes = new ArrayList();
-        List l1 = new ArrayList();
-        l1.add("Queso Cabrales");
-        l1.add(105.0);
-        l1.add(0.0);
-        l1.add(1260.0);
-        l1.add("Produit laitiers");
-        List l2 = new ArrayList();
-        l2.add("Singaporean Hokkien Fried Mee");
-        l2.add(70.0);
-        l2.add(0.0);
-        l2.add(700.0);
-        l2.add("Pâtes et céréales");
-        List l3 = new ArrayList();
-        l3.add("Mozzarella di Giovanni");
-        l3.add(174.0);
-        l3.add(0.0);
-        l3.add(870.0);
-        l3.add("Produit laitiers");
+        List<LigneCommandeEntity> lcommandes = new ArrayList<>();
+        LigneCommandeEntity l1 = new LigneCommandeEntity(new LigneEntity(10248,11,12),"Queso Cabrales",105.0,0.0,1260.0,"Produit laitiers");
+        LigneCommandeEntity l2 = new LigneCommandeEntity(new LigneEntity(10248,42,10),"Singaporean Hokkien Fried Mee",70.0,0.0,700.0,"Pâtes et céréales");
+        LigneCommandeEntity l3 = new LigneCommandeEntity(new LigneEntity(10248,72,5),"Mozzarella di Giovanni",174.0,0.0,870.0,"Produit laitiers");
         lcommandes.add(l1);
         lcommandes.add(l2);
         lcommandes.add(l3);

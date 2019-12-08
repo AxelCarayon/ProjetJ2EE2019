@@ -16,6 +16,7 @@ import java.util.List;
 import javax.sql.DataSource;
 import modele.entity.ClientEntity;
 import modele.entity.CommandeEntity;
+import modele.entity.LigneCommandeEntity;
 
 /**
  *
@@ -249,14 +250,14 @@ public class DAOcommande {
     public Double prixCommande(int commande) throws SQLException,ParseException{
         Double total = 0.;
         DAOligne dao = new DAOligne(this.myDataSource);
-        List<List> lignes;
+        List<LigneCommandeEntity> lignes;
         try{
             lignes = dao.afficherCommande(commande);
         }catch (Exception e){
             throw e;
         }
         for (int i = 0;i<lignes.size();i++){
-            total += (Double) lignes.get(i).get(3);
+            total += lignes.get(i).getPrixTotal();
         }
         
         return total;

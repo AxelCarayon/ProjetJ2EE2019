@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 import modele.dao.DAOligne;
 import modele.dao.DataSourceFactory;
-import modele.entity.LigneEntity;
+import modele.entity.LigneCommandeEntity;
 
 /**
  *
@@ -54,7 +54,7 @@ public class LignesCommandeServlet extends HttpServlet {
         }
         
         try (PrintWriter out = response.getWriter()) {
-            List<List> data = dao.afficherCommande(commande);
+            List<LigneCommandeEntity> data = dao.afficherCommande(commande);
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
             String gsonData = gson.toJson(data);
             out.println(gsonData);
