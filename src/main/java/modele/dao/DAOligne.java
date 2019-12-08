@@ -152,13 +152,12 @@ public class DAOligne {
      * @param quantite la quantité du produit
      * @throws SQLException 
      */
-    public void supprimerLigne(int commande,int produit, int quantite) throws SQLException{
-        String sql = "DELETE FROM LIGNE WHERE COMMANDE = ? AND PRODUIT = ? AND QUANTITE = ?";
+    public void supprimerLigne(int commande,int produit) throws SQLException{
+        String sql = "DELETE FROM LIGNE WHERE COMMANDE = ? AND PRODUIT = ?";
         try (Connection connection = myDataSource.getConnection();
                 PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1,commande);
             stmt.setInt(2,produit);
-            stmt.setInt(3,quantite);
             stmt.executeUpdate();
         }catch(Exception e){
             throw e;
