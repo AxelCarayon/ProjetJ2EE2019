@@ -25,6 +25,7 @@ and open the template in the editor.
         <script src='../JS/controller/connexionController.js'></script>
         <script src='../JS/sb-admin-2.min.js'></script>
         <script src="../JS/controller/commandeController.js"></script>
+        <script src="../JS/controller/userController.js"></script>
 
     </head>
     <body>
@@ -184,21 +185,17 @@ and open the template in the editor.
          
      <!-- Block formulaire de info perso -->
     <script id="templateFormInfoUser" type="text/template">
-          <form>
+          <form id="fromInfoUser">
             {{#user}}
                 <div class="form-row">
                   <div class="form-group col-md-6">
                     <label for="inputEmail4">Nom</label>
                     <input class="form-control" id="inputEmail4" placeholder="{{contact}}">
                   </div>
-                  <div class="form-group col-md-6">
-                    <label for="inputPassword4">Code</label>
-                    <input type="password" class="form-control" id="inputPassword4" placeholder="{{code}}">
+                  <div class="form-group col-md-6 ">
+                    <label for="inputAddress">Adresse</label>
+                    <input type="text" class="form-control" id="inputAddress" placeholder="{{adresse}}">
                   </div>
-                </div>
-                <div class="form-group">
-                  <label for="inputAddress">Adresse</label>
-                  <input type="text" class="form-control" id="inputAddress" placeholder="{{adresse}}">
                 </div>
                 <div class="form-row">
                   <div class="form-group col-md-4">
@@ -239,7 +236,7 @@ and open the template in the editor.
                   </div>
                 </div>  
                 {{/user}}
-                <button type="submit" class="btn btn-primary">Modifier</button>
+                <button type="button" onclick="modifierInfoUser()" class="btn btn-primary">Modifier</button>
             </form>
         </script>
          
@@ -301,7 +298,7 @@ and open the template in the editor.
     <!-- DataTales Example -->
           <div class="card shadow mb-4 col-12">
             <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">Bon de commande</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Bon de commande n°<span id="numCom">{{id}}</span></h6>
             </div>
             <div class="card-body">
               <div class="table-responsive">
@@ -335,9 +332,9 @@ and open the template in the editor.
                       <td>{{categorie}}</td>
                       <td>{{prixUnitaire}}</td>
                       <td>{{remise}}</td>
-                      <td><input type="number" onchange="" value="{{quantite}}"></input></td>
+                      <td><input type="number" onchange="modifierQteProdLigne({{produit}})" value="{{quantite}}"></input></td>
                       <td>{{total}}</td>
-                      <td><button class="btn btn-danger" onclick="">Supprimer</button></td>
+                      <td><button class="btn btn-danger" onclick="suppProdLigne({{produit}})">Supprimer</button></td>
                     </tr>
                     {{/lignes}}
                   </tbody>

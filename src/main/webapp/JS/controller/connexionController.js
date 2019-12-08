@@ -117,24 +117,3 @@ function afficherPage(){
         });		
     }
 }
-
-function afficheInformationUser(){
-    if (localStorage.getItem('acces') === 'true'){
-        $.ajax({
-                url: "../SessionActiveServlet",
-                xhrFields: {
-                    withCredentials: true
-                },
-                data: {  "action":"getuser"},
-                dataType: "json",
-                success: 
-                        function(result) {
-                            var template = $('#templateFormInfoUser').html();
-                            Mustache.parse(template);
-                            var processedTemplate = Mustache.render(template, {user: result });
-                            $('#pageContentProfil').html(processedTemplate);	
-                        },
-                error: function(){console.log("erreur");}
-            });		
-    }
-}
