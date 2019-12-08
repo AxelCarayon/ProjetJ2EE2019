@@ -372,11 +372,74 @@ and open the template in the editor.
                       <td>{{prix_unitaire}}</td>
                       <td>{{indisponible}}</td>
                       
-                      <td><a  id="{{reference}}" href="#">
-                        <i class="fas fa-edit"></i>
+                      <td><a  class="modifierProd" id="{{reference}}" href="#">
+                        <i class="fas fa-edit"></i></a>
+                        <a  class="trashProd" id="{{reference}}" href="#">
+                        <i class="fas fa-trash-alt"></i>
                       </td>
                     </tr>
             {{/lignes}}    
     </script>   
+<!--    int reference; //clef primaire
+    String nom;
+    int fournisseur;
+    int categorie; //clef étrangère
+    String quantite_par_unite;
+    Double prix_unitaire;
+    int unites_en_stock;
+    int unites_commandes;
+    int niveau_reaprovis;
+    boolean indisponible;-->
+     <!-- Block formulaire produit -->
+        <script id="templateFormProduitForAdmin" type="text/template">
+            <form id="fromInfoUser">
+              {{#produit}}
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label for="nom">Nom</label>
+                      <input class="form-control" id="nom" placeholder="{{nom}}">
+                    </div>
+                    <div class="form-group col-md-6 ">
+                      <label for="fournisseur">Fournisseur</label>
+                      <input type="text" class="form-control" id="fournisseur" placeholder="{{fournisseur}}">
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-4">
+                      <label for="categorie">categorie</label>
+                      <input type="text" class="form-control" id="categorie" placeholder="{{categorie}}">
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label for="quantite_par_unite">Quantité par unité</label>
+                      <input type="text" class="form-control" id="quantite_par_unite" placeholder="{{quantite_par_unite}}">
+                    </div>
+                    <div class="form-group col-md-2">
+                      <label for="prix_unitaire">prix unitaire</label>
+                      <input type="text" class="form-control" id="prix_unitaire" placeholder="{{prix_unitaire}}">
+                    </div>
+                    <div class="form-group col-md-2">
+                      <label for="unites_commandes">Unités commandés</label>
+                      <input type="text" class="form-control" id="unites_commandes" placeholder="{{unites_commandes}}">
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label for="niveau_reaprovis">niveau reaprovis</label>
+                      <input type="number" class="form-control" id="niveau_reaprovis" placeholder="{{niveau_reaprovis}}">
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label>indisponible</label>
+                      <!--<input type="text" class="form-control" id="indisponible" placeholder="{{indisponible}}">-->
+                      <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id="customSwitches">
+                        <label class="custom-control-label" for="customSwitches">{{indisponible}}</label>
+                      </div>
+                    </div>
+                    
+                  </div>  
+                {{/produit}}
+                <button type="button" class="btn btn-primary">Modifier</button>
+            </form>
+        </script>
     </body>
 </html>

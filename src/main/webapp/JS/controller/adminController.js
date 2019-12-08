@@ -2,11 +2,11 @@ $(document).ready(
     function () {
         
         $(document).on('click', '.nav-link-cat', function () {
-            console.log($(this).attr('id'));
-                        console.log($(this).text());
-
             afficheListeProduit($(this).attr('id'),$(this).text());
-    });
+        });
+        $(document).on('click', '.modifierProd', function () {
+            afficherDetailsProduit($(this).attr('id'));
+        });
 });
 
 function displayCat(){
@@ -49,6 +49,28 @@ function afficheListeProduit(id,cat){
                 error: showError
             });		
     }
+}
+
+function afficherDetailsProduit(id){
+    if (localStorage.getItem('acces') === 'admin'){
+        $.ajax({
+                url: "../ProduitServlet",
+                xhrFields: {
+                    withCredentials: true
+                },
+                data: {"reference":id},
+                dataType: "json",
+                success: 
+                        function(result) {
+                            var template = $('#templateFormProduitForAdmin').html();
+                            Mustache.parse(template);
+                            var processedTemplate = Mustache.render(template, {produit:result});
+                            $('#pageContentProfil').html(processedTemplate);	
+                        },
+                error: showError
+            });		
+    }
+    
 }
 
 // Fonction qui traite les erreurs de la requête
