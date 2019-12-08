@@ -238,6 +238,29 @@ public class DAOcommande {
         }
         return resultat;
     }
+    
+    /**
+     * Renvoie le prix total d'une commande
+     * @param commande
+     * @return Double prix total de la commande
+     * @throws SQLException
+     * @throws ParseException 
+     */
+    public Double prixCommande(int commande) throws SQLException,ParseException{
+        Double total = 0.;
+        DAOligne dao = new DAOligne(this.myDataSource);
+        List<List> lignes;
+        try{
+            lignes = dao.afficherCommande(commande);
+        }catch (Exception e){
+            throw e;
+        }
+        for (int i = 0;i<lignes.size();i++){
+            total += (Double) lignes.get(i).get(3);
+        }
+        
+        return total;
+    }
 
     /**
      * Modifie le destinataire d'une commande

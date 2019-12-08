@@ -172,6 +172,11 @@ public class DAOcommandeTest {
         assertEquals(0.00,dao.afficherRemise(code),0);
     }
     
+    @Test
+    public void afficherTotalTest() throws ParseException,SQLException{
+        assertEquals(1260.0+700.0+870.0,dao.prixCommande(code), 0);
+    }
+    
     public static DataSource getDataSource() throws SQLException {
 	org.hsqldb.jdbc.JDBCDataSource ds = new org.hsqldb.jdbc.JDBCDataSource();
 	ds.setDatabase("jdbc:hsqldb:mem:testcase;shutdown=true");

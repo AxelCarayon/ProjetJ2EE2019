@@ -49,8 +49,8 @@ public class DAOligne {
      * @param commande la commande à afficher
      * @return Liste de toutes les LigneEntity d'une commande
      */
-    public List afficherCommande(int commande) throws SQLException {
-        List resultat = new ArrayList();
+    public List<List> afficherCommande(int commande) throws SQLException {
+        List<List> resultat = new ArrayList();
         String sql = "SELECT * FROM LIGNE WHERE COMMANDE = ?";
         try (Connection connection = myDataSource.getConnection();
                 PreparedStatement stmt = connection.prepareStatement(sql)) {

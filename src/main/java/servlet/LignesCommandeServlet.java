@@ -54,7 +54,7 @@ public class LignesCommandeServlet extends HttpServlet {
         }
         
         try (PrintWriter out = response.getWriter()) {
-            List<LigneEntity> data = dao.afficherCommande(commande);
+            List<List> data = dao.afficherCommande(commande);
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
             String gsonData = gson.toJson(data);
             out.println(gsonData);
