@@ -177,6 +177,11 @@ public class DAOcommandeTest {
         assertEquals(1260.0+700.0+870.0,dao.prixCommande(code), 0);
     }
     
+    @Test
+    public void listePaysAvecCommandeTest() throws SQLException, ParseException{
+        assertEquals(21,dao.listePaysAvecCommande().size());
+    }
+    
     public static DataSource getDataSource() throws SQLException {
 	org.hsqldb.jdbc.JDBCDataSource ds = new org.hsqldb.jdbc.JDBCDataSource();
 	ds.setDatabase("jdbc:hsqldb:mem:testcase;shutdown=true");

@@ -241,6 +241,28 @@ public class DAOcommande {
     }
     
     /**
+     * Affiche la liste de tous les pays ou l'on a déjà eu une commande
+     * @return List<String>
+     * @throws SQLException
+     * @throws ParseException 
+     */
+    public List<String> listePaysAvecCommande() throws SQLException,ParseException{
+        List<String> resultat = new ArrayList<>();
+        String sql = "SELECT DISTINCT PAYS_LIVRAISON FROM COMMANDE";
+        try (Connection connection = myDataSource.getConnection();
+                PreparedStatement stmt = connection.prepareStatement(sql)) {
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                String paysLivraison = rs.getString("PAYS_LIVRAISON");
+                resultat.add(paysLivraison);
+            }
+        } catch (Exception e) {
+            throw e;
+        }
+        return resultat;
+    }
+    
+    /**
      * Renvoie le prix total d'une commande
      * @param commande
      * @return Double prix total de la commande
