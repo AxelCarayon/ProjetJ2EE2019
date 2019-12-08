@@ -310,15 +310,18 @@ and open the template in the editor.
     </script>
     <!--Block liste ligne-->      
     <script id="templateTbodyLigneCommandeUser" type="text/template">
+            <div id="numCom" class="d-none">{{id}}</div>
             {{#lignes}}
                     <tr>
                       <td>{{nom}}</td>
                       <td>{{categorie}}</td>
                       <td>{{prixUnitaire}}</td>
                       <td>{{remise}}</td>
-                      <td><input type="number" onchange="modifierQteProdLigne({{ligne.produit}})" value="{{ligne.quantite}}"></input></td>
+                      <td><input class="majQte" type="number" id="{{ligne.produit}}" value="{{ligne.quantite}}"></input></td>
                       <td>{{prixTotal}}</td>
-                      <td><button class="btn btn-danger" onclick="suppProdLigne({{ligne.produit}})">Supprimer</button></td>
+                      <td><a  class="trashProd" id="{{ligne.produit}}" href="#">
+                        <i class="fas fa-trash-alt"></i>
+                      </td>
                     </tr>
             {{/lignes}}    
     </script>          

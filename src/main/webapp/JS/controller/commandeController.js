@@ -1,5 +1,11 @@
 /* global Mustache */
-
+$(document).ready(
+    function () {
+        $(document).on('change', '.majQte', function () {
+            modifierQteProdLigne($(this).attr('id'),$(this).val());
+        });
+    }
+);
 function afficheListeCommandeUser(){
     if (localStorage.getItem('acces') === 'true'){
         $.ajax({
@@ -62,12 +68,12 @@ function afficheLigneCommande(id){
                             var template = $('#templateTable').html();
                             Mustache.parse(template);
                             var tab = [{titre:"Produit"},{titre:"Catégorie"},{titre:"Prix unitaire"},{titre:"Promo"},{titre:"Quantité"},{titre:"Total"}];
-                            var processedTemplate = Mustache.render(template, {ths:tab,id:id,title:"Détails de la commande n°"+id});
+                            var processedTemplate = Mustache.render(template, {ths:tab,title:"Détails de la commande n°"+id});
                             $('#pageContentProfil').html(processedTemplate);	
                             
                             var template = $('#templateTbodyLigneCommandeUser').html();
                             Mustache.parse(template);
-                            var processedTemplate = Mustache.render(template, {lignes: result });
+                            var processedTemplate = Mustache.render(template, {lignes: result,id:id });
                             $('#tbody').html(processedTemplate);
                         },
                 error: showError
@@ -75,19 +81,28 @@ function afficheLigneCommande(id){
     }
 }
 
-function modifierQteProdLigne(prod){
-    var idcom = $('#numCom');
+function modifierQteProdLigne(prod,qte){
+    var idcom = $('#numCom').text();
     if (localStorage.getItem('acces') === 'true'){
         $.ajax({
                 url: "../LignesCommandeServlet",
                 xhrFields: {
                     withCredentials: true
                 },
-                data: {"commande":idcom,"produit":prod,"quantite":qte},
+                data: {"commande":idcom,"produit":prod,"quantite":qte,"action":"majQte"},
                 dataType: "json",
                 success: 
                         function(result) {
+                            var template = $('#templateTable').html();
+                            Mustache.parse(template);
+                            var tab = [{titre:"Produit"},{titre:"Catégorie"},{titre:"Prix unitaire"},{titre:"Promo"},{titre:"Quantité"},{titre:"Total"}];
+                            var processedTemplate = Mustache.render(template, {ths:tab,title:"Détails de la commande n°"+idcom});
+                            $('#pageContentProfil').html(processedTemplate);	
                             
+                            var template = $('#templateTbodyLigneCommandeUser').html();
+                            Mustache.parse(template);
+                            var processedTemplate = Mustache.render(template, {lignes: result,id:idcom });
+                            $('#tbody').html(processedTemplate);
                         },
                 error: showError
             });		
