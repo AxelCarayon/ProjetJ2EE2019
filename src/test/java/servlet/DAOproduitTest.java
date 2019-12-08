@@ -199,6 +199,37 @@ public class DAOproduitTest {
         
     }
     
+    @Test
+    public void ajouterProduitTest() throws SQLException{
+        ProduitEntity p = new ProduitEntity(78,"machin", 1, 1, "6x25cl", 10.00, 100, 25, 10, 0);
+        dao.ajouterProduit("machin", 1, 1, "6x25cl", 10.00, 100, 25, 10, false);
+        assertEquals(dao.afficherProduit(78),p);
+    }
+    
+    @Test
+    public void supprimerProduitTest() throws SQLException{
+        dao.ajouterProduit("machin", 1, 1, "6x25cl", 10.00, 100, 25, 10, false);
+        Boolean supprime = true;
+        try{
+           dao.supprimerProduit(78); 
+        }catch(Exception e){
+            supprime = false;
+        }
+        if (supprime == false){
+            fail();
+        }
+        
+        
+        supprime = true;
+        try{
+            dao.supprimerProduit(1); // un produit utilisé ailleurs
+        }catch(Exception e){
+            supprime = false;
+        }
+        if (supprime == true){
+            fail();
+        }
+    }
     
     
     

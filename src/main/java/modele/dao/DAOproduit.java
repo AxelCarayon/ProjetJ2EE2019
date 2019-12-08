@@ -92,6 +92,63 @@ public class DAOproduit {
     }
     
     /**
+     * Ajoute un produit dans la BDD
+     * @param nom le nom du produit
+     * @param fournisseur le fournisseur
+     * @param categorie sa catégorie
+     * @param quantite_par_unite sa quantité par unité
+     * @param prix_unitaire le prix unitaire
+     * @param unite_en_stock le nombre d'unites en stock
+     * @param unite_commandees le nombre d'unites commandées
+     * @param niveau_de_reappro le niveau de reapprovisionnement
+     * @param indisponible si le produit est disponible ou non 
+     * @throws SQLException 
+     */
+    public void ajouterProduit(String nom,int fournisseur,int categorie,
+            String quantite_par_unite,Double prix_unitaire,int unite_en_stock,
+            int unite_commandees,int niveau_de_reappro,boolean indisponible) throws SQLException{
+        
+        String sql = "insert INTO PRODUIT(NOM,FOURNISSEUR,CATEGORIE,QUANTITE_PAR_UNITE,PRIX_UNITAIRE,UNITES_EN_STOCK,UNITES_COMMANDEES,NIVEAU_DE_REAPPRO,INDISPONIBLE)"
+                + "VALUES(?,?,?,?,?,?,?,?,?) ";
+        try (Connection connection = myDataSource.getConnection();
+                PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1,nom);
+            stmt.setInt(2,fournisseur);
+            stmt.setInt(3,categorie);
+            stmt.setString(4,quantite_par_unite);
+            stmt.setDouble(5,prix_unitaire);
+            stmt.setInt(6,unite_en_stock);
+            stmt.setInt(7,unite_commandees);
+            stmt.setInt(8,niveau_de_reappro);
+            if (indisponible == true){
+                stmt.setInt(9,1);
+            }
+            else{
+                stmt.setInt(9,0);
+            }
+            stmt.executeUpdate();
+        }catch(Exception e){
+            throw e;
+        }
+    }
+    
+    /**
+     * Supprime un produit de la BDD
+     * @param reference la référence du produit à supprimer
+     * @throws SQLException 
+     */
+    public void supprimerProduit(int reference) throws SQLException{
+        String sql = "DELETE FROM PRODUIT WHERE REFERENCE = ?";
+        try (Connection connection = myDataSource.getConnection();
+                PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, reference);
+            stmt.executeUpdate();
+        }catch(Exception e){
+            throw e;
+        }
+    }
+    
+    /**
      * Renvoie la liste de tous les produits d'une catégorie
      * @param categorie la catégorie dont on souhaite voir les produits
      * @return ArrayList<ProduitEntity>
