@@ -43,7 +43,6 @@ function afficherTotalCommande(id,place){
                    var template = $('#templatePrixTotalCommandeUser').html();
                     Mustache.parse(template);
                     var processedTemplate = Mustache.render(template, {prix: result });
-                    console.log("place :"+place);
                     place.html(processedTemplate);
                 },
         error: showError
@@ -60,7 +59,6 @@ function afficheLigneCommande(id){
                 dataType: "json",
                 success: 
                         function(result) {
-                            console.log(result);
                             var template = $('#templateTable').html();
                             Mustache.parse(template);
                             var tab = [{titre:"Produit"},{titre:"Catégorie"},{titre:"Prix unitaire"},{titre:"Promo"},{titre:"Quantité"},{titre:"Total"}];
