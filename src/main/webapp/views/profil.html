@@ -299,12 +299,15 @@ and open the template in the editor.
                   <td>{{saisiLe}}</td>
                   <td>{{envoyeLe}}</td>
                   <td>{{adresseLivraison}} {{codePostalLivraison}}</td>
-                  <td>{{port}}</td>
-                  <td>{{prix}}</td>
+                  <td>{{port}}€</td>
+                  <td class="prixTotalCommande" id="{{numero}}"></td>
                   <td><button class="btn btn-success" onclick="afficheLigneCommande({{numero}})">Éditer</button></td>
                 </tr>
             {{/commandes}}       
-    </script>  
+    </script> 
+    <script id="templatePrixTotalCommandeUser" type="text/template">
+            {{prix}}€
+    </script>
     <!--Block liste ligne-->      
     <script id="templateTbodyLigneCommandeUser" type="text/template">
             {{#lignes}}
