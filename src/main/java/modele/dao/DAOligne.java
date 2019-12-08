@@ -165,4 +165,24 @@ public class DAOligne {
         }
     }
     
+    /**
+     * Modifier la quantité de la ligne d'une commande
+     * @param commande la commande de la ligne à modifier
+     * @param produit le produit de la ligne à modifier
+     * @param quantite la nouvelle quantité
+     * @throws SQLException 
+     */
+    public void modifierQuantiteLigne(int commande, int produit, int quantite) throws SQLException{
+        String sql = "UPDATE LIGNE SET QUANTITE = ? WHERE COMMANDE = ? AND PRODUIT = ?";
+        try (Connection connection = myDataSource.getConnection();
+                PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1,quantite);
+            stmt.setInt(2,commande);
+            stmt.setInt(3,produit);
+            stmt.executeUpdate();
+        }catch(Exception e){
+            throw e;
+        }
+    }
+    
 }

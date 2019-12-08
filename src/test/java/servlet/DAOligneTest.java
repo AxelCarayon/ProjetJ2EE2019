@@ -72,6 +72,17 @@ public class DAOligneTest {
     }
     
     /**
+     * Teste la méthode modifierQuantiteLigne
+     * @throws SQLException 
+     */
+    @Test
+    public void modifierQuantiteLigneTest() throws SQLException{
+        LigneCommandeEntity l1 = new LigneCommandeEntity(new LigneEntity(10248,11,7),"Queso Cabrales",105.0,0.0,735.0,"Produit laitiers");
+        dao.modifierQuantiteLigne(10248, 11, 7);
+        assertEquals(dao.afficherCommande(10248).get(2),l1);
+    }
+    
+    /**
      * Teste la méthode toutesLesLignes
      */
     @Test
