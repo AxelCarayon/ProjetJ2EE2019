@@ -1,3 +1,5 @@
+/* global Mustache */
+
 function afficheListeCommandeUser(){
     if (localStorage.getItem('acces') === 'true'){
         $.ajax({
@@ -8,10 +10,16 @@ function afficheListeCommandeUser(){
                 dataType: "json",
                 success: 
                         function(result) {
-                            var template = $('#templateListeCommandeUser').html();
+                            var template = $('#templateTable').html();
+                            Mustache.parse(template);
+                            var tab = [{titre:"Numéro"},{titre:"Saisie le"},{titre:"Envoyée le"},{titre:"Adresse"},{titre:"Port"},{titre:"Total"}];
+                            var processedTemplate = Mustache.render(template, {ths: tab });
+                            $('#pageContentProfil').html(processedTemplate);
+                            
+                            var template = $('#templateLigneCommandeUser').html();
                             Mustache.parse(template);
                             var processedTemplate = Mustache.render(template, {commandes: result });
-                            $('#pageContentProfil').html(processedTemplate);	
+                            $('#tbody').html(processedTemplate);
                         },
                 error: function(){console.log("erreur");}
             });		
@@ -29,10 +37,16 @@ function afficheLigneCommande(id){
                 dataType: "json",
                 success: 
                         function(result) {
-                            var template = $('#templateListeLigne').html();
+                            var template = $('#templateTable').html();
                             Mustache.parse(template);
-                            var processedTemplate = Mustache.render(template, {lignes: result ,id:id});
+                            var tab = [{titre:"Produit"},{titre:"Catégorie"},{titre:"Prix unitaire"},{titre:"Promo"},{titre:"Quantité"},{titre:"Total"}];
+                            var processedTemplate = Mustache.render(template, {ths:tab,id:id});
                             $('#pageContentProfil').html(processedTemplate);	
+                            
+                            var template = $('#templateTbodyLigneCommandeUser').html();
+                            Mustache.parse(template);
+                            var processedTemplate = Mustache.render(template, {lignes: result });
+                            $('#tbody').html(processedTemplate);
                         },
                 error: function(){console.log("erreur");}
             });		

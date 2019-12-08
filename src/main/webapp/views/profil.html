@@ -107,217 +107,95 @@ and open the template in the editor.
 
           <!-- Divider -->
           <hr class="sidebar-divider my-0">
-
-          <!-- Nav Item - Dashboard -->
-          <li class="nav-item active">
-            <a class="nav-link" href="#" id="profilInformation" onclick="afficheInformationUser()" >
-             <i class="far fa-address-card"></i>
-              <span>Mes informations</span></a>
-          </li>
-
+          <div id="showTemplateMenu"></div>
+          
           <!-- Divider -->
-          <hr class="sidebar-divider">
+          <hr class="sidebar-divider d-none d-md-block">
+
+        </ul>
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+          <!-- Main Content -->
+          <div id="content">
+
+            <!-- Topbar -->
+            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+              <!-- Sidebar Toggle (Topbar) -->
+              <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                <i class="fa fa-bars"></i>
+              </button>
+
+              <!-- Topbar Search -->
+              <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                <div class="input-group">
+                  <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                  <div class="input-group-append">
+                    <button class="btn btn-primary" type="button">
+                      <i class="fas fa-search fa-sm"></i>
+                    </button>
+                  </div>
+                </div>
+              </form>
+
+              <!-- Topbar Navbar -->
+              <ul class="navbar-nav ml-auto">
+              <li class="nav-item"><a class="nav-link" href="#" onclick="deconnexionClient()">Se déconnecter</a></li>
+                <div class="topbar-divider d-none d-sm-block"></div>
+
+                <!-- Nav Item - User Information -->
+                <li class="nav-item dropdown no-arrow">
+                  <a class="nav-link" href="#">
+                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">
+                    Bonjour {{#user}}{{contact}}{{/user}} 
+                </span>
+                    <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
+                  </a>
+                </li>
+              </ul>
+            </nav>
+            <!-- End of Topbar -->
+
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+
+              <!-- Page Heading -->
+              <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                <h1 class="h3 mb-0 text-gray-800">{{titre}}</h1>
+              </div>
+              <!-- Content Row -->
+              <div class="row" id="pageContentProfil"></div>
+
+            </div>
+        </div>
+             </div>
+             </div>
+             </div>
+
+        </script>
+             
+        <!-- Block menu pour user -->
+        <script id="templateMenuforUser" type="text/template">
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item active">
+              <a class="nav-link" href="#" id="profilInformation" onclick="afficheInformationUser()" >
+               <i class="far fa-address-card"></i>
+                <span>Mes informations</span></a>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
             <li class="nav-item">
                 <a class="nav-link" onclick="afficheListeCommandeUser()" href="#">
                  <i class="fas fa-shopping-cart"></i>
                  <span>Bon de commande</span></a>
              </li>
-          <!-- Divider -->
-          <hr class="sidebar-divider d-none d-md-block">
-
-        </ul>
-        <!-- End of Sidebar -->
-
-        <!-- Content Wrapper -->
-        <div id="content-wrapper" class="d-flex flex-column">
-
-          <!-- Main Content -->
-          <div id="content">
-
-            <!-- Topbar -->
-            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-
-              <!-- Sidebar Toggle (Topbar) -->
-              <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                <i class="fa fa-bars"></i>
-              </button>
-
-              <!-- Topbar Search -->
-              <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                <div class="input-group">
-                  <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-                  <div class="input-group-append">
-                    <button class="btn btn-primary" type="button">
-                      <i class="fas fa-search fa-sm"></i>
-                    </button>
-                  </div>
-                </div>
-              </form>
-
-              <!-- Topbar Navbar -->
-              <ul class="navbar-nav ml-auto">
-              <li class="nav-item"><a class="nav-link" href="#" onclick="deconnexionClient()">Se déconnecter</a></li>
-                <div class="topbar-divider d-none d-sm-block"></div>
-
-                <!-- Nav Item - User Information -->
-                <li class="nav-item dropdown no-arrow">
-                  <a class="nav-link" href="#">
-                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">
-                    Bonjour {{#user}}{{contact}}{{/user}} 
-                </span>
-                    <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
-                  </a>
-                </li>
-              </ul>
-            </nav>
-            <!-- End of Topbar -->
-
-            <!-- Begin Page Content -->
-            <div class="container-fluid">
-
-              <!-- Page Heading -->
-              <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                <h1 class="h3 mb-0 text-gray-800">Votre espace client</h1>
-              </div>
-              <!-- Content Row -->
-              <div class="row" id="pageContentProfil"></div>
-
-            </div>
-        </div>
-             </div>
-             </div>
-             </div>
-
         </script>
-
-
-        <!--Block admin-->
-        <script id="templateAdmin" type="text/template">
-            <div class="row">
-
-            </div>
-            <!-- Page Wrapper -->
-      <div id="wrapper">
-
-        <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
-            <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/ProjetJ2EE2019">
-            <img class="navbar-brand" src="../images/logo.png" />
-            </a>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider my-0">
-
-              <!-- Heading -->
-            <div class="sidebar-heading">
-              Statistiques
-            </div>
-
-            <!-- Nav Item - Dashboard -->
-            <li class="nav-item">
-              <a class="nav-link" href="#" onclick="" >
-                <i class="fas fa-chart-pie"></i>
-                <span>C.A by catégorie</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" onclick="" href="#">
-                 <i class="fas fa-chart-pie"></i>
-                 <span>C.A by pays</span></a>
-             </li>
-             <li class="nav-item">
-                <a class="nav-link" onclick="" href="#">
-                 <i class="fas fa-chart-pie"></i>
-                 <span>C.A by client</span></a>
-             </li>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider my-0">
-              <!-- Heading -->
-            <div class="sidebar-heading" onclick="displayCatForAdmin()">
-              Produits
-            </div> 
-            <div id="menuListeCategorie"></div>
-
-          <!-- Divider -->
-          <hr class="sidebar-divider d-none d-md-block">
-
-        </ul>
-        <!-- End of Sidebar -->
-
-        <!-- Content Wrapper -->
-        <div id="content-wrapper" class="d-flex flex-column">
-
-          <!-- Main Content -->
-          <div id="content">
-
-            <!-- Topbar -->
-            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-
-              <!-- Sidebar Toggle (Topbar) -->
-              <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                <i class="fa fa-bars"></i>
-              </button>
-
-              <!-- Topbar Search -->
-              <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                <div class="input-group">
-                  <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-                  <div class="input-group-append">
-                    <button class="btn btn-primary" type="button">
-                      <i class="fas fa-search fa-sm"></i>
-                    </button>
-                  </div>
-                </div>
-              </form>
-
-              <!-- Topbar Navbar -->
-              <ul class="navbar-nav ml-auto">
-              <li class="nav-item"><a class="nav-link" href="#" onclick="deconnexionClient()">Se déconnecter</a></li>
-                <div class="topbar-divider d-none d-sm-block"></div>
-
-                <!-- Nav Item - User Information -->
-                <li class="nav-item dropdown no-arrow">
-                  <a class="nav-link" href="#">
-                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">
-                    Bonjour {{#user}}{{contact}}{{/user}} 
-                </span>
-                    <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
-                  </a>
-                </li>
-              </ul>
-            </nav>
-            <!-- End of Topbar -->
-
-            <!-- Begin Page Content -->
-            <div class="container-fluid">
-
-              <!-- Page Heading -->
-              <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                <h1 class="h3 mb-0 text-gray-800">Votre espace Administration</h1>
-              </div>
-              <!-- Content Row -->
-              <div class="row" id="pageContentProfil"></div>
-
-            </div>
-        </div>
-             </div>
-             </div>
-             </div>
-
-        </script>
-
-         <!-- Block formulaire de info perso -->
-        <script id="templateMenuCatAdmin" type="text/template">
-                {{#categories}}    
-               <li class="nav-item">
-                <a class="nav-link" onclick="f({{code}})" href="#">
-                 <i class="fas fa-edit"></i>
-                 <span>{{libelle}}</span></a>
-             </li> 
-             {{/categories}}
-        </script>
+             
+             
          <!-- Block formulaire de info perso -->
         <script id="templateFormInfoUser" type="text/template">
             <form id="fromInfoUser">
@@ -377,7 +255,7 @@ and open the template in the editor.
 
 
         <!--Block liste commande-->      
-        <script id="templateListeCommandeUser" type="text/template">
+        <script id="templateTable" type="text/template">
 
         <!-- DataTales Example -->
               <div class="card shadow mb-4 col-12">
@@ -389,38 +267,22 @@ and open the template in the editor.
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                       <thead>
                         <tr>
-                          <th>Numéro</th>
-                          <th>Saisie le</th>
-                          <th>Envoyée le</th>
-                          <th>Adresse</th>
-                          <th>Port</th>
-                          <th>Total</th>
+                        {{#ths}}
+                          <th>{{titre}}</th>
+                        {{/ths}}
                           <th></th>
                         </tr>
                       </thead>
                       <tfoot>
                         <tr>
-                         <th>Numéro</th>
-                          <th>Saisie le</th>
-                          <th>Envoyée le</th>
-                          <th>Adresse</th>
-                          <th>Port</th>
-                          <th>Total</th>
+                         {{#ths}}
+                          <th>{{titre}}</th>
+                        {{/ths}}
                           <th></th>
                         </tr>
                       </tfoot>
-                      <tbody>
-                      {{#commandes}}
-                        <tr>
-                          <td>{{numero}}</td>
-                          <td>{{saisiLe}}</td>
-                          <td>{{envoyeLe}}</td>
-                          <td>{{adresseLivraison}} {{codePostalLivraison}}</td>
-                          <td>{{port}}</td>
-                          <td>{{prix}}</td>
-                          <td><button class="btn btn-success" onclick="afficheLigneCommande({{numero}})">Éditer</button></td>
-                        </tr>
-                        {{/commandes}}
+                      <tbody id="tbody">
+                      
                       </tbody>
                     </table>
                   </div>
@@ -428,40 +290,22 @@ and open the template in the editor.
               </div>
     </script> 
     <!--Block liste ligne-->      
-    <script id="templateListeLigne" type="text/template">
-       
-    <!-- DataTales Example -->
-          <div class="card shadow mb-4 col-12">
-            <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Bon de commande n°<span id="numCom">{{id}}</span></h6>
-            </div>
-            <div class="card-body">
-              <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                  <thead>
-                    <tr>
-                      <th>Produit</th>
-                      <th>Catégorie</th>
-                      <th>Prix unitaire</th>
-                      <th>Promo</th>
-                      <th>Quantité</th>
-                      <th>Total</th>
-                      <th></th>
-                    </tr>
-                  </thead>
-                  <tfoot>
-                    <tr>
-                     <th>Produit</th>
-                      <th>Catégorie</th>
-                      <th>Prix unitaire</th>
-                      <th>Promo</th>
-                      <th>Quantité</th>
-                      <th>Total</th>
-                      <th></th>
-                    </tr>
-                  </tfoot>
-                  <tbody>
-                  {{#lignes}}
+    <script id="templateLigneCommandeUser" type="text/template">
+            {{#commandes}}
+                <tr>
+                  <td>{{numero}}</td>
+                  <td>{{saisiLe}}</td>
+                  <td>{{envoyeLe}}</td>
+                  <td>{{adresseLivraison}} {{codePostalLivraison}}</td>
+                  <td>{{port}}</td>
+                  <td>{{prix}}</td>
+                  <td><button class="btn btn-success" onclick="afficheLigneCommande({{numero}})">Éditer</button></td>
+                </tr>
+            {{/commandes}}       
+    </script>  
+    <!--Block liste ligne-->      
+    <script id="templateTbodyLigneCommandeUser" type="text/template">
+            {{#lignes}}
                     <tr>
                       <td>{{produit}}</td>
                       <td>{{categorie}}</td>
@@ -471,12 +315,47 @@ and open the template in the editor.
                       <td>{{total}}</td>
                       <td><button class="btn btn-danger" onclick="suppProdLigne({{produit}})">Supprimer</button></td>
                     </tr>
-                    {{/lignes}}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-</script> 
+            {{/lignes}}    
+    </script>          
+    
+        <!---------------- Block ADMIN ----------->
+        
+        <!-- Block Menu admin -->
+        <script id="templateMenuforAdmin" type="text/template">
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item">
+              <a class="nav-link" href="#" onclick="" >
+                <i class="fas fa-chart-pie"></i>
+                <span>C.A by catégorie</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" onclick="" href="#">
+                 <i class="fas fa-chart-pie"></i>
+                 <span>C.A by pays</span></a>
+             </li>
+             <li class="nav-item">
+                <a class="nav-link" onclick="" href="#">
+                 <i class="fas fa-chart-pie"></i>
+                 <span>C.A by client</span></a>
+             </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+              <!-- Heading -->
+            <div class="sidebar-heading" onclick="displayCatForAdmin()">
+              Produits
+            </div> 
+            <div id="menuListeCategorie"></div>
+        </script>
+         <!-- Block menu catégorie admin -->
+        <script id="templateMenuCatAdmin" type="text/template">
+                {{#categories}}    
+               <li class="nav-item">
+                <a class="nav-link" onclick="f({{code}})" href="#">
+                 <i class="fas fa-edit"></i>
+                 <span>{{libelle}}</span></a>
+             </li> 
+             {{/categories}}
+        </script>
     </body>
 </html>

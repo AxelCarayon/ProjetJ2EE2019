@@ -95,10 +95,15 @@ function afficherPage(){
             dataType: "json",
             success: 
                     function(result) {
-                        var template = $('#templateAdmin').html();
+                        var template = $('#templateWelcome').html();
                         Mustache.parse(template);
-                        var processedTemplate = Mustache.render(template, {user: result });
+                        var processedTemplate = Mustache.render(template, {user: result ,titre:"Votre espace Administration"});
                         $('#body').html(processedTemplate);
+                        
+                        var template = $('#templateMenuforAdmin').html();
+                        Mustache.parse(template);
+                        var processedTemplate = Mustache.render(template);
+                        $('#showTemplateMenu').html(processedTemplate);
                     },
             error: showError
         });
@@ -116,11 +121,15 @@ function afficherPage(){
                     function(result) {
                         var template = $('#templateWelcome').html();
                         Mustache.parse(template);
-                        var processedTemplate = Mustache.render(template, {user: result });
-                        $('#body').html(processedTemplate);	
+                        var processedTemplate = Mustache.render(template, {user: result,titre:"Votre espace client" });
+                        $('#body').html(processedTemplate);
+                        
+                        var template = $('#templateMenuforUser').html();
+                        Mustache.parse(template);
+                        var processedTemplate = Mustache.render(template);
+                        $('#showTemplateMenu').html(processedTemplate);
                     },
             error: showError
-
         });		
     }
 }
@@ -134,7 +143,6 @@ function displayCatForAdmin(){
                             Mustache.parse(template);
                             var processedTemplate = Mustache.render(template, {categories: result });
                             $('#menuListeCategorie').html(processedTemplate);
-                            console.log('oo');	
                     },
             error: showError
     });		
