@@ -20,12 +20,35 @@ function afficheListeCommandeUser(){
                             Mustache.parse(template);
                             var processedTemplate = Mustache.render(template, {commandes: result });
                             $('#tbody').html(processedTemplate);
+                            
+                            $('.prixTotalCommande').each(function(){
+                                var code = $(this).attr('id');
+                                afficherTotalCommande(code,$(this));
+                            });
                         },
-                error: function(){console.log("erreur");}
+                error: showError
             });		
     }
 }
-
+function afficherTotalCommande(id,place){
+    $.ajax({
+        url: "../PrixCommandeServlet",
+        xhrFields: {
+            withCredentials: true
+        },
+        data: {"code":id},
+        dataType: "json",
+        success: 
+                function(result) {
+                   var template = $('#templatePrixTotalCommandeUser').html();
+                    Mustache.parse(template);
+                    var processedTemplate = Mustache.render(template, {prix: result });
+                    console.log("place :"+place);
+                    place.html(processedTemplate);
+                },
+        error: showError
+    });		
+}
 function afficheLigneCommande(id){
     if (localStorage.getItem('acces') === 'true'){
         $.ajax({
@@ -37,6 +60,7 @@ function afficheLigneCommande(id){
                 dataType: "json",
                 success: 
                         function(result) {
+                            console.log(result);
                             var template = $('#templateTable').html();
                             Mustache.parse(template);
                             var tab = [{titre:"Produit"},{titre:"Catégorie"},{titre:"Prix unitaire"},{titre:"Promo"},{titre:"Quantité"},{titre:"Total"}];
@@ -48,7 +72,7 @@ function afficheLigneCommande(id){
                             var processedTemplate = Mustache.render(template, {lignes: result });
                             $('#tbody').html(processedTemplate);
                         },
-                error: function(){console.log("erreur");}
+                error: showError
             });		
     }
 }
@@ -67,7 +91,7 @@ function modifierQteProdLigne(prod){
                         function(result) {
                             
                         },
-                error: function(){console.log("erreur");}
+                error: showError
             });		
     }
 }
@@ -86,7 +110,12 @@ function suppProdLigne(prod){
                         function(result) {
                             afficheLigneCommande(idcom);
                         },
-                error: function(){console.log("erreur");}
+                error: showError
             });		
     }
+}
+
+// Fonction qui traite les erreurs de la requête
+function showError(xhr, status, message) {
+        alert("Erreur: " + status + " : " + message);
 }

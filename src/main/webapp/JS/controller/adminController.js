@@ -70,7 +70,6 @@ function afficherDetailsProduit(id){
                 error: showError
             });		
     }
-    
 }
 
 // Fonction qui traite les erreurs de la requête
