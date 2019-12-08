@@ -39,6 +39,8 @@ public class DAOligne {
                 LigneEntity l = new LigneEntity(code, produit, quantite);
                 resultat.add(l);
             }
+        }catch(Exception e){
+            throw e;
         }
         return resultat;
     }
@@ -75,6 +77,8 @@ public class DAOligne {
                 ligne.add(nomCategorie);
                 resultat.add(ligne);
             }
+        }catch(Exception e){
+            throw e;
         }
         return resultat;
     }
@@ -95,6 +99,8 @@ public class DAOligne {
             while (rs.next()) {
                 resultat.add(rs.getInt("PRODUIT"));
             }
+        }catch(Exception e){
+            throw e;
         }
         return resultat;
     }
@@ -116,8 +122,50 @@ public class DAOligne {
             if (rs.next()) {
                 resultat = rs.getInt("QUANTITE");
             }
+        }catch(Exception e){
+            throw e;
         }
         return resultat;
+    }
+    
+    /**
+     * Ajoute une ligne d'une commande
+     * @param commande le numéro de la commande
+     * @param produit le produit de la ligne
+     * @param quantite la quantité du produit
+     * @throws SQLException 
+     */
+    public void ajouterLigne(int commande, int produit, int quantite) throws SQLException{
+        String sql = "INSERT INTO LIGNE VALUES (?,?,?)";
+        try (Connection connection = myDataSource.getConnection();
+                PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1,commande);
+            stmt.setInt(2,produit);
+            stmt.setInt(3,quantite);
+            stmt.executeUpdate();
+        }catch(Exception e){
+            throw e;
+        }
+    }
+    
+    /**
+     * Supprime la ligne d'une commande
+     * @param commande le numéro de la commande
+     * @param produit le produit de la ligne
+     * @param quantite la quantité du produit
+     * @throws SQLException 
+     */
+    public void supprimerLigne(int commande,int produit, int quantite) throws SQLException{
+        String sql = "DELETE FROM LIGNE WHERE COMMANDE = ? AND PRODUIT = ? AND QUANTITE = ?";
+        try (Connection connection = myDataSource.getConnection();
+                PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1,commande);
+            stmt.setInt(2,produit);
+            stmt.setInt(3,quantite);
+            stmt.executeUpdate();
+        }catch(Exception e){
+            throw e;
+        }
     }
     
 }

@@ -113,6 +113,18 @@ public class DAOligneTest {
         assertEquals(12,dao.afficherQuantite(10248, 11));
     }
     
+    @Test
+    public void ajouterLigneTest() throws SQLException{
+        dao.ajouterLigne(10248,2,3);
+        assertEquals(dao.toutesLesLignes().size(),2156);
+    }
+    
+    @Test
+    public void supprimerLigneTest() throws SQLException{
+        dao.supprimerLigne(10248, 11, 12);
+        assertEquals(dao.toutesLesLignes().size(),2154);
+    }
+    
     public static DataSource getDataSource() throws SQLException {
 		org.hsqldb.jdbc.JDBCDataSource ds = new org.hsqldb.jdbc.JDBCDataSource();
 		ds.setDatabase("jdbc:hsqldb:mem:testcase;shutdown=true");
