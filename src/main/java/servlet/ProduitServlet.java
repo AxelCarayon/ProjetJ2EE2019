@@ -49,8 +49,8 @@ public class ProduitServlet extends HttpServlet {
         int code = Integer.parseInt(request.getParameter("reference"));
 
         ProduitEntity produit;
-        if (request.getSession().getAttribute("etat") == "admin") {
-            if (actionIs(request, "update")) {
+        if (actionIs(request, "update")) {
+            if (request.getSession().getAttribute("etat") == "admin") {
                 try {
                     String data = request.getParameter("data");
                     String champ = request.getParameter("champ");
@@ -81,17 +81,17 @@ public class ProduitServlet extends HttpServlet {
                     throw new SQLException(e);
                 }
             }
-            try {
-                produit = dao.afficherProduit(code);
-            } catch (SQLException e) {
-                throw new SQLException(e);
-            }
-            try ( PrintWriter out = response.getWriter()) {
-                response.setContentType("application/json;charset=UTF-8");
-                Gson gson = new GsonBuilder().setPrettyPrinting().create();
-                String gsonData = gson.toJson(produit);
-                out.println(gsonData);
-            }
+        }
+        try {
+            produit = dao.afficherProduit(code);
+        } catch (SQLException e) {
+            throw new SQLException(e);
+        }
+        try ( PrintWriter out = response.getWriter()) {
+            response.setContentType("application/json;charset=UTF-8");
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            String gsonData = gson.toJson(produit);
+            out.println(gsonData);
         }
     }
 
