@@ -1,10 +1,41 @@
 /* global Mustache, Storage */
 
 $(document).ready(function(){
-    if (localStorage.getItem('acces')=== 'true'|| localStorage.getItem('acces')=== 'admin'){
-        $('#displayProd').parent().removeClass('col-lg-12');
+    isConnected();
+});
 
-        // Affichage block panier 
+function isConnected(){
+    $.ajax({
+            url: "SessionActiveServlet",
+            xhrFields: {
+                withCredentials: true
+            },
+            data: {  "action":"isconected"},
+            dataType: "json",
+            success: 
+                    function(result) {
+                        localStorage.setItem('acces', result);
+                        show(result);
+                    },
+            error: showError
+    });	
+}
+
+function show(rep){
+    localStorage.setItem('acces',rep);
+    if (rep===true){
+        afficherPanier();
+    }else{
+        $('#displayProd').parent().addClass('col-lg-12');
+        $(document).on('click', '.ajoutPanier', function () {
+            alert("Vous devez être connecté.");
+        });
+    }
+}
+
+function afficherPanier(){
+    $('#displayProd').parent().removeClass('col-lg-12');
+    // Affichage block panier 
         var templateP = $('#templateBlockPanier').html();
         Mustache.parse(templateP);
         var processedTemplate = Mustache.render(templateP);
@@ -13,20 +44,12 @@ $(document).ready(function(){
         var panier = new Panier();
         remplirPanierAvecStorage(panier);
         displayPanier(panier);
-
+        
         $(document).on('click', '.ajoutPanier', function () {
             var id = $(this).val();
             $.get("ProduitServlet",{reference:id},ajouter,'json');;//appel ajax
         });
-    }
-    else{
-        $('#displayProd').parent().addClass('col-lg-12');
-         $(document).on('click', '.ajoutPanier', function () {
-             alert("Vous devez être connecté.");
-         });
-    }
-    
-});
+}
 
 // Objet LignePanier
 function LignePanier (code,libelle, qte, prix)
@@ -176,4 +199,8 @@ function afficherPopupConfirmationSup(question,panier,article) {
     });
     $("#popupconfirmation").prev().addClass('ui-state-question');
     return popup;
+}
+// Fonction qui traite les erreurs de la requête
+function showError(xhr, status, message) {
+        alert("Erreur: " + status + " : " + message);
 }
