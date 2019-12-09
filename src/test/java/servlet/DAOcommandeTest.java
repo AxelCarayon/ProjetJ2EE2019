@@ -80,13 +80,13 @@ public class DAOcommandeTest {
      */
     @Test
     public void ajouterCommandeTest() throws ParseException, SQLException{
-        CommandeEntity commande = new CommandeEntity(11078, "VINET", "2019-11-01","2019-11-15",400.00,"Magasin osef","51 rue du chat","Albi", "Occitanie","81000","France",0.00);
+        int numero = 0;
         try{
-            dao.ajouterCommande(11078, "VINET", "2019-11-01","2019-11-15",400.00,"Magasin osef","51 rue du chat","Albi", "Occitanie","81000","France",0.00);
+            numero = dao.ajouterCommande("VINET", "2019-11-01","2019-11-15",400.00,"Magasin osef","51 rue du chat","Albi", "Occitanie","81000","France",0.00);
         }catch(Exception e){
             fail(e.getMessage());
         }
-        assertEquals(commande,dao.afficherCommande(11078));
+        assertEquals(11078,numero);
     }
     
     /**

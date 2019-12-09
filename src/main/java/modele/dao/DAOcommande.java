@@ -112,7 +112,6 @@ public class DAOcommande {
     /**
      * Ajoute une nouvelle commande dans la bdd
      *
-     * @param numero le numéro de la nouvelle commande
      * @param code_client le nouveau code client
      * @param saisiLe date de saisie de la commande
      * @param envoyeLe date d'envoi de la commande
@@ -124,11 +123,26 @@ public class DAOcommande {
      * @param codePostalLivraison code postal de livraison de la commande
      * @param paysLivraison pays de livraison de la commande
      * @param remise % de remise de la commande
+     * @return le numéro de la nouvelle commande
      */
-    public void ajouterCommande(int numero, String code_client, String saisiLe, String envoyeLe,
+    public int ajouterCommande(String code_client, String saisiLe, String envoyeLe,
             double port, String destinataire, String adresseLivraison, String villeLivraison,
             String regionLivraison, String codePostalLivraison, String paysLivraison, double remise) throws SQLException {
-        String sql = "INSERT INTO COMMANDE VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+        int numero = 0;
+        
+        String sql = "SELECT MAX(NUMERO) AS NUMERO FROM COMMANDE";
+        
+        try (Connection connection = myDataSource.getConnection();
+                PreparedStatement stmt = connection.prepareStatement(sql)) {
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                numero = rs.getInt("NUMERO")+1;
+            }
+        } catch (SQLException e) {
+            throw e;
+        }
+        
+        sql = "INSERT INTO COMMANDE VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
         try (Connection connection = myDataSource.getConnection();
                 PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, numero);
@@ -147,6 +161,7 @@ public class DAOcommande {
         } catch (SQLException e) {
             throw e;
         }
+        return numero;
     }
 
     /**
