@@ -9,8 +9,6 @@ $(document).ready(
         $(document).on('click', '.elemtMenuCat', function () {
             showProduitByCategorie($(this).attr('id'));
         });
-        $('#menu_connexion').click(function(){
-        });
     }
 );
 
@@ -19,15 +17,11 @@ function showProduitByCategorie(cat) {
             url: "ProduitsCategorieServlet",
             data: {categorie: cat},
             dataType: "json",
-            success: // La fonction qui traite les résultats
-                    // La fonction qui traite les résultats
+            success: 
                     function(result) {
-                            // Le code source du template est dans la page
                             var template = $('#templateShowProduits').html();
                             Mustache.parse(template);
-                            // On combine le template avec le résultat de la requête
                             var processedTemplate = Mustache.render(template, {produits: result });
-                            // On affiche le résultat dans la page
                             $('#displayProd').html(processedTemplate);	
                     },
             error: showError
@@ -48,6 +42,7 @@ function showCategorieForNav() {
             error: showError
     });				
 }
+
 function showCategorieForNavMob() {
     $.ajax({
             url: "CategorieServlet",
@@ -62,7 +57,7 @@ function showCategorieForNavMob() {
             error: showError
     });				
 }
-// Fonction qui traite les erreurs de la requête
+
 function showError(xhr, status, message) {
         alert("Erreur: " + status + " : " + message);
 }

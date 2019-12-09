@@ -1,15 +1,15 @@
 /* global Mustache */
 $(document).ready(function () {
-    afficherPage();
-    $('#connexion').submit(function(e){
-        e.preventDefault();
-        connexionClient($('#inputEmail').val(),$('#inputPassword').val(),$(".action").val());
-    });
-    
     $('#profilInformation').click(function(){
         console.log("coucou");
     });
+    testConnexionForAfficherPage();
 });
+
+function connect(){
+    connexionClient($('#inputEmail').val(),$('#inputPassword').val(),$(".action").val());
+}
+
 function isConnected(){
     $.ajax({
             url: "../SessionActiveServlet",
@@ -21,11 +21,12 @@ function isConnected(){
             success: 
                     function(result) {
                         localStorage.setItem('acces', result);
-                        //statusClient(result);
+                        show(result);
                     },
             error: showError
-    });			
+    });	
 }
+
 function isAdmin(){
     $.ajax({
             url: "../SessionActiveServlet",
@@ -40,16 +41,17 @@ function isAdmin(){
                            isConnected();
                         }else{
                             localStorage.setItem('acces', 'admin');
-                            //statusClient('admin');
+                            show('admin');
                         }
                     },
             error: showError
-    });		
+    });	
 }
 
-//function statusClient(role){
-//    return role;
-//}
+function show(rep){
+    afficherPage(rep);
+}
+
 function connexionClient(mail,pw,action) {
     console.log(mail,pw,action);
     $.ajax({
@@ -58,34 +60,42 @@ function connexionClient(mail,pw,action) {
                 withCredentials: true
             },
             data: { "email" : mail, "pw" : pw , "action":action},
-            success: afficherPage,
+            success: connectSuccess,
             error: showError
     });				
 }
 
+function connectSuccess(){
+    testConnexionForAfficherPage();
+}
+
 function deconnexionClient() {
-    console.log("function deconnexionClient");
     $.ajax({
             url: "../ConnexionServlet",
             xhrFields: {
                 withCredentials: true
             },
             data: { "action":"deconnexion"},
-            success: function(){localStorage.removeItem(("MonPanier"));afficherPage();},
+            success: function(){
+                localStorage.removeItem(("MonPanier"));
+                connectSuccess();
+            },
             error: showError
-    });				
+    });	
 }
 
-function afficherPage(){
+function testConnexionForAfficherPage(){
     isAdmin();
-    //console.log("affiche page -> satus : "+isAdmin());
-    if (localStorage.getItem('acces') === 'false' || localStorage.getItem('acces') == null){
+}
+
+function afficherPage(status){
+    if (status == false){
         var template = $('#templateFormConnexion').html();
         Mustache.parse(template);
         var processedTemplate = Mustache.render(template);
         $('#pageContent').html(processedTemplate);	
     }
-    if (localStorage.getItem('acces') === 'admin'){
+    if (status == 'admin'){
         $.ajax({
             url: "../SessionActiveServlet",
             xhrFields: {
@@ -109,7 +119,7 @@ function afficherPage(){
         });
         displayCatForAdmin();
     }
-    if (localStorage.getItem('acces') === 'true'){
+    if (status == true){
         $.ajax({
             url: "../SessionActiveServlet",
             xhrFields: {

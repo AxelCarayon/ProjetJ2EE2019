@@ -62,7 +62,9 @@ public class SessionActiveServlet extends HttpServlet {
                     }
                 //lambda
                 if (isconected.equals(request.getParameter("action"))){
-                    gsonData = gson.toJson(true);
+                    if(session.getAttribute("etat").equals("client")){
+                        gsonData = gson.toJson(true);
+                    }else gsonData = gson.toJson(false);
                 }
                 //getuser
                 if (getUser.equals(request.getParameter("action"))){
