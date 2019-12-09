@@ -256,7 +256,7 @@ and open the template in the editor.
         </script>
 
 
-        <!--Block liste commande-->      
+        <!--Block template table-->      
         <script id="templateTable" type="text/template">
 
         <!-- DataTales Example -->
@@ -301,7 +301,10 @@ and open the template in the editor.
                   <td>{{adresseLivraison}} {{codePostalLivraison}}</td>
                   <td>{{port}}€</td>
                   <td class="prixTotalCommande" id="{{numero}}"></td>
-                  <td><button class="btn btn-success" onclick="afficheLigneCommande({{numero}})">Éditer</button></td>
+                  <td>
+                    <a  onclick="afficheLigneCommande({{numero}})" href="#"><i class="fas fa-edit"></i></a>
+                    <a  onclick="suppCommande({{numero}})" class="trashProd" id="{{reference}}" href="#"><i class="fas fa-trash-alt"></i></a>
+                  </td>
                 </tr>
             {{/commandes}}       
     </script> 
