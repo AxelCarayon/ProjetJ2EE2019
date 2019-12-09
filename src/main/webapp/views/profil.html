@@ -317,9 +317,9 @@ and open the template in the editor.
                       <td>{{categorie}}</td>
                       <td>{{prixUnitaire}}</td>
                       <td>{{remise}}</td>
-                      <td><input class="majQte" type="number" id="{{ligne.produit}}" value="{{ligne.quantite}}"></input></td>
+                      <td><input class="majQte" type="number" min="1" id="{{ligne.produit}}" value="{{ligne.quantite}}"></input></td>
                       <td>{{prixTotal}}</td>
-                      <td><a  class="trashProd" id="{{ligne.produit}}" href="#">
+                      <td><a  class="trashProdCommande" id="{{ligne.produit}}" href="#">
                         <i class="fas fa-trash-alt"></i>
                       </td>
                     </tr>
@@ -357,6 +357,11 @@ and open the template in the editor.
         </script>
          <!-- Block menu catégorie admin -->
         <script id="templateMenuCatAdmin" type="text/template">
+                <li class="nav-item ">
+                <a class="nav-link" href="#">
+                 <i class="far fa-plus-square"></i>
+                 <span>Nouveau produit</span></a>
+             </li> 
                 {{#categories}}    
                <li class="nav-item ">
                 <a class="nav-link nav-link-cat" id="{{code}}" href="#">
@@ -368,6 +373,7 @@ and open the template in the editor.
 
         <!--Ligne tab produit Admin-->
         <script id="templateTbodyLigneProduitAdmin" type="text/template">
+            <div class="infoCat d-none" id="{{idcat}}">{{titlecat}}</div>
             {{#lignes}}
                     <tr>
                       <td>{{reference}}</td>

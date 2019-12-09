@@ -44,20 +44,19 @@ public class CommandesClientServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, SQLException, ParseException, Exception {
+            throws ServletException, IOException, SQLException, ParseException {
         response.setContentType("application/json;charset=UTF-8");
         dataSource = DataSourceFactory.getDataSource();
         dao = new DAOcommande(dataSource);
-        String client="";
+        String client = request.getSession().getAttribute("id").toString();
+        List<CommandeEntity> data;
         try{
-            client = request.getSession().getAttribute("id").toString();
-            if (client == ""){throw new Exception() ;}
-        }catch(Exception e){
-            throw new Exception("Client non connecté.");
+           data = dao.listeCommandesClient(client);
+        }catch(SQLException e){
+            throw new SQLException(e);
         }
         
         try (PrintWriter out = response.getWriter()) {
-                List<CommandeEntity> data = dao.listeCommandesClient(client);
                 Gson gson = new GsonBuilder().setPrettyPrinting().create();
                 String gsonData = gson.toJson(data);
                 out.println(gsonData);
@@ -78,13 +77,9 @@ public class CommandesClientServlet extends HttpServlet {
             throws ServletException, IOException {
         try {
             processRequest(request, response);
-        } catch (SQLException ex) {
+        } catch (SQLException | ParseException ex) {
             Logger.getLogger(CommandesClientServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(CommandesClientServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(CommandesClientServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } 
     }
 
     /**
@@ -100,13 +95,9 @@ public class CommandesClientServlet extends HttpServlet {
             throws ServletException, IOException {
         try {
             processRequest(request, response);
-        } catch (SQLException ex) {
+        } catch (SQLException | ParseException ex) {
             Logger.getLogger(CommandesClientServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(CommandesClientServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(CommandesClientServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } 
     }
 
     /**

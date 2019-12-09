@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -44,42 +45,91 @@ public class ModifierClientServlet extends HttpServlet {
         dataSource = DataSourceFactory.getDataSource();
         dao = new DAOclient(dataSource);
         
-        String client="";
-        try{
-            client = request.getSession().getAttribute("id").toString();
-            if (client == ""){throw new Exception() ;}
-        }catch(Exception e){
-            throw new Exception("Client non connecté.");
-        }
-        
+        String client=request.getSession().getAttribute("id").toString();
         String action = request.getParameter("action");
         String data = request.getParameter("data");
+        ClientEntity clientEntity;
         
         switch (action){
-            case "email": dao.modifierContact(client, data);
+            case "email": 
+                try{
+                    dao.modifierContact(client, data);
+                }catch(Exception e){
+                    throw new Exception(e);
+                }
+            break;
+            case "adresse": 
+                try{
+                    dao.modifierAdresse(client, data);
+                }catch(Exception e){
+                    throw new Exception(e);
+                }
+            break;
+            case "ville": 
+                try{
+                    dao.modifierVille(client, data);
+                }catch(Exception e){
+                    throw new Exception(e);
+                }
+            break;    
+            case "region": 
+                try{
+                    dao.modifierRegion(client, data);
+                }catch(Exception e){
+                    throw new Exception(e);
+                }
+            break;  
+            case "cp":
+                try{
+                    dao.modifierCodePostal(client, data);
+                }catch(Exception e){
+                    throw new Exception(e);
+                }
+            break;
+            case "pays": 
+                try{
+                    dao.modifierPays(client, data);
+                }catch(Exception e){
+                    throw new Exception(e);
+                }
+            break;
+            case "tel": 
+                try{
+                    dao.modifierTelephone(client, data);
+                }catch(Exception e){
+                    throw new Exception(e);
+                }
                 break;
-            case "adresse": dao.modifierAdresse(client, data);
-                break;
-            case "ville": dao.modifierVille(client, data);
-                break;    
-            case "region": dao.modifierRegion(client, data);
-                break;  
-            case "cp":dao.modifierCodePostal(client, data);
-                break;
-            case "pays": dao.modifierPays(client, data);
-                break;
-            case "tel": dao.modifierTelephone(client, data);
-                break;
-            case "fax": dao.modifierFax(client, data);
-                break;
-            case "societe": dao.modifierSociete(client, data);
-                break;
-            case "fonction": dao.modifierFonction(client, data);
-                break;    
+            case "fax": 
+                try{
+                    dao.modifierFax(client, data);
+                }catch(Exception e){
+                    throw new Exception(e);
+                }
+            break;
+            case "societe": 
+                try{
+                    dao.modifierSociete(client, data);
+                }catch(Exception e){
+                    throw new Exception(e);
+                }
+            break;
+            case "fonction": 
+                try{
+                    dao.modifierFonction(client, data);
+                }catch(Exception e){
+                    throw new Exception(e);
+                }
+            break;    
         }
+        try{
+            clientEntity = dao.afficherClient(client);
+        }catch(Exception e){
+            throw new Exception(e);
+        }                
+
         try (PrintWriter out = response.getWriter()) {
             response.setContentType("application/json;charset=UTF-8");
-            ClientEntity clientEntity = dao.afficherClient(client);
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
             String gsonData = gson.toJson(clientEntity);
             out.println(gsonData);

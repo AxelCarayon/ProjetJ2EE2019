@@ -10,7 +10,7 @@ import com.google.gson.GsonBuilder;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.text.ParseException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -19,17 +19,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
-import modele.dao.DAOcommande;
+import modele.dao.DAOproduit;
 import modele.dao.DataSourceFactory;
+import modele.entity.LigneCommandeEntity;
 
 /**
  *
  * @author marie
  */
-@WebServlet(name = "PrixCommandeServlet", urlPatterns = {"/PrixCommandeServlet"})
-public class PrixCommandeServlet extends HttpServlet {
+@WebServlet(name = "ProduitTrashServlet", urlPatterns = {"/ProduitTrashServlet"})
+public class ProduitTrashServlet extends HttpServlet {
+
     private DataSource dataSource;
-    private DAOcommande dao;
+    private DAOproduit dao;
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -38,24 +41,21 @@ public class PrixCommandeServlet extends HttpServlet {
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
+     * @throws java.sql.SQLException
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, SQLException, ParseException {
+            throws ServletException, IOException, SQLException {
+        response.setContentType("application/json;charset=UTF-8");
         dataSource = DataSourceFactory.getDataSource();
-        dao = new DAOcommande(dataSource);
+        dao = new DAOproduit(dataSource);
         int code = Integer.parseInt(request.getParameter("code"));
-        double data;
         
         try{
-            data = dao.prixCommande(code);
+            if(request.getSession().getAttribute("etat")== "admin"){
+                dao.supprimerProduit(code);
+            }
         }catch(SQLException e){
             throw new SQLException(e);
-        }
-        try (PrintWriter out = response.getWriter()) {
-            response.setContentType("application/json;charset=UTF-8");
-            Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            String gsonData = gson.toJson(data);
-            out.println(gsonData);
         }
     }
 
@@ -74,9 +74,7 @@ public class PrixCommandeServlet extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(PrixCommandeServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(PrixCommandeServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProduitTrashServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -94,9 +92,7 @@ public class PrixCommandeServlet extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(PrixCommandeServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(PrixCommandeServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProduitTrashServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

@@ -43,13 +43,18 @@ public class ClientServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
-        response.setContentType("application/json;charset=UTF-8");
         dataSource = DataSourceFactory.getDataSource();
         dao = new DAOclient(dataSource);
         String code = "" + request.getParameter("code");
+        ClientEntity data;
+        try{
+            data = dao.afficherClient(code);
+        }catch(SQLException e){
+            throw new SQLException(e);
+        }
         
         try (PrintWriter out = response.getWriter()) {
-            ClientEntity data = dao.afficherClient(code);
+            response.setContentType("application/json;charset=UTF-8");
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
             String gsonData = gson.toJson(data);
             out.println(gsonData);

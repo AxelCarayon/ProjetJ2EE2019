@@ -40,20 +40,22 @@ public class ProduitServlet extends HttpServlet {
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
+     * @throws java.sql.SQLException
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
         dataSource = DataSourceFactory.getDataSource();
         dao = new DAOproduit(dataSource);
-        int code = 0;
+        int code = Integer.parseInt(request.getParameter("reference"));
+        ProduitEntity data;
+        
         try {
-            code = Integer.parseInt(request.getParameter("reference"));
-        } catch (Exception e) {
+            data = dao.afficherProduit(code);
+        } catch (SQLException e) {
+            throw new SQLException(e);
         }
-
-        response.setContentType("application/json;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            ProduitEntity data = dao.afficherProduit(code);
+            response.setContentType("application/json;charset=UTF-8");
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
             String gsonData = gson.toJson(data);
             out.println(gsonData);

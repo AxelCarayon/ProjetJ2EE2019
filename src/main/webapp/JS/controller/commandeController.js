@@ -4,6 +4,10 @@ $(document).ready(
         $(document).on('change', '.majQte', function () {
             modifierQteProdLigne($(this).attr('id'),$(this).val());
         });
+        $(document).on('click', '.trashProdCommande', function () {
+            console.log($(this).attr('id'));
+            suppProdLigne($(this).attr('id'));
+        });
     }
 );
 function afficheListeCommandeUser(){
@@ -117,11 +121,20 @@ function suppProdLigne(prod){
                 xhrFields: {
                     withCredentials: true
                 },
-                data: {"commande":idcom,"produit":prod},
+                data: {"commande":idcom,"produit":prod,"action":"trashLigne"},
                 dataType: "json",
                 success: 
                         function(result) {
-                            afficheLigneCommande(idcom);
+                            var template = $('#templateTable').html();
+                            Mustache.parse(template);
+                            var tab = [{titre:"Produit"},{titre:"Catégorie"},{titre:"Prix unitaire"},{titre:"Promo"},{titre:"Quantité"},{titre:"Total"}];
+                            var processedTemplate = Mustache.render(template, {ths:tab,title:"Détails de la commande n°"+idcom});
+                            $('#pageContentProfil').html(processedTemplate);	
+                            
+                            var template = $('#templateTbodyLigneCommandeUser').html();
+                            Mustache.parse(template);
+                            var processedTemplate = Mustache.render(template, {lignes: result,id:idcom });
+                            $('#tbody').html(processedTemplate);
                         },
                 error: showError
             });		

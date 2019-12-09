@@ -44,19 +44,36 @@ public class LignesCommandeServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
-        response.setContentType("application/json;charset=UTF-8");
         dataSource = DataSourceFactory.getDataSource();
         dao = new DAOligne(dataSource);
-        
+        List<LigneCommandeEntity> data;
         int commande = Integer.parseInt(request.getParameter("commande"));
-        
+
         if ( actionIs(request, "majQte")){
             int produit = Integer.parseInt(request.getParameter("produit"));
             int qte = Integer.parseInt(request.getParameter("quantite"));
-            dao.modifierQuantiteLigne(commande, produit, qte);
+            try{
+                dao.modifierQuantiteLigne(commande, produit, qte);
+            }catch(SQLException e){
+                throw new SQLException(e);
+            }
+        }
+        if ( actionIs(request, "trashLigne")){
+            int produit = Integer.parseInt(request.getParameter("produit"));
+            try{
+                dao.supprimerLigne(commande, produit);
+            }catch(SQLException e){
+                throw new SQLException(e);
+            }
+        }
+        
+        try{
+            data = dao.afficherCommande(commande);
+        }catch(SQLException e){
+            throw new SQLException(e);
         }
         try (PrintWriter out = response.getWriter()) {
-            List<LigneCommandeEntity> data = dao.afficherCommande(commande);
+            response.setContentType("application/json;charset=UTF-8");
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
             String gsonData = gson.toJson(data);
             out.println(gsonData);

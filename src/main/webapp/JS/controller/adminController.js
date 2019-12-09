@@ -7,6 +7,9 @@ $(document).ready(
         $(document).on('click', '.modifierProd', function () {
             afficherDetailsProduit($(this).attr('id'));
         });
+        $(document).on('click', '.trashProd', function () {
+            supprimerProduit($(this).attr('id'));
+        });
 });
 
 function displayCat(){
@@ -35,6 +38,7 @@ function afficheListeProduit(id,cat){
                 dataType: "json",
                 success: 
                         function(result) {
+                            console.log("affichage");
                             var template = $('#templateTable').html();
                             Mustache.parse(template);
                             var tab = [{titre:"Réference"},{titre:"Libelle"},{titre:"En stock"},{titre:"commandé"},{titre:"réapro"},{titre:"Prix"},{titre:"Indisponible"}];
@@ -43,7 +47,7 @@ function afficheListeProduit(id,cat){
                             
                             var template = $('#templateTbodyLigneProduitAdmin').html();
                             Mustache.parse(template);
-                            var processedTemplate = Mustache.render(template, {lignes: result });
+                            var processedTemplate = Mustache.render(template, {lignes: result ,idcat:id,titlecat:cat});
                             $('#tbody').html(processedTemplate);
                         },
                 error: showError
@@ -72,6 +76,22 @@ function afficherDetailsProduit(id){
     }
 }
 
+function supprimerProduit(idprod){
+    var idcat = $('.infocat').attr('id');
+    var cat = $('.infocat').text();
+    if (localStorage.getItem('acces') === 'admin'){
+        $.ajax({
+                url: "../ProduitTrashServlet",
+                xhrFields: {
+                    withCredentials: true
+                },
+                data: {"code":idprod},
+                success: function(){console.log("succes");},
+                error: function(){alert("Erreur: produit commandé par un client.");}
+            });		
+    }
+}
+//afficheListeProduit(idcat,cat),
 // Fonction qui traite les erreurs de la requête
 function showError(xhr, status, message) {
         alert("Erreur: " + status + " : " + message);

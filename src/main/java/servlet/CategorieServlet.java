@@ -44,8 +44,14 @@ public class CategorieServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
         dataSource = DataSourceFactory.getDataSource();
-        dao = new DAOcategorie(dataSource);
-        List<CategorieEntity> cat = dao.toutesLesCategories();
+        List<CategorieEntity> cat;
+        try{
+            dao = new DAOcategorie(dataSource);
+            cat = dao.toutesLesCategories();
+        }
+        catch(SQLException e){
+            throw new SQLException(e);
+        }
 
         try ( PrintWriter out = response.getWriter()) {
             response.setContentType("application/json;charset=UTF-8");
