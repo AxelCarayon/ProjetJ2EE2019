@@ -5,7 +5,6 @@ $(document).ready(
                 modifierQteProdLigne($(this).attr('id'), $(this).val());
             });
             $(document).on('click', '.trashProdCommande', function () {
-                console.log($(this).attr('id'));
                 suppProdLigne($(this).attr('id'));
             });
             colCommande = [{titre: "Numéro"}, {titre: "Saisie le"}, {titre: "Envoyée le"}, {titre: "Adresse"}, {titre: "Port"}, {titre: "Total"}];
@@ -113,7 +112,7 @@ function modifierQteProdLigne(prod, qte) {
 }
 
 function suppProdLigne(prod) {
-    var idcom = $('#numCom');
+    var idcom = $('#numCom').text();
     if (localStorage.getItem('acces') === 'true') {
         $.ajax({
             url: "../LignesCommandeServlet",
