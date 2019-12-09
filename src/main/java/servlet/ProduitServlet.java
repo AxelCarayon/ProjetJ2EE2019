@@ -47,19 +47,56 @@ public class ProduitServlet extends HttpServlet {
         dataSource = DataSourceFactory.getDataSource();
         dao = new DAOproduit(dataSource);
         int code = Integer.parseInt(request.getParameter("reference"));
-        ProduitEntity data;
-        
-        try {
-            data = dao.afficherProduit(code);
-        } catch (SQLException e) {
-            throw new SQLException(e);
+
+        ProduitEntity produit;
+        if (request.getSession().getAttribute("etat") == "admin") {
+            if (actionIs(request, "update")) {
+                try {
+                    String data = request.getParameter("data");
+                    String champ = request.getParameter("champ");
+                    switch (champ) {
+                        case "nom":
+                            dao.modifierNomProduit(code, data);
+                            break;
+                        case "fournisseur":
+                            dao.modifierFournisseur(code, Integer.parseInt(data));
+                            break;
+                        case "categorie":
+                            dao.modifierCategorie(code, Integer.parseInt(data));
+                        break;
+                        case "quantite_par_unite":
+                            dao.modifierQuantiteParUnite(code, data);
+                            break;
+                        case "prix_unitaire":
+                            dao.modifierPrixUnitaire(code, Double.parseDouble(data));
+                            break;
+                        case "unites_commandes":
+                            dao.modifierUnitesCommandees(code, Integer.parseInt(data));
+                            break;
+                        case "niveau_reaprovis":
+                            dao.remettreEnStock(code, Integer.parseInt(data));
+                            break;
+                    }
+                }catch(SQLException e){
+                    throw new SQLException(e);
+                }
+            }
+            try {
+                produit = dao.afficherProduit(code);
+            } catch (SQLException e) {
+                throw new SQLException(e);
+            }
+            try ( PrintWriter out = response.getWriter()) {
+                response.setContentType("application/json;charset=UTF-8");
+                Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                String gsonData = gson.toJson(produit);
+                out.println(gsonData);
+            }
         }
-        try (PrintWriter out = response.getWriter()) {
-            response.setContentType("application/json;charset=UTF-8");
-            Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            String gsonData = gson.toJson(data);
-            out.println(gsonData);
-        }
+    }
+
+    private boolean actionIs(HttpServletRequest request, String action) {
+        return action.equals(request.getParameter("action"));
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
