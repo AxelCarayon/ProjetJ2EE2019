@@ -1,8 +1,5 @@
 /* global Mustache */
 $(document).ready(function () {
-    $('#profilInformation').click(function(){
-        console.log("coucou");
-    });
     testConnexionForAfficherPage();
 });
 
@@ -66,6 +63,7 @@ function connexionClient(mail,pw,action) {
 }
 
 function connectSuccess(){
+    sessionStorage.removeItem('MonPanier');
     testConnexionForAfficherPage();
 }
 
