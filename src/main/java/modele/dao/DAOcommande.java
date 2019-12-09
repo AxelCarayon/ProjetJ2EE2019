@@ -408,4 +408,8 @@ public class DAOcommande {
         }
     }
 
+    public int ajouterCommande(String code_client, Date date, Date date0, int i, String contact, String adresse, String ville, String region, String code_postal, String pays, int i0) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

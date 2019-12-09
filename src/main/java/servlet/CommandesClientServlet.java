@@ -48,21 +48,32 @@ public class CommandesClientServlet extends HttpServlet {
         response.setContentType("application/json;charset=UTF-8");
         dataSource = DataSourceFactory.getDataSource();
         dao = new DAOcommande(dataSource);
-        String client = request.getSession().getAttribute("id").toString();
         List<CommandeEntity> data;
-        try{
-           data = dao.listeCommandesClient(client);
-        }catch(SQLException e){
+        
+        if (actionIs(request, "trash")){
+            int code = Integer.parseInt(request.getParameter("code"));
+            try{
+                dao.supprimerCommande(code);
+            }catch(SQLException e){
+                throw new SQLException(e);
+            }
+        } 
+        
+        try {
+            String client = request.getSession().getAttribute("id").toString();
+            data = dao.listeCommandesClient(client);
+        } catch (SQLException e) {
             throw new SQLException(e);
         }
-        
         try (PrintWriter out = response.getWriter()) {
-                Gson gson = new GsonBuilder().setPrettyPrinting().create();
-                String gsonData = gson.toJson(data);
-                out.println(gsonData);
-            }
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            String gsonData = gson.toJson(data);
+            out.println(gsonData);
+        }
     }
-
+    private boolean actionIs(HttpServletRequest request, String action) {
+        return action.equals(request.getParameter("action"));
+    }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
