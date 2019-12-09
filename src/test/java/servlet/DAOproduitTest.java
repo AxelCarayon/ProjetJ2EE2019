@@ -167,6 +167,37 @@ public class DAOproduitTest {
     }
     
     @Test
+    public void listeProduitsCategorieDisponiblesTest() throws SQLException{
+        ProduitEntity p1 = dao.afficherProduit(1);
+        ProduitEntity p2 = dao.afficherProduit(2);
+        ProduitEntity p4 = dao.afficherProduit(34);
+        ProduitEntity p5 = dao.afficherProduit(35);
+        ProduitEntity p6 = dao.afficherProduit(38);
+        ProduitEntity p7 = dao.afficherProduit(39);
+        ProduitEntity p8 = dao.afficherProduit(43);
+        ProduitEntity p9 = dao.afficherProduit(67);
+        ProduitEntity p10 = dao.afficherProduit(70);
+        ProduitEntity p11 = dao.afficherProduit(75);
+        ProduitEntity p12 = dao.afficherProduit(76);
+        
+        List<ProduitEntity> resultat = new ArrayList<ProduitEntity>();
+        resultat.add(p1);
+        resultat.add(p2);
+        resultat.add(p4);
+        resultat.add(p5);
+        resultat.add(p6);
+        resultat.add(p7);
+        resultat.add(p8);
+        resultat.add(p9);
+        resultat.add(p10);
+        resultat.add(p11);
+        resultat.add(p12);
+        
+        assertEquals(resultat,dao.listeProduitsCategorieDisponible(1));
+        
+    }
+    
+    @Test
     public void listeProduitsCategorieTest() throws SQLException{
         ProduitEntity p1 = dao.afficherProduit(1);
         ProduitEntity p2 = dao.afficherProduit(2);
