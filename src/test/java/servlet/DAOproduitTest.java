@@ -283,6 +283,12 @@ public class DAOproduitTest {
     }
     
     @Test
+    public void modifierCategorieTest() throws SQLException{
+        dao.modifierCategorie(code, 8);
+        assertEquals(dao.afficherProduit(code).getCategorie(),8);
+    }
+    
+    @Test
     public void modifierPrixUnitaireTest() throws SQLException{
         dao.modifierPrixUnitaire(code, 147.);
         assertEquals(dao.afficherProduit(code).getPrix_unitaire(),147.,0);

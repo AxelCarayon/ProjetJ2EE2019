@@ -283,9 +283,10 @@ public class DAOproduit {
 
     /**
      * Modifie le fournisseur d'un produit
+     *
      * @param reference la référence du produit
      * @param fournisseur le nouveau fournisseur
-     * @throws SQLException 
+     * @throws SQLException
      */
     public void modifierFournisseur(int reference, int fournisseur) throws SQLException {
         String sql = "UPDATE PRODUIT SET FOURNISSEUR = ? WHERE REFERENCE=?";
@@ -297,14 +298,33 @@ public class DAOproduit {
             throw e;
         }
     }
-    
+
     /**
-     * Modifie la quantité par unité d'un produit
+     * Modifie la categorie d'un produit
+     * 
      * @param reference la référence du produit
-     * @param quantiteParUnite la nouvelle quantité
+     * @param categorie la nouvelle catégorie
      * @throws SQLException 
      */
-    public void modifierQuantiteParUnite(int reference, String quantiteParUnite) throws SQLException{
+    public void modifierCategorie(int reference, int categorie) throws SQLException {
+        String sql = "UPDATE PRODUIT SET CATEGORIE = ? WHERE REFERENCE=?";
+        try ( Connection myConnection = myDataSource.getConnection();  PreparedStatement statement = myConnection.prepareStatement(sql)) {
+            statement.setInt(1, categorie);
+            statement.setInt(2, reference);
+            statement.executeUpdate();
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    /**
+     * Modifie la quantité par unité d'un produit
+     *
+     * @param reference la référence du produit
+     * @param quantiteParUnite la nouvelle quantité
+     * @throws SQLException
+     */
+    public void modifierQuantiteParUnite(int reference, String quantiteParUnite) throws SQLException {
         String sql = "UPDATE PRODUIT SET QUANTITE_PAR_UNITE = ? WHERE REFERENCE=?";
         try ( Connection myConnection = myDataSource.getConnection();  PreparedStatement statement = myConnection.prepareStatement(sql)) {
             statement.setString(1, quantiteParUnite);
@@ -314,18 +334,19 @@ public class DAOproduit {
             throw e;
         }
     }
-    
+
     /**
      * Modifie le prix unitaire d'un produit
+     *
      * @param reference la référence du produit
      * @param prix le nouveau prix
-     * @throws SQLException 
+     * @throws SQLException
      */
-    public void modifierPrixUnitaire(int reference, Double prix) throws SQLException{
+    public void modifierPrixUnitaire(int reference, Double prix) throws SQLException {
         if (prix < 1) {
             throw new IllegalArgumentException("Le nouveau prix ne peut être nul ou négatif");
         }
-        
+
         String sql = "UPDATE PRODUIT SET PRIX_UNITAIRE = ? WHERE REFERENCE=?";
         try ( Connection myConnection = myDataSource.getConnection();  PreparedStatement statement = myConnection.prepareStatement(sql)) {
             statement.setDouble(1, prix);
@@ -335,14 +356,15 @@ public class DAOproduit {
             throw e;
         }
     }
-    
+
     /**
      * Modifie le nom d'un produit
+     *
      * @param reference la référence du produit
      * @param nom le nouveau nom
-     * @throws SQLException 
+     * @throws SQLException
      */
-    public void modifierNomProduit(int reference, String nom) throws SQLException{
+    public void modifierNomProduit(int reference, String nom) throws SQLException {
         String sql = "UPDATE PRODUIT SET NOM = ? WHERE REFERENCE=?";
         try ( Connection myConnection = myDataSource.getConnection();  PreparedStatement statement = myConnection.prepareStatement(sql)) {
             statement.setString(1, nom);
@@ -352,7 +374,6 @@ public class DAOproduit {
             throw e;
         }
     }
-    
 
     /**
      * Affiche le nom d'un produit
