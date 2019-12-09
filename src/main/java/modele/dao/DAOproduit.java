@@ -258,6 +258,103 @@ public class DAOproduit {
     }
 
     /**
+     * Remet en stock des unités et enlève l'indisponibilité
+     *
+     * @param reference la référence du produit
+     * @param quantite la quantité à réapprovisionner
+     * @throws SQLException
+     */
+    public void remettreEnStock(int reference, int quantite) throws SQLException {
+
+        if (quantite < 1) {
+            throw new IllegalArgumentException("La quantité a modifier ne peut être nulle ou négative");
+        }
+
+        String sql = "UPDATE PRODUIT SET UNITES_EN_STOCK = ? , INDISPONIBLE = 0 WHERE REFERENCE=?"; //On met indisponible à 0 puisque c'est forcémernt disponible car on remet en stock.
+        try ( Connection myConnection = myDataSource.getConnection();  PreparedStatement statement = myConnection.prepareStatement(sql)) {
+            int stock = this.uniteEnStock(reference);
+            statement.setInt(1, quantite + stock);
+            statement.setInt(2, reference);
+            statement.executeUpdate();
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    /**
+     * Modifie le fournisseur d'un produit
+     * @param reference la référence du produit
+     * @param fournisseur le nouveau fournisseur
+     * @throws SQLException 
+     */
+    public void modifierFournisseur(int reference, int fournisseur) throws SQLException {
+        String sql = "UPDATE PRODUIT SET FOURNISSEUR = ? WHERE REFERENCE=?";
+        try ( Connection myConnection = myDataSource.getConnection();  PreparedStatement statement = myConnection.prepareStatement(sql)) {
+            statement.setInt(1, fournisseur);
+            statement.setInt(2, reference);
+            statement.executeUpdate();
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+    
+    /**
+     * Modifie la quantité par unité d'un produit
+     * @param reference la référence du produit
+     * @param quantiteParUnite la nouvelle quantité
+     * @throws SQLException 
+     */
+    public void modifierQuantiteParUnite(int reference, String quantiteParUnite) throws SQLException{
+        String sql = "UPDATE PRODUIT SET QUANTITE_PAR_UNITE = ? WHERE REFERENCE=?";
+        try ( Connection myConnection = myDataSource.getConnection();  PreparedStatement statement = myConnection.prepareStatement(sql)) {
+            statement.setString(1, quantiteParUnite);
+            statement.setInt(2, reference);
+            statement.executeUpdate();
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+    
+    /**
+     * Modifie le prix unitaire d'un produit
+     * @param reference la référence du produit
+     * @param prix le nouveau prix
+     * @throws SQLException 
+     */
+    public void modifierPrixUnitaire(int reference, Double prix) throws SQLException{
+        if (prix < 1) {
+            throw new IllegalArgumentException("Le nouveau prix ne peut être nul ou négatif");
+        }
+        
+        String sql = "UPDATE PRODUIT SET PRIX_UNITAIRE = ? WHERE REFERENCE=?";
+        try ( Connection myConnection = myDataSource.getConnection();  PreparedStatement statement = myConnection.prepareStatement(sql)) {
+            statement.setDouble(1, prix);
+            statement.setInt(2, reference);
+            statement.executeUpdate();
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+    
+    /**
+     * Modifie le nom d'un produit
+     * @param reference la référence du produit
+     * @param nom le nouveau nom
+     * @throws SQLException 
+     */
+    public void modifierNomProduit(int reference, String nom) throws SQLException{
+        String sql = "UPDATE PRODUIT SET NOM = ? WHERE REFERENCE=?";
+        try ( Connection myConnection = myDataSource.getConnection();  PreparedStatement statement = myConnection.prepareStatement(sql)) {
+            statement.setString(1, nom);
+            statement.setInt(2, reference);
+            statement.executeUpdate();
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+    
+
+    /**
      * Affiche le nom d'un produit
      *
      * @param reference la référence du produit

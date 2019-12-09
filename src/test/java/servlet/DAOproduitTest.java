@@ -20,7 +20,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import org.junit.Ignore;
 
 /**
  *
@@ -260,6 +259,61 @@ public class DAOproduitTest {
         if (supprime == true){
             fail();
         }
+    }
+    
+    
+    @Test
+    public void modifierFournisseurTest() throws SQLException{
+        dao.modifierFournisseur(code, 27);
+        assertEquals(dao.afficherProduit(code).getFournisseur(), 27);
+        
+    }
+    
+    @Test
+    public void modifierQuantiteParUniteTest() throws SQLException{
+        dao.modifierQuantiteParUnite(code, "6x6 bouteilles de 25 cl");
+        assertEquals(dao.afficherProduit(code).getQuantite_par_unite(),"6x6 bouteilles de 25 cl");
+    }
+    
+    @Test
+    public void modifierNomProduitTest() throws SQLException{
+        dao.modifierNomProduit(code, "bidule");
+        assertEquals(dao.afficherProduit(code).getNom(),"bidule");
+        
+    }
+    
+    @Test
+    public void modifierPrixUnitaireTest() throws SQLException{
+        dao.modifierPrixUnitaire(code, 147.);
+        assertEquals(dao.afficherProduit(code).getPrix_unitaire(),147.,0);
+        
+        boolean modifie = true;
+        try{
+            dao.modifierPrixUnitaire(code, -1.);
+        }catch(Exception e){
+            modifie = false;
+        }
+        if (modifie == true){
+            fail();
+        }
+        
+    }
+    
+    @Test
+    public void remettreEnStockTest() throws SQLException{
+        dao.remettreEnStock(code, 11);
+        assertEquals(dao.afficherProduit(code).getUnites_en_stock(),50);
+        
+        boolean modifie = true;
+        try{
+            dao.remettreEnStock(code, -1);
+        }catch(Exception e){
+            modifie = false;
+        }
+        if (modifie == true){
+            fail();
+        }
+        
     }
     
     
