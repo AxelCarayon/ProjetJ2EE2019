@@ -306,6 +306,12 @@ public class DAOproduitTest {
     }
     
     @Test
+    public void modifierNiveauDeReapproTest() throws SQLException{
+        dao.modifierNiveauDeReappro(code, 50);
+        assertEquals(50,dao.niveauReaprovisionnement(code));
+    }
+    
+    @Test
     public void remettreEnStockTest() throws SQLException{
         dao.remettreEnStock(code, 11);
         assertEquals(dao.afficherProduit(code).getUnites_en_stock(),50);

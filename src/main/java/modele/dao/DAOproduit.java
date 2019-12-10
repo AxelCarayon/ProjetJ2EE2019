@@ -34,7 +34,7 @@ public class DAOproduit {
     public List<ProduitEntity> tousLesProduits() throws SQLException {
         List<ProduitEntity> resultat = new ArrayList<ProduitEntity>();
         String sql = "SELECT * FROM PRODUIT";
-        try ( Connection connection = myDataSource.getConnection();  PreparedStatement stmt = connection.prepareStatement(sql)) {
+        try (Connection connection = myDataSource.getConnection(); PreparedStatement stmt = connection.prepareStatement(sql)) {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 int reference = rs.getInt("REFERENCE");
@@ -67,7 +67,7 @@ public class DAOproduit {
     public ProduitEntity afficherProduit(int reference) throws SQLException {
         ProduitEntity resultat = null;
         String sql = "SELECT * FROM PRODUIT WHERE REFERENCE = ?";
-        try ( Connection connection = myDataSource.getConnection();  PreparedStatement stmt = connection.prepareStatement(sql)) {
+        try (Connection connection = myDataSource.getConnection(); PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, reference);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
@@ -111,7 +111,7 @@ public class DAOproduit {
 
         String sql = "insert INTO PRODUIT(NOM,FOURNISSEUR,CATEGORIE,QUANTITE_PAR_UNITE,PRIX_UNITAIRE,UNITES_EN_STOCK,UNITES_COMMANDEES,NIVEAU_DE_REAPPRO,INDISPONIBLE)"
                 + "VALUES(?,?,?,?,?,?,?,?,?) ";
-        try ( Connection connection = myDataSource.getConnection();  PreparedStatement stmt = connection.prepareStatement(sql)) {
+        try (Connection connection = myDataSource.getConnection(); PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, nom);
             stmt.setInt(2, fournisseur);
             stmt.setInt(3, categorie);
@@ -139,7 +139,7 @@ public class DAOproduit {
      */
     public void supprimerProduit(int reference) throws SQLException {
         String sql = "DELETE FROM PRODUIT WHERE REFERENCE = ?";
-        try ( Connection connection = myDataSource.getConnection();  PreparedStatement stmt = connection.prepareStatement(sql)) {
+        try (Connection connection = myDataSource.getConnection(); PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, reference);
             stmt.executeUpdate();
         } catch (Exception e) {
@@ -158,7 +158,7 @@ public class DAOproduit {
         List<ProduitEntity> resultat = new ArrayList<ProduitEntity>();
 
         String sql = "SELECT * FROM PRODUIT WHERE CATEGORIE = ?";
-        try ( Connection connection = myDataSource.getConnection();  PreparedStatement stmt = connection.prepareStatement(sql)) {
+        try (Connection connection = myDataSource.getConnection(); PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, categorie);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
@@ -193,7 +193,7 @@ public class DAOproduit {
         List<ProduitEntity> resultat = new ArrayList<ProduitEntity>();
 
         String sql = "SELECT * FROM PRODUIT WHERE CATEGORIE = ?";
-        try ( Connection connection = myDataSource.getConnection();  PreparedStatement stmt = connection.prepareStatement(sql)) {
+        try (Connection connection = myDataSource.getConnection(); PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, categorie);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
@@ -236,7 +236,7 @@ public class DAOproduit {
 
         String sql = "UPDATE PRODUIT SET UNITES_COMMANDEES = UNITES_COMMANDEES+?, "
                 + "UNITES_EN_STOCK = UNITES_EN_STOCK - ?, INDISPONIBLE = ? WHERE REFERENCE=?";
-        try ( Connection myConnection = myDataSource.getConnection();  PreparedStatement statement = myConnection.prepareStatement(sql)) {
+        try (Connection myConnection = myDataSource.getConnection(); PreparedStatement statement = myConnection.prepareStatement(sql)) {
 
             int indisponible = 0;
 
@@ -271,7 +271,7 @@ public class DAOproduit {
         }
 
         String sql = "UPDATE PRODUIT SET UNITES_EN_STOCK = ? , INDISPONIBLE = 0 WHERE REFERENCE=?"; //On met indisponible à 0 puisque c'est forcémernt disponible car on remet en stock.
-        try ( Connection myConnection = myDataSource.getConnection();  PreparedStatement statement = myConnection.prepareStatement(sql)) {
+        try (Connection myConnection = myDataSource.getConnection(); PreparedStatement statement = myConnection.prepareStatement(sql)) {
             int stock = this.uniteEnStock(reference);
             statement.setInt(1, quantite + stock);
             statement.setInt(2, reference);
@@ -279,6 +279,19 @@ public class DAOproduit {
         } catch (Exception e) {
             throw e;
         }
+    }
+    
+    public void modifierNiveauDeReappro(int reference, int quantite) throws SQLException{
+
+        String sql = "UPDATE PRODUIT SET NIVEAU_DE_REAPPRO = ? , INDISPONIBLE = 0 WHERE REFERENCE=?"; //On met indisponible à 0 puisque c'est forcémernt disponible car on remet en stock.
+        try (Connection myConnection = myDataSource.getConnection(); PreparedStatement statement = myConnection.prepareStatement(sql)) {
+            statement.setInt(1, quantite);
+            statement.setInt(2, reference);
+            statement.executeUpdate();
+        } catch (Exception e) {
+            throw e;
+        }
+        
     }
 
     /**
@@ -290,7 +303,7 @@ public class DAOproduit {
      */
     public void modifierFournisseur(int reference, int fournisseur) throws SQLException {
         String sql = "UPDATE PRODUIT SET FOURNISSEUR = ? WHERE REFERENCE=?";
-        try ( Connection myConnection = myDataSource.getConnection();  PreparedStatement statement = myConnection.prepareStatement(sql)) {
+        try (Connection myConnection = myDataSource.getConnection(); PreparedStatement statement = myConnection.prepareStatement(sql)) {
             statement.setInt(1, fournisseur);
             statement.setInt(2, reference);
             statement.executeUpdate();
@@ -301,14 +314,14 @@ public class DAOproduit {
 
     /**
      * Modifie la categorie d'un produit
-     * 
+     *
      * @param reference la référence du produit
      * @param categorie la nouvelle catégorie
-     * @throws SQLException 
+     * @throws SQLException
      */
     public void modifierCategorie(int reference, int categorie) throws SQLException {
         String sql = "UPDATE PRODUIT SET CATEGORIE = ? WHERE REFERENCE=?";
-        try ( Connection myConnection = myDataSource.getConnection();  PreparedStatement statement = myConnection.prepareStatement(sql)) {
+        try (Connection myConnection = myDataSource.getConnection(); PreparedStatement statement = myConnection.prepareStatement(sql)) {
             statement.setInt(1, categorie);
             statement.setInt(2, reference);
             statement.executeUpdate();
@@ -326,7 +339,7 @@ public class DAOproduit {
      */
     public void modifierQuantiteParUnite(int reference, String quantiteParUnite) throws SQLException {
         String sql = "UPDATE PRODUIT SET QUANTITE_PAR_UNITE = ? WHERE REFERENCE=?";
-        try ( Connection myConnection = myDataSource.getConnection();  PreparedStatement statement = myConnection.prepareStatement(sql)) {
+        try (Connection myConnection = myDataSource.getConnection(); PreparedStatement statement = myConnection.prepareStatement(sql)) {
             statement.setString(1, quantiteParUnite);
             statement.setInt(2, reference);
             statement.executeUpdate();
@@ -348,7 +361,7 @@ public class DAOproduit {
         }
 
         String sql = "UPDATE PRODUIT SET PRIX_UNITAIRE = ? WHERE REFERENCE=?";
-        try ( Connection myConnection = myDataSource.getConnection();  PreparedStatement statement = myConnection.prepareStatement(sql)) {
+        try (Connection myConnection = myDataSource.getConnection(); PreparedStatement statement = myConnection.prepareStatement(sql)) {
             statement.setDouble(1, prix);
             statement.setInt(2, reference);
             statement.executeUpdate();
@@ -366,7 +379,7 @@ public class DAOproduit {
      */
     public void modifierNomProduit(int reference, String nom) throws SQLException {
         String sql = "UPDATE PRODUIT SET NOM = ? WHERE REFERENCE=?";
-        try ( Connection myConnection = myDataSource.getConnection();  PreparedStatement statement = myConnection.prepareStatement(sql)) {
+        try (Connection myConnection = myDataSource.getConnection(); PreparedStatement statement = myConnection.prepareStatement(sql)) {
             statement.setString(1, nom);
             statement.setInt(2, reference);
             statement.executeUpdate();
@@ -384,7 +397,7 @@ public class DAOproduit {
     public String nomProduit(int reference) throws SQLException {
         String resultat = null;
         String sql = "SELECT * FROM PRODUIT WHERE REFERENCE = ?";
-        try ( Connection connection = myDataSource.getConnection();  PreparedStatement stmt = connection.prepareStatement(sql)) {
+        try (Connection connection = myDataSource.getConnection(); PreparedStatement stmt = connection.prepareStatement(sql)) {
 
             stmt.setInt(1, reference);
 
@@ -407,7 +420,7 @@ public class DAOproduit {
     public int numeroFournisseur(int reference) throws SQLException {
         int resultat = 0;
         String sql = "SELECT * FROM PRODUIT WHERE REFERENCE = ?";
-        try ( Connection connection = myDataSource.getConnection();  PreparedStatement stmt = connection.prepareStatement(sql)) {
+        try (Connection connection = myDataSource.getConnection(); PreparedStatement stmt = connection.prepareStatement(sql)) {
 
             stmt.setInt(1, reference);
 
@@ -430,7 +443,7 @@ public class DAOproduit {
     public int numeroCategorie(int reference) throws SQLException {
         int resultat = 0;
         String sql = "SELECT * FROM PRODUIT WHERE REFERENCE = ?";
-        try ( Connection connection = myDataSource.getConnection();  PreparedStatement stmt = connection.prepareStatement(sql)) {
+        try (Connection connection = myDataSource.getConnection(); PreparedStatement stmt = connection.prepareStatement(sql)) {
 
             stmt.setInt(1, reference);
 
@@ -453,7 +466,7 @@ public class DAOproduit {
     public String quantiteParUnite(int reference) throws SQLException {
         String resultat = null;
         String sql = "SELECT * FROM PRODUIT WHERE REFERENCE = ?";
-        try ( Connection connection = myDataSource.getConnection();  PreparedStatement stmt = connection.prepareStatement(sql)) {
+        try (Connection connection = myDataSource.getConnection(); PreparedStatement stmt = connection.prepareStatement(sql)) {
 
             stmt.setInt(1, reference);
 
@@ -476,7 +489,7 @@ public class DAOproduit {
     public Double prixUnitaire(int reference) throws SQLException {
         Double resultat = 0.00;
         String sql = "SELECT * FROM PRODUIT WHERE REFERENCE = ?";
-        try ( Connection connection = myDataSource.getConnection();  PreparedStatement stmt = connection.prepareStatement(sql)) {
+        try (Connection connection = myDataSource.getConnection(); PreparedStatement stmt = connection.prepareStatement(sql)) {
 
             stmt.setInt(1, reference);
 
@@ -499,7 +512,7 @@ public class DAOproduit {
     public int uniteEnStock(int reference) throws SQLException {
         int resultat = 0;
         String sql = "SELECT * FROM PRODUIT WHERE REFERENCE = ?";
-        try ( Connection connection = myDataSource.getConnection();  PreparedStatement stmt = connection.prepareStatement(sql)) {
+        try (Connection connection = myDataSource.getConnection(); PreparedStatement stmt = connection.prepareStatement(sql)) {
 
             stmt.setInt(1, reference);
 
@@ -522,7 +535,7 @@ public class DAOproduit {
     public int uniteCommandes(int reference) throws SQLException {
         int resultat = 0;
         String sql = "SELECT * FROM PRODUIT WHERE REFERENCE = ?";
-        try ( Connection connection = myDataSource.getConnection();  PreparedStatement stmt = connection.prepareStatement(sql)) {
+        try (Connection connection = myDataSource.getConnection(); PreparedStatement stmt = connection.prepareStatement(sql)) {
 
             stmt.setInt(1, reference);
 
@@ -545,7 +558,7 @@ public class DAOproduit {
     public int niveauReaprovisionnement(int reference) throws SQLException {
         int resultat = 0;
         String sql = "SELECT * FROM PRODUIT WHERE REFERENCE = ?";
-        try ( Connection connection = myDataSource.getConnection();  PreparedStatement stmt = connection.prepareStatement(sql)) {
+        try (Connection connection = myDataSource.getConnection(); PreparedStatement stmt = connection.prepareStatement(sql)) {
 
             stmt.setInt(1, reference);
 
@@ -568,7 +581,7 @@ public class DAOproduit {
     public boolean estIndisponible(int reference) throws SQLException {
         boolean resultat = true;
         String sql = "SELECT * FROM PRODUIT WHERE REFERENCE = ?";
-        try ( Connection connection = myDataSource.getConnection();  PreparedStatement stmt = connection.prepareStatement(sql)) {
+        try (Connection connection = myDataSource.getConnection(); PreparedStatement stmt = connection.prepareStatement(sql)) {
 
             stmt.setInt(1, reference);
 
