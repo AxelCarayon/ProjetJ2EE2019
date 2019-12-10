@@ -2,7 +2,6 @@
 
 $(document).ready(
         function () {
-
             $(document).on('click', '.nav-link-cat', function () {
                 afficheListeProduit($(this).attr('id'), $(this).text());
             });
@@ -13,21 +12,23 @@ $(document).ready(
                 supprimerProduit($(this).attr('id'));
             });
             $(document).on('click', '#fromModifierProduit', function () {
-                console.log("submit");
                 modifierProduit();
+            });
+            $(document).on('click', '.link-ajout-prod', function () {
+                afficherFormAjoutProd();
             });
         });
 
-function displayCat() {
+function displayCat(t,t1) {
     $.ajax({
         url: "../CategorieServlet",
         dataType: "json",
         success:
                 function (result) {
-                    var template = $('#').html();
+                    var template = $('#'+t).html();
                     Mustache.parse(template);
                     var processedTemplate = Mustache.render(template, {categories: result});
-                    $('#').html(processedTemplate);
+                    $('#'+t1).html(processedTemplate);
                 },
         error: showError
     });
@@ -44,7 +45,6 @@ function afficheListeProduit(id, cat) {
             dataType: "json",
             success:
                     function (result) {
-                        console.log("affichage");
                         var template = $('#templateTable').html();
                         Mustache.parse(template);
                         var tab = [{titre: "Réference"}, {titre: "Libelle"}, {titre: "En stock"}, {titre: "commandé"}, {titre: "réapro"}, {titre: "Prix"}, {titre: "Indisponible"}];
@@ -76,10 +76,39 @@ function afficherDetailsProduit(id) {
                         Mustache.parse(template);
                         var processedTemplate = Mustache.render(template, {produit: result});
                         $('#pageContentProfil').html(processedTemplate);
+                        catForModifProd(result);
                     },
             error: showError
         });
     }
+}
+
+function catForModifProd(prod) {
+    $.ajax({
+        url: "../CategorieServlet",
+        dataType: "json",
+        success:
+                function (result) {
+                    catActiveProduit(prod.categorie,result);
+                },
+        error: showError
+    });
+}
+
+function catActiveProduit(codeCat,listcat){
+    $.ajax({
+        url: "../CategorieServlet",
+        data:{"action":"libelle","code":codeCat},
+        dataType: "json",
+        success:
+                function (result) {
+                    var template = $('#templateOptCatForModif').html();
+                    Mustache.parse(template);
+                    var processedTemplate = Mustache.render(template, {codeCat:codeCat, libCat:result,categories: listcat});
+                    $('#categorie').html(processedTemplate);
+                },
+        error: showError
+    });
 }
 
 function supprimerProduit(idprod) {
@@ -119,11 +148,48 @@ function modifierProduit() {
                             Mustache.parse(template);
                             var processedTemplate = Mustache.render(template, {produit: result});
                             $('#pageContentProfil').html(processedTemplate);
+                            catForModifProd(result);
                         },
                 error: showError
             });
         }
     }
+}
+function afficherFormAjoutProd(){
+    var template = $('#templateFormAjoutProduit').html();
+    Mustache.parse(template);
+    var processedTemplate = Mustache.render(template);
+    $('#pageContentProfil').html(processedTemplate);
+    displayCat('templateOptCat','categorie');
+    $('#fromAjouterProduit').click(ajouterProduit);
+}  
+
+function ajouterProduit(){
+    var champs = ["nom", "fournisseur", "categorie", "quantite_par_unite", "prix_unitaire", "unite_commandees", "niveau_de_reappro","unite_en_stock"];
+    var data =[];
+    
+    for (var i = 0; i < champs.length; i++ ) {
+        if (champs[i]==="categorie"){
+            data.push($('#categorie option:selected').val());
+        }else data.push($('#' + champs[i]).val());
+    }     
+    $.ajax({
+        url: "../ProduitTrashServlet",
+        xhrFields: {
+            withCredentials: true
+        },
+        data: {"action": "add", "nom": data[0],"fournisseur": data[1], "categorie": data[2], "quantite_par_unite": data[3], "prix_unitaire": data[4], "unite_commandees": data[5], "niveau_de_reappro": data[6],"unite_en_stock": data[7]},
+        dataType: "json",
+        success:
+                function (result) {
+                    alert("Produit ajouté.");
+                    var template = $('#templateFormProduitForAdmin').html();
+                    Mustache.parse(template);
+                    var processedTemplate = Mustache.render(template, {produit: result});
+                    $('#pageContentProfil').html(processedTemplate);
+                },
+        error: showError
+    });
 }
 
 // Fonction qui traite les erreurs de la requête

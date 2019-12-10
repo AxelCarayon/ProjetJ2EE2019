@@ -214,7 +214,6 @@ function commander(){
            dataType: "json",
            success: 
                    function(result) {
-                       console.log(result);
                        ajoutLigneCommande(result,panier);
                    },
            error: showError
@@ -227,9 +226,9 @@ function ajoutLigneCommande(code,panier){
         var article = panier.getPanier()[i];
         $.get("CommanderServlet",{code:code,prod:article.codeArticle,qte:article.qteArticle},'json');;//appel ajax
     }
-    alert("Commande enregistré !");
-    sessionStorage.removeItem('MonPanier');
+    localStorage.removeItem('MonPanier');
     displayPanier(new Panier());
+    alert("Commande enregistré !");
 }
 
 // Fonction qui traite les erreurs de la requête

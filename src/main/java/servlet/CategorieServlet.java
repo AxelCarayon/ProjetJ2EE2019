@@ -44,23 +44,39 @@ public class CategorieServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
         dataSource = DataSourceFactory.getDataSource();
+        dao = new DAOcategorie(dataSource);
         List<CategorieEntity> cat;
-        try{
-            dao = new DAOcategorie(dataSource);
-            cat = dao.toutesLesCategories();
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        String gsonData; 
+        if(actionIs(request, "libelle")){
+            try{
+                int code = Integer.parseInt(request.getParameter("code"));
+                String libelle=dao.afficherLibelle(code);
+                envoyerResultat(response,gson.toJson(libelle));
+            }
+            catch(SQLException e){
+                throw new SQLException(e);
+            }
+        }else{
+            try{
+                cat = dao.toutesLesCategories();
+                envoyerResultat(response,gson.toJson(cat));
+            }
+            catch(SQLException e){
+                throw new SQLException(e);
+            }
         }
-        catch(SQLException e){
-            throw new SQLException(e);
-        }
-
+        
+    }
+    private boolean actionIs(HttpServletRequest request, String action) {
+        return action.equals(request.getParameter("action"));
+    }
+    private void envoyerResultat(HttpServletResponse response, String gsonData) throws IOException{
         try ( PrintWriter out = response.getWriter()) {
             response.setContentType("application/json;charset=UTF-8");
-            Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            String gsonData = gson.toJson(cat);
             out.println(gsonData);
         }
     }
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
