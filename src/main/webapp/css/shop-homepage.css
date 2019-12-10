@@ -26,6 +26,9 @@ nav .dropleft .dropdown-toggle::before{
     color:green;
     padding-top: 5px;
 }
+.fa.fa-times:hover{
+    color:red;
+}
 .container.pageContent{
     padding-top: 7%;
 }
