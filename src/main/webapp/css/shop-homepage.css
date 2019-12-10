@@ -13,8 +13,18 @@ nav .dropleft .dropdown-toggle::before{
     padding-left: 3%;
     padding-right: 3%;
 }
-#displayMenu div.col:hover{
+#displayMenu div.col a:hover{
     color: rgb(104,189,13);
+    text-decoration: none;
+}
+#displayMenu div.col a{
+    color: black;
+    text-decoration: none;
+}
+.list-group-item .font-italic{
+    font-size: x-small;
+    color:green;
+    padding-top: 5px;
 }
 .container.pageContent{
     padding-top: 7%;
