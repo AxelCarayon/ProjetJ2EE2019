@@ -21,7 +21,7 @@ nav .dropleft .dropdown-toggle::before{
     color: black;
     text-decoration: none;
 }
-.list-group-item .font-italic{
+.font-italic{
     font-size: x-small;
     color:green;
     padding-top: 5px;
@@ -51,10 +51,37 @@ nav .dropleft .dropdown-toggle::before{
 .dialogstyleperso .btn.btn-dark{
     margin-right: 10px;
 }
-
+.navbar-cart-product-wrapper{
+    min-width: 270px;
+}
+.navbar-cart-product {
+ padding-top:.6rem;
+ padding-bottom:.6rem;
+ border-bottom:1px solid #e9ecef;
+}
+.dropdown-menu-right {
+ right:0;
+ left:auto;
+}
+@media (max-width: 992px) {
+    .dropdown-menu{
+          height:400px;
+          overflow-y:auto;
+       }
+    }
 @media (min-width: 992px) {
   img.navbar-brand{
     width: 3%;
   }
+}
+@media (max-width: 408px ) {
+    .dropdown-menu-right {
+        right:auto;
+    }
+}
+@media (max-width: 327px ) {
+    .dropdown-menu-right {
+        right:-136px;
+    }
 }
 

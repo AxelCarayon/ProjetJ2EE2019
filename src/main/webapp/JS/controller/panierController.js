@@ -5,6 +5,9 @@ $(document).ready(function(){
      $(document).on('change', '.quantity', function () {
         qteUpDate($(this).attr('id'),$(this).val());
     });
+    $(document).on('click', '.close', function () {
+        supprimer($(this).attr('id'));
+    });
 });
 
 // Objet LignePanier
@@ -85,6 +88,14 @@ function ajouter(dataJson)
     localStorage.setItem("MonPanier",JSON.stringify(monPanier.liste));
 }
 
+function supprimer(code){
+    var panier = new Panier();
+    remplirPanierAvecStorage(panier);
+    panier.supprimerArticle(code);
+    displayPanier(panier);
+    localStorage.setItem("MonPanier",JSON.stringify(panier.liste));
+}
+
 function qteUpDate(id,val){
     var monPanier = new Panier();
     remplirPanierAvecStorage(monPanier);
@@ -123,13 +134,12 @@ function displayPanier(monPanier){
     Mustache.parse(templateP);
     var processedTemplate = Mustache.render(templateP, {prix: monPanier.getPrixPanier() });
     $('#displayprixTotal').html(processedTemplate);
+    $('#prixTotalMobile').html(processedTemplate);
     
-//    var templateMob = $('#templatePanierMob').html();
-//    Mustache.parse(templateMob);
-//    var processedTemplate = Mustache.render(templateMob, {
-//    liste: templateItem,items: monPanier.getPanier()
-//    });
-//    $('#displayShopMob').html(processedTemplate);	 
+    var templateMob = $('#templateItemPanierMobile').html();
+    Mustache.parse(templateMob);
+    var processedTemplate = Mustache.render(templateMob, {items: monPanier.getPanier()});
+    $('.panierForMobil').html(processedTemplate);	 
 
 }
 
