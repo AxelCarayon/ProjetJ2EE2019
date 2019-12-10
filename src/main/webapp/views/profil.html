@@ -363,7 +363,7 @@ and open the template in the editor.
          <!-- Block menu catégorie admin -->
         <script id="templateMenuCatAdmin" type="text/template">
                 <li class="nav-item ">
-                <a class="nav-link" href="#">
+                <a class="nav-link link-ajout-prod" href="#">
                  <i class="far fa-plus-square"></i>
                  <span>Nouveau produit</span></a>
              </li> 
@@ -400,7 +400,7 @@ and open the template in the editor.
 
      <!-- Block formulaire produit -->
         <script id="templateFormProduitForAdmin" type="text/template">
-            <form>
+            <form class="col-12">
               {{#produit}}
                   <div class="form-row">
                     <div class="form-group col-md-6">
@@ -408,43 +408,97 @@ and open the template in the editor.
                       <input class="form-control" id="nom" placeholder="{{nom}}">
                     </div>
                     <div class="form-group col-md-6 ">
-                      <label for="fournisseur">Fournisseur</label>
-                      <input type="text" class="form-control" id="fournisseur" placeholder="{{fournisseur}}">
+                        <label for="categorie">categorie</label>
+                      <select class="form-control form-control-sm" id="categorie">
+                        </select>
+                      <!--<input type="text" class="form-control" id="categorie" placeholder="{{categorie}}">-->
                     </div>
                   </div>
                   <div class="form-row">
-                    <div class="form-group col-md-4">
-                      <label for="categorie">categorie</label>
-                      <input type="text" class="form-control" id="categorie" placeholder="{{categorie}}">
+                    <div class="form-group col-md-3">
+                      <label for="fournisseur">Fournisseur</label>
+                      <input type="number" min="1" class="form-control" id="fournisseur" placeholder="{{fournisseur}}">
                     </div>
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-5">
                       <label for="quantite_par_unite">Quantité par unité</label>
                       <input type="text" class="form-control" id="quantite_par_unite" placeholder="{{quantite_par_unite}}">
                     </div>
                     <div class="form-group col-md-2">
                       <label for="prix_unitaire">prix unitaire</label>
-                      <input type="text" class="form-control" id="prix_unitaire" placeholder="{{prix_unitaire}}">
+                      <input type="number" min="0" step="0.01" class="form-control" id="prix_unitaire" placeholder="{{prix_unitaire}}">
                     </div>
                     <div class="form-group col-md-2">
                       <label for="unites_commandes">Unités commandés</label>
-                      <input type="text" class="form-control" id="unites_commandes" placeholder="{{unites_commandes}}">
+                      <input type="number" min="0" class="form-control" id="unites_commandes" placeholder="{{unites_commandes}}">
                     </div>
                   </div>
                   <div class="form-row">
                     <div class="form-group col-md-6">
-                      <label for="niveau_reaprovis">niveau reaprovis</label>
-                      <input type="number" class="form-control" id="niveau_reaprovis" placeholder="{{niveau_reaprovis}}">
+                      <label for="niveau_reaprovis">Ajouter des produit au stock</label>
+                      <input type="number" min="0" class="form-control" id="niveau_reaprovis" >
                     </div>
-                      
+                    <div class="form-group col-md-6">
+                      <label for="unites_en_stock">Unité en stock</label>
+                      <div  class="form-control" id="unites_en_stock" >{{unites_en_stock}}</div>
+                    </div>  
                   </div> 
                   <div id="reference" class="d-none ">{{reference}}</div>
                 {{/produit}}
                 <button id="fromModifierProduit"  type="button" class="btn btn-primary">Modifier</button>
             </form>
         </script>
-        <!--//onclick="modifierProduit()"-->
+         <!-- Block formulaire ajout produit -->
+        <script id="templateFormAjoutProduit" type="text/template">
+            <form class="col-12">
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label for="nom">Nom</label>
+                      <input class="form-control" id="nom" >
+                    </div>
+                    <div class="form-group col-md-6 ">
+                        <label for="categorie">categorie</label>
+                        <select class="form-control form-control-sm" id="categorie">
+                        </select>
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label for="quantite_par_unite">Quantité par unité</label>
+                      <input type="text" class="form-control" id="quantite_par_unite" >
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label for="prix_unitaire">prix unitaire</label>
+                      <input type="number" min="0"  step="0.01" class="form-control" id="prix_unitaire" >
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label for="fournisseur">Identifiant fournisseur</label>
+                      <input type="number" min="0" class="form-control" id="fournisseur" >
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label for="unite_en_stock">Unité en stock</label>
+                      <input type="number" min="0" class="form-control" id="unite_en_stock" >
+                    </div>
+                  </div> 
+                <button id="fromAjouterProduit"  type="button" class="btn btn-primary">Ajouter</button>
+            </form>
+        </script>
+            
+        <script id="templateOptCat" type="text/template">
+            {{#categories}}
+               <option value="{{code}}">{{libelle}}</option>
+            {{/categories}}
+        </script>
+        <script id="templateOptCatForModif" type="text/template">
+            <option value="{{codeCat}}">{{libCat}}</option>
+            {{#categories}}
+               <option value="{{code}}">{{libelle}}</option>
+            {{/categories}}
+        </script>
+               
         <!--Template piechart-->
-        <script id="templateFormProduitForAdmin" type="text/template">
+        <script id="templatePieChart" type="text/template">
             <div id="piechart" style="width: 900px; height: 500px;"></div>
         </script>
     </body>

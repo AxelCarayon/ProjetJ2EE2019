@@ -48,17 +48,29 @@ public class ProduitTrashServlet extends HttpServlet {
         response.setContentType("application/json;charset=UTF-8");
         dataSource = DataSourceFactory.getDataSource();
         dao = new DAOproduit(dataSource);
-        int code = Integer.parseInt(request.getParameter("code"));
         
         try{
             if(request.getSession().getAttribute("etat")== "admin"){
-                dao.supprimerProduit(code);
+                if(actionIs(request, "add")){
+                    String nom = request.getParameter("nom");
+                    int fournisseur= Integer.parseInt(request.getParameter("fournisseur"));
+                    int categorie= Integer.parseInt(request.getParameter("categorie"));
+                    String quantite_par_unite= request.getParameter("quantite_par_unite");
+                    Double prix_unitaire= Double.parseDouble(request.getParameter("prix_unitaire"));
+                    int unite_en_stock= Integer.parseInt(request.getParameter("unite_en_stock"));     
+                    dao.ajouterProduit(nom, fournisseur, categorie, quantite_par_unite, prix_unitaire, unite_en_stock, 0, 0, false);
+                }else{
+                    int code = Integer.parseInt(request.getParameter("code"));
+                    dao.supprimerProduit(code);
+                }
             }
         }catch(SQLException e){
             throw new SQLException(e);
         }
     }
-
+    private boolean actionIs(HttpServletRequest request, String action) {
+            return action.equals(request.getParameter("action"));
+    }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
