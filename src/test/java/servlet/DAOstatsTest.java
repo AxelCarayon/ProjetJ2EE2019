@@ -86,12 +86,22 @@ public class DAOstatsTest {
     @Test
     public void CAtousLesPaysTest() throws SQLException{
         Object[] pays =dao.CAtousLesPays("1995-01-01", "1995-02-01").keySet().toArray();
-        System.out.println(dao.CAtousLesPays("1995-01-01", "1995-02-01").keySet());
         Double total = 0.00;
         for (int i=0; i<pays.length;i++){
             total+= dao.CAparPays((String)pays[i], "1995-01-01", "1995-02-01");
         }
         assertEquals(total,361446.,0);
+    }
+    
+    @Test
+    public void CAtoutesLesCategoriesTest() throws SQLException{
+        Object[] pays =dao.CAtoutesLesCategories("1995-01-01", "1995-02-01").keySet().toArray();
+        Double total =0.00;
+        for (int i=0; i<pays.length;i++){
+            total+= dao.CApourCategorie(i+1, "1995-01-01", "1995-02-01");
+        }
+        assertEquals(total,361446.,0);
+        
     }
 
     @After

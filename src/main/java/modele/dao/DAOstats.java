@@ -151,6 +151,13 @@ public class DAOstats {
         return ca;
     }
     
+    /**
+     * Renvoie le CA de chaque pays pour une période donnée
+     * @param dateDebut début de la période
+     * @param dateFin fin de la période
+     * @return HashMap<Code du client,CA du client>
+     * @throws SQLException 
+     */
     public Map<String,Double> CAtousLesPays(String dateDebut, String dateFin) throws SQLException {
         List<String> pays = new ArrayList<String>();
         String sql = "SELECT DISTINCT(PAYS_LIVRAISON) FROM COMMANDE WHERE " +
@@ -168,11 +175,38 @@ public class DAOstats {
             throw e;
         }
         
-        System.out.println(pays);
         Map<String,Double> resultat = new HashMap();
         for (int i=0;i<pays.size();i++){
-            System.out.println(this.CAparPays(pays.get(i), dateDebut, dateFin));
             resultat.put(pays.get(i),this.CAparPays(pays.get(i), dateDebut, dateFin));
+        }
+        return resultat;
+    }
+    
+    /**
+     * Renvoie le CA de toutes les catégories sans une période donnée
+     * @param dateDebut date de début
+     * @param dateFin date de fin 
+     * @return HashMap<Nom de la categorie,le CA>
+     * @throws SQLException 
+     */
+    public Map<String,Double> CAtoutesLesCategories(String dateDebut, String dateFin) throws SQLException {
+        List<Integer> categorie = new ArrayList<Integer>();
+        List<String> libelle = new ArrayList<String>();
+        String sql = "SELECT CODE,LIBELLE FROM CATEGORIE";
+        try (Connection connection = myDataSource.getConnection();
+                PreparedStatement stmt = connection.prepareStatement(sql)) {
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                categorie.add(rs.getInt("CODE"));
+                libelle.add(rs.getString("LIBELLE"));
+            }
+        }catch(Exception e){
+            throw e;
+        }
+        
+        Map<String,Double> resultat = new HashMap();
+        for (int i=0;i<categorie.size();i++){
+            resultat.put(libelle.get(i),this.CApourCategorie(categorie.get(i), dateDebut, dateFin));
         }
         return resultat;
     }
