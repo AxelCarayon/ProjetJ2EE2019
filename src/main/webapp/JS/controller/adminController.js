@@ -47,7 +47,7 @@ function afficheListeProduit(id, cat) {
                     function (result) {
                         var template = $('#templateTable').html();
                         Mustache.parse(template);
-                        var tab = [{titre: "Réference"}, {titre: "Libelle"}, {titre: "En stock"}, {titre: "commandé"}, {titre: "réapro"}, {titre: "Prix"}, {titre: "Indisponible"}];
+                        var tab = [{titre: "Réference"}, {titre: "Libelle"},{titre: "Quantité par unité"}, {titre: "En stock"}, {titre: "commandé"}, {titre: "Prix"}, {titre: "Indisponible"}];
                         var processedTemplate = Mustache.render(template, {ths: tab, title: "Produit de la catégorie: " + cat});
                         $('#pageContentProfil').html(processedTemplate);
 
