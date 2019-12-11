@@ -5,12 +5,8 @@
  */
 package servlet;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -21,7 +17,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 import modele.dao.DAOproduit;
 import modele.dao.DataSourceFactory;
-import modele.entity.LigneCommandeEntity;
 
 /**
  *

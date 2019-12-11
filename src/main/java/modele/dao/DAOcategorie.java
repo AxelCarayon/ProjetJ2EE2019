@@ -62,7 +62,7 @@ public class DAOcategorie {
 
     public String afficherLibelle(int code) throws SQLException {
         String libelle = null;
-        String sql = "SELECT * FROM CATEGORIE WHERE CODE = ?";
+        String sql = "SELECT LIBELLE FROM CATEGORIE WHERE CODE = ?";
         try (Connection myConnection = myDataSource.getConnection();
                 PreparedStatement statement = myConnection.prepareStatement(sql)) {
             statement.setInt(1, code); // On fixe le 1° paramètre de la requête
@@ -77,7 +77,7 @@ public class DAOcategorie {
 
     public String afficherDescription(int code) throws SQLException {
         String description = null;
-        String sql = "SELECT * FROM CATEGORIE WHERE CODE = ?";
+        String sql = "SELECT DESCRIPTION FROM CATEGORIE WHERE CODE = ?";
         try (Connection myConnection = myDataSource.getConnection();
                 PreparedStatement statement = myConnection.prepareStatement(sql)) {
             statement.setInt(1, code); // On fixe le 1° paramètre de la requête

@@ -5,13 +5,11 @@
  */
 package servlet;
 
-import static servlet.DAOclientTest.getDataSource;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import javax.sql.DataSource;
 import modele.dao.DAOligne;
@@ -23,7 +21,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import org.junit.Ignore;
 
 /**
  *

@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.sql.DataSource;
-import modele.entity.ClientEntity;
 import modele.entity.CommandeEntity;
 import modele.entity.LigneCommandeEntity;
 

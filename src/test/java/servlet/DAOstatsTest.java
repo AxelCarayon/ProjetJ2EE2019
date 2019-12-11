@@ -9,9 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Set;
 import javax.sql.DataSource;
-import modele.dao.DAOligne;
 import modele.dao.DAOstats;
 import org.hsqldb.cmdline.SqlFile;
 import org.hsqldb.cmdline.SqlToolError;
@@ -19,7 +17,6 @@ import org.junit.After;
 import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
-import static servlet.DAOligneTest.getDataSource;
 
 /**
  *

@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.sql.DataSource;
 import modele.dao.DAOcommande;
-import modele.dao.DataSourceFactory;
 import modele.entity.CommandeEntity;
 import org.hsqldb.cmdline.SqlFile;
 import org.hsqldb.cmdline.SqlToolError;
@@ -22,7 +21,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import org.junit.Ignore;
 
 /**
  *

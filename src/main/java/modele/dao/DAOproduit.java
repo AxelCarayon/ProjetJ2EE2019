@@ -412,7 +412,7 @@ public class DAOproduit {
      */
     public String nomProduit(int reference) throws SQLException {
         String resultat = null;
-        String sql = "SELECT * FROM PRODUIT WHERE REFERENCE = ?";
+        String sql = "SELECT NOM FROM PRODUIT WHERE REFERENCE = ?";
         try (Connection connection = myDataSource.getConnection(); PreparedStatement stmt = connection.prepareStatement(sql)) {
 
             stmt.setInt(1, reference);
@@ -435,7 +435,7 @@ public class DAOproduit {
      */
     public int numeroFournisseur(int reference) throws SQLException {
         int resultat = 0;
-        String sql = "SELECT * FROM PRODUIT WHERE REFERENCE = ?";
+        String sql = "SELECT FOURNISSEUR FROM PRODUIT WHERE REFERENCE = ?";
         try (Connection connection = myDataSource.getConnection(); PreparedStatement stmt = connection.prepareStatement(sql)) {
 
             stmt.setInt(1, reference);
@@ -504,7 +504,7 @@ public class DAOproduit {
      */
     public Double prixUnitaire(int reference) throws SQLException {
         Double resultat = 0.00;
-        String sql = "SELECT * FROM PRODUIT WHERE REFERENCE = ?";
+        String sql = "SELECT PRIX_UNITAIRE FROM PRODUIT WHERE REFERENCE = ?";
         try (Connection connection = myDataSource.getConnection(); PreparedStatement stmt = connection.prepareStatement(sql)) {
 
             stmt.setInt(1, reference);
@@ -527,7 +527,7 @@ public class DAOproduit {
      */
     public int uniteEnStock(int reference) throws SQLException {
         int resultat = 0;
-        String sql = "SELECT * FROM PRODUIT WHERE REFERENCE = ?";
+        String sql = "SELECT UNITES_EN_STOCK FROM PRODUIT WHERE REFERENCE = ?";
         try (Connection connection = myDataSource.getConnection(); PreparedStatement stmt = connection.prepareStatement(sql)) {
 
             stmt.setInt(1, reference);
@@ -550,7 +550,7 @@ public class DAOproduit {
      */
     public int uniteCommandes(int reference) throws SQLException {
         int resultat = 0;
-        String sql = "SELECT * FROM PRODUIT WHERE REFERENCE = ?";
+        String sql = "SELECT UNITES_COMMANDEES FROM PRODUIT WHERE REFERENCE = ?";
         try (Connection connection = myDataSource.getConnection(); PreparedStatement stmt = connection.prepareStatement(sql)) {
 
             stmt.setInt(1, reference);
@@ -573,7 +573,7 @@ public class DAOproduit {
      */
     public int niveauReaprovisionnement(int reference) throws SQLException {
         int resultat = 0;
-        String sql = "SELECT * FROM PRODUIT WHERE REFERENCE = ?";
+        String sql = "SELECT NIVEAU_DE_REAPPRO FROM PRODUIT WHERE REFERENCE = ?";
         try (Connection connection = myDataSource.getConnection(); PreparedStatement stmt = connection.prepareStatement(sql)) {
 
             stmt.setInt(1, reference);

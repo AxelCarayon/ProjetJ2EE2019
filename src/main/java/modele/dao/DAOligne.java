@@ -54,7 +54,7 @@ public class DAOligne {
      */
     public List<LigneCommandeEntity> afficherCommande(int commande) throws SQLException {
         List<LigneCommandeEntity> resultat = new ArrayList();
-        String sql = "SELECT * FROM LIGNE WHERE COMMANDE = ?";
+        String sql = "SELECT PRODUIT,QUANTITE FROM LIGNE WHERE COMMANDE = ?";
         try (Connection connection = myDataSource.getConnection();
                 PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1,commande);
@@ -88,7 +88,7 @@ public class DAOligne {
      */
     public List<Integer> afficherCodeProduits(int commande) throws SQLException {
         List<Integer> resultat = new ArrayList<Integer>();
-        String sql = "SELECT * FROM LIGNE WHERE COMMANDE = ?";
+        String sql = "SELECT PRODUIT FROM LIGNE WHERE COMMANDE = ?";
         try (Connection connection = myDataSource.getConnection();
                 PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1,commande);
@@ -111,7 +111,7 @@ public class DAOligne {
      */
     public int afficherQuantite(int commande, int produit) throws SQLException {
         int resultat = 0;
-        String sql = "SELECT * FROM LIGNE WHERE COMMANDE = ?";
+        String sql = "SELECT QUANTITE FROM LIGNE WHERE COMMANDE = ?";
         try (Connection connection = myDataSource.getConnection();
                 PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1,commande);
