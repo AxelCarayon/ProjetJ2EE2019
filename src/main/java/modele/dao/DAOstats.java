@@ -11,7 +11,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Stack;
 import javax.sql.DataSource;
 
@@ -91,12 +93,9 @@ public class DAOstats {
                 + "AND COMMANDE.SAISIE_LE >= ? "
                 + "AND COMMANDE.SAISIE_LE <= ? ";
         
-        // On met une majuscule au début du mot et le reste en minuscule pour être sur d'avoir le bon format
-        String paysFormate = pays.substring(0,1).toUpperCase() + pays.substring(1, pays.length()).toLowerCase();
-        
         try (Connection connection = myDataSource.getConnection();
                 PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setString(1,paysFormate);
+            stmt.setString(1,pays);
             stmt.setString(2,dateDebut);
             stmt.setString(3, dateFin);
             ResultSet rs = stmt.executeQuery();
@@ -131,12 +130,10 @@ public class DAOstats {
                 + "AND COMMANDE.SAISIE_LE >= ? "
                 + "AND COMMANDE.SAISIE_LE <= ? ";
         
-        //On met en majuscule pour être sur du formatage
-        String client_formate = client.toUpperCase();
         
         try (Connection connection = myDataSource.getConnection();
                 PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setString(1,client_formate);
+            stmt.setString(1,client);
             stmt.setString(2,dateDebut);
             stmt.setString(3, dateFin);
             ResultSet rs = stmt.executeQuery();
@@ -152,6 +149,32 @@ public class DAOstats {
         }
         
         return ca;
+    }
+    
+    public Map<String,Double> CAtousLesPays(String dateDebut, String dateFin) throws SQLException {
+        List<String> pays = new ArrayList<String>();
+        String sql = "SELECT DISTINCT(PAYS_LIVRAISON) FROM COMMANDE WHERE " +
+                     "SAISIE_LE >= ? " +
+                     "AND SAISIE_LE <= ?";
+        try (Connection connection = myDataSource.getConnection();
+                PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, dateDebut);
+            stmt.setString(2, dateFin);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                pays.add(rs.getString("PAYS_LIVRAISON"));
+            }
+        }catch(Exception e){
+            throw e;
+        }
+        
+        System.out.println(pays);
+        Map<String,Double> resultat = new HashMap();
+        for (int i=0;i<pays.size();i++){
+            System.out.println(this.CAparPays(pays.get(i), dateDebut, dateFin));
+            resultat.put(pays.get(i),this.CAparPays(pays.get(i), dateDebut, dateFin));
+        }
+        return resultat;
     }
 
 }

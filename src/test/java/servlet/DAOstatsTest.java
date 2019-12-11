@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Set;
 import javax.sql.DataSource;
 import modele.dao.DAOligne;
 import modele.dao.DAOstats;
@@ -71,7 +72,7 @@ public class DAOstatsTest {
                 107.*60.+
                 174.*21.;
         
-        assertEquals(ca, dao.CAparPays("aLlEmAGne","1995-01-01", "1995-02-01"),0);
+        assertEquals(ca, dao.CAparPays("Allemagne","1995-01-01", "1995-02-01"),0);
     }
     
     @Test
@@ -79,7 +80,18 @@ public class DAOstatsTest {
         Double ca = 50.*6.+
                 90.*15.;
         
-        assertEquals(ca, dao.CAparClient("alfki", "1995-01-01", "1996-01-01"),0);
+        assertEquals(ca, dao.CAparClient("ALFKI", "1995-01-01", "1996-01-01"),0);
+    }
+    
+    @Test
+    public void CAtousLesPaysTest() throws SQLException{
+        Object[] pays =dao.CAtousLesPays("1995-01-01", "1995-02-01").keySet().toArray();
+        System.out.println(dao.CAtousLesPays("1995-01-01", "1995-02-01").keySet());
+        Double total = 0.00;
+        for (int i=0; i<pays.length;i++){
+            total+= dao.CAparPays((String)pays[i], "1995-01-01", "1995-02-01");
+        }
+        assertEquals(total,361446.,0);
     }
 
     @After
