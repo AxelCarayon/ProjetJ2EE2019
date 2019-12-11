@@ -66,6 +66,7 @@ public class DAOproduit {
      */
     public ProduitEntity afficherProduit(int reference) throws SQLException {
         ProduitEntity resultat = null;
+        
         String sql = "SELECT * FROM PRODUIT WHERE REFERENCE = ?";
         try (Connection connection = myDataSource.getConnection(); PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, reference);
@@ -108,22 +109,37 @@ public class DAOproduit {
     public void ajouterProduit(String nom, int fournisseur, int categorie,
             String quantite_par_unite, Double prix_unitaire, int unite_en_stock,
             int unite_commandees, int niveau_de_reappro, boolean indisponible) throws SQLException {
-
-        String sql = "insert INTO PRODUIT(NOM,FOURNISSEUR,CATEGORIE,QUANTITE_PAR_UNITE,PRIX_UNITAIRE,UNITES_EN_STOCK,UNITES_COMMANDEES,NIVEAU_DE_REAPPRO,INDISPONIBLE)"
-                + "VALUES(?,?,?,?,?,?,?,?,?) ";
+        
+        
+        int numero = 0;
+        
+        String sql = "SELECT MAX(REFERENCE) AS REFERENCE FROM PRODUIT";
+        
+        try (Connection connection = myDataSource.getConnection();
+                PreparedStatement stmt = connection.prepareStatement(sql)) {
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                numero = rs.getInt("REFERENCE")+1;
+            }
+        } catch (SQLException e) {
+            throw e;
+        }
+        
+        sql = "insert INTO PRODUIT VALUES(?,?,?,?,?,?,?,?,?,?) ";
         try (Connection connection = myDataSource.getConnection(); PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setString(1, nom);
-            stmt.setInt(2, fournisseur);
-            stmt.setInt(3, categorie);
-            stmt.setString(4, quantite_par_unite);
-            stmt.setDouble(5, prix_unitaire);
-            stmt.setInt(6, unite_en_stock);
-            stmt.setInt(7, unite_commandees);
-            stmt.setInt(8, niveau_de_reappro);
+            stmt.setInt(1,numero);
+            stmt.setString(2, nom);
+            stmt.setInt(3, fournisseur);
+            stmt.setInt(4, categorie);
+            stmt.setString(5, quantite_par_unite);
+            stmt.setDouble(6, prix_unitaire);
+            stmt.setInt(7, unite_en_stock);
+            stmt.setInt(8, unite_commandees);
+            stmt.setInt(9, niveau_de_reappro);
             if (indisponible == true) {
-                stmt.setInt(9, 1);
+                stmt.setInt(10, 1);
             } else {
-                stmt.setInt(9, 0);
+                stmt.setInt(10, 0);
             }
             stmt.executeUpdate();
         } catch (Exception e) {
@@ -442,7 +458,7 @@ public class DAOproduit {
      */
     public int numeroCategorie(int reference) throws SQLException {
         int resultat = 0;
-        String sql = "SELECT * FROM PRODUIT WHERE REFERENCE = ?";
+        String sql = "SELECT CATEGORIE FROM PRODUIT WHERE REFERENCE = ?";
         try (Connection connection = myDataSource.getConnection(); PreparedStatement stmt = connection.prepareStatement(sql)) {
 
             stmt.setInt(1, reference);
@@ -465,7 +481,7 @@ public class DAOproduit {
      */
     public String quantiteParUnite(int reference) throws SQLException {
         String resultat = null;
-        String sql = "SELECT * FROM PRODUIT WHERE REFERENCE = ?";
+        String sql = "SELECT QUANTITE_PAR_UNITE FROM PRODUIT WHERE REFERENCE = ?";
         try (Connection connection = myDataSource.getConnection(); PreparedStatement stmt = connection.prepareStatement(sql)) {
 
             stmt.setInt(1, reference);
@@ -580,7 +596,7 @@ public class DAOproduit {
      */
     public boolean estIndisponible(int reference) throws SQLException {
         boolean resultat = true;
-        String sql = "SELECT * FROM PRODUIT WHERE REFERENCE = ?";
+        String sql = "SELECT INDISPONIBLE FROM PRODUIT WHERE REFERENCE = ?";
         try (Connection connection = myDataSource.getConnection(); PreparedStatement stmt = connection.prepareStatement(sql)) {
 
             stmt.setInt(1, reference);

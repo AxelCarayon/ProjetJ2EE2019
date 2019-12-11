@@ -232,8 +232,12 @@ public class DAOproduitTest {
     @Test
     public void ajouterProduitTest() throws SQLException{
         ProduitEntity p = new ProduitEntity(78,"machin", 1, 1, "6x25cl", 10.00, 100, 25, 10, 0);
+        ProduitEntity p2 = new ProduitEntity(79,"bidule", 1,2,"quantite",20.00,50,0,0,0);
         dao.ajouterProduit("machin", 1, 1, "6x25cl", 10.00, 100, 25, 10, false);
+        dao.ajouterProduit("bidule", 1,2,"quantite",20.00,50,0,0,false);
         assertEquals(dao.afficherProduit(78),p);
+        assertEquals(dao.afficherProduit(79),p2);
+        
     }
     
     @Test
