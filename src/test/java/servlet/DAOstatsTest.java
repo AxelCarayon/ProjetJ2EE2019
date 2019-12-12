@@ -100,6 +100,12 @@ public class DAOstatsTest {
         assertEquals(total,361446.,0);
         
     }
+    
+    @Test
+    public void tousLesPaysTest() throws SQLException{
+        int nombreDePays = 21;
+        assertEquals(dao.tousLesPays().size(),21);
+    }
 
     @After
     public void tearDown() throws SQLException {

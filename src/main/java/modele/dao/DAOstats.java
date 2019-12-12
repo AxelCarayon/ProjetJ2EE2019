@@ -208,5 +208,27 @@ public class DAOstats {
         }
         return resultat;
     }
+    
+    /**
+     * Renvoie la liste de tous les pays qui ont passés une commande.
+     * @return List<String>
+     * @throws SQLException 
+     */
+    public List<String> tousLesPays() throws SQLException{
+        List<String> resultat = new ArrayList<>();
+        String sql = "SELECT DISTINCT PAYS_LIVRAISON FROM COMMANDE";
+        
+        try (Connection connection = myDataSource.getConnection();
+                PreparedStatement stmt = connection.prepareStatement(sql)) {
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                resultat.add(rs.getString("PAYS_LIVRAISON"));
+            }
+        }catch(Exception e){
+            throw e;
+        }
+        
+        return resultat;
+    }
 
 }
