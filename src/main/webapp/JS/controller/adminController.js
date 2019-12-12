@@ -3,9 +3,11 @@
 $(document).ready(
         function () {
             $(document).on('click', '.nav-link-cat', function () {
+                $('h2').addClass('d-none');
                 afficheListeProduit($(this).attr('id'), $(this).text());
             });
             $(document).on('click', '.modifierProd', function () {
+                $('h2').removeClass('d-none');
                 afficherDetailsProduit($(this).attr('id'));
             });
             $(document).on('click', '.trashProd', function () {
@@ -15,9 +17,18 @@ $(document).ready(
                 modifierProduit();
             });
             $(document).on('click', '.link-ajout-prod', function () {
+                $('h2').removeClass('d-none');
+                displayTitre("Ajouté un article");
                 afficherFormAjoutProd();
             });
         });
+        
+function displayTitre(msg){
+    var template = $('#templatetitreSection').html();
+    Mustache.parse(template);
+    var processedTemplate = Mustache.render(template, {titreSection:msg});
+    $('h2').html(processedTemplate);	
+}
 
 function displayCat(t,t1) {
     $.ajax({
@@ -72,6 +83,7 @@ function afficherDetailsProduit(id) {
             dataType: "json",
             success:
                     function (result) {
+                        displayTitre("Éditez le produit "+result.nom);
                         var template = $('#templateFormProduitForAdmin').html();
                         Mustache.parse(template);
                         var processedTemplate = Mustache.render(template, {produit: result});

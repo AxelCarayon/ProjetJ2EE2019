@@ -1,4 +1,9 @@
 /* global Mustache */
+$(document).ready(function () {
+    $(document).on('click', '#profilInformation', function () {
+        afficheInformationUser();
+    });
+});
 
 function afficheInformationUser(){
     if (localStorage.getItem('acces') === 'true'){
