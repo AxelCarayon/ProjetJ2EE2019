@@ -139,6 +139,8 @@ public class DAOligne {
             stmt.setInt(1,commande);
             stmt.setInt(2,produit);
             stmt.setInt(3,quantite);
+            DAOproduit dao = new DAOproduit(myDataSource);
+            dao.modifierUnitesCommandees(commande, quantite);
             stmt.executeUpdate();
         }catch(Exception e){
             throw e;
