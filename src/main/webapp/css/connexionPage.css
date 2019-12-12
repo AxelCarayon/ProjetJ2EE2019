@@ -6,12 +6,14 @@
 .container{
     margin-top: 10%;
 }
+/*navbar*/
 img.navbar-brand{
   width: 10%;
 }
 .sidebar-brand.d-flex.align-items-center.justify-content-center img.navbar-brand{
   width: 25%;
 }
+/*Connexion*/
 .card-signin {
   border: 0;
   border-radius: 1rem;
@@ -40,7 +42,7 @@ img.navbar-brand{
   padding: 1rem;
   transition: all 0.2s;
 }
-
+/*.*/
 .form-label-group {
   position: relative;
   margin-bottom: 1rem;

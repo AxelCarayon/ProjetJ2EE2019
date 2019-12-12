@@ -16,9 +16,7 @@ and open the template in the editor.
         <!-- Custom fonts for this template -->
         <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-
-
-
+        <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css">
     </head>
     <body>
         <div id="body">
@@ -54,6 +52,7 @@ and open the template in the editor.
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
         <script src='../JS/controller/connexionController.js'></script>
         <script src='../JS/sb-admin-2.min.js'></script>
         <script src="../JS/controller/commandeController.js"></script>
@@ -127,7 +126,8 @@ and open the template in the editor.
 
             <!-- Topbar -->
             <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-            
+                <h1 class="h3 mb-0 text-gray-800">{{titre}}</h1>
+
 <!--               Topbar Search 
               <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                 <div class="input-group">
@@ -144,7 +144,6 @@ and open the template in the editor.
               <ul class="navbar-nav ml-auto">
               <li class="nav-item"><a class="nav-link" href="#" onclick="deconnexionClient()">Se déconnecter</a></li>
                 <div class="topbar-divider d-none d-sm-block"></div>
-
                 <!-- Nav Item - User Information -->
                 <li class="nav-item dropdown no-arrow">
                   <a class="nav-link" href="#">
@@ -163,11 +162,10 @@ and open the template in the editor.
 
               <!-- Page Heading -->
               <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                <h1 class="h3 mb-0 text-gray-800">{{titre}}</h1>
+                <h2 class="h3 mb-0 text-gray-800"></h2>
               </div>
               <!-- Content Row -->
               <div class="row" id="pageContentProfil"></div>
-
             </div>
         </div>
              </div>
@@ -337,12 +335,12 @@ and open the template in the editor.
                 <span>C.A by catégorie</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" onclick="" href="#">
+                <a class="nav-link" id="link-ca-pays" href="#">
                  <i class="fas fa-chart-pie"></i>
                  <span>C.A by pays</span></a>
              </li>
              <li class="nav-item">
-                <a class="nav-link" onclick="" href="#">
+                <a class="nav-link" id="link-ca-p" href="#">
                  <i class="fas fa-chart-pie"></i>
                  <span>C.A by client</span></a>
              </li>
@@ -393,7 +391,7 @@ and open the template in the editor.
             {{/lignes}}    
     </script>   
 
-     <!-- Block formulaire produit -->
+     <!-- Block formulaire modifier produit -->
         <script id="templateFormProduitForAdmin" type="text/template">
             <form class="col-12">
               {{#produit}}
@@ -491,10 +489,51 @@ and open the template in the editor.
                <option value="{{code}}">{{libelle}}</option>
             {{/categories}}
         </script>
-               
+             
+        <script id="templatetitreSection" type="text/template">
+            <i class="fas fa-angle-right"></i>  {{titreSection}}
+        </script>
+        
         <!--Template piechart-->
         <script id="templatePieChart" type="text/template">
-            <div id="piechart" style="width: 900px; height: 500px;"></div>
+                <div class="col-stat col-12">
+                    <div class="form-row col-12 justify-content-center">
+                            <div class="form-group col-4">
+                              <label for="dateD">Date de début</label>
+                              <input type="date" class="dateStat form-control" id="dateD" >
+                            </div>
+                            <div class="form-group col-4">
+                              <label for="dateF">Date de fin</label>
+                              <input type="date" class="dateStat form-control" id="dateF" >
+                            </div>
+                    </div>        
+                    <div id="piechart" class="col-12" style="width: 900px; height: 500px;"></div>
+                </div>
+                <div class="col-4 listeClients"></div>
         </script>
+        <!--template liste client pour stat--> 
+        <script id="templateListClient" type="text/template">
+            <table class="table table-clients">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Pays</th>
+                    <th scope="col">Ville</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {{#clients}}
+                  <tr>
+                    <td><input type="checkbox" id="{{code}}" class="select"></input></td>
+                    <td>{{contact}}</td>
+                    <td>{{pays}}</td>
+                    <td>{{ville}}</td>
+                  </tr>
+                {{/clients}}
+                </tbody>
+            </table>
+        </script>
+
     </body>
 </html>

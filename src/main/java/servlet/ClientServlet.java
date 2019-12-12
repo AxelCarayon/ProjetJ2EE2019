@@ -10,6 +10,8 @@ import com.google.gson.GsonBuilder;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -45,10 +47,17 @@ public class ClientServlet extends HttpServlet {
             throws ServletException, IOException, SQLException {
         dataSource = DataSourceFactory.getDataSource();
         dao = new DAOclient(dataSource);
-        String code = "" + request.getParameter("code");
-        ClientEntity data;
+        String code = request.getParameter("code");
+        ClientEntity data = null;
+        List<ClientEntity> dataList = new ArrayList<>();
+        
         try{
-            data = dao.afficherClient(code);
+            if(code!=null){
+                data = dao.afficherClient(code);
+            }else {
+                dataList = dao.tousLesClients();
+            }
+            
         }catch(SQLException e){
             throw new SQLException(e);
         }
@@ -56,7 +65,12 @@ public class ClientServlet extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             response.setContentType("application/json;charset=UTF-8");
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            String gsonData = gson.toJson(data);
+            String gsonData;
+            if (data == null){
+                gsonData = gson.toJson(dataList);
+            }else {
+                gsonData = gson.toJson(data);
+            }
             out.println(gsonData);
         }
     }
