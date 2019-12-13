@@ -3,12 +3,14 @@
 var categorie = [];
 var ca;
 var  pays;
+var caUsers = [];
 
 $(document).ready(function () {
     $.get("../ClientPays",getPays,"json");
     $.get("../CategorieServlet",getCategorie,"json");
 
     $(document).on('click', '#link-ca-cat', function () {
+        $('h2').removeClass('d-none');
         displayChart();
         $('.dateStat').addClass('dateCat');
         displayTitre("Chiffre d'affaires par catégorie d'article");
@@ -22,6 +24,7 @@ $(document).ready(function () {
     });
     
     $(document).on('click', '#link-ca-pays', function () {
+        $('h2').removeClass('d-none');
         displayChart();
         $('.dateStat').addClass('datePays');
         displayTitre("Chiffre d'affaires par pays");
@@ -34,24 +37,48 @@ $(document).ready(function () {
         });
     });
     
-//    $(document).on('click', '#link-ca-p', function () {
-//        displayChart();
-//        displayTitre("Chiffre d'affaires par client");
-//        displayListeClients();
-//        $('.col-stat').removeClass('col-12');
-//        $('.col-stat').addClass('col-8');
-//        $(document).on('click','.select', function (){
-//            var dateD = $('#dateD').val();
-//            var dateF = $('#dateF').val();
-//            if (dateD != "" && dateF!= ""){
-//                $.get("../statServlet",{"action":"pays","dateD":dateD,"dateF":dateF}, statByUser,"json");
-//            }else{
-//                alert("Selectionnez une date de début et de fin.");
-//            }
-//        });
-//    });
-    
-
+    $(document).on('click', '#link-ca-p', function () {
+        displayChart();
+        displayTitre("Chiffre d'affaires par client");
+        displayListeClients();
+        $('.col-stat').addClass('col-lg-8');
+        $(document).on('click','.select', function (){
+            var client = $(this).attr("id");
+            var dateD = $('#dateD').val();
+            var dateF = $('#dateF').val();
+            
+            if(this.checked) {
+                if (dateD != "" && dateF!= ""){
+                    statFor1Usr(dateD,dateF,client);
+                }else{
+                    alert("Selectionnez une date de début et de fin.");
+                }
+            } 
+            else {
+                var newT = [];
+                for (var i=0; i<caUsers.length; i++){
+                    if (caUsers[i][0]!=client){
+                        newT.push(caUsers[i]);
+                    }
+                }
+                caUsers = newT;
+                if (dateD != "" && dateF!= ""){
+                    statByUser();
+                }
+            }
+        });
+        $(document).on('change','.dateStat', function (){
+            var dateD = $('#dateD').val();
+            var dateF = $('#dateF').val();
+            if (dateD != "" && dateF!= "" && caUsers.length>0){
+                while(caUsers.length>0){
+                    var max = caUsers.length-1;
+                    statFor1Usr(dateD,dateF,caUsers[max][0]);
+                    caUsers.pop();
+                }
+            }
+        });
+    });
 });
 
 function getCategorie(result){
@@ -60,7 +87,6 @@ function getCategorie(result){
     }
 }
 function getPays(result){
-    console.log("getPays ",result);
     pays = result;
 }
 
@@ -78,7 +104,6 @@ function displayListeClients(){
            dataType: "json",
            success: 
                    function(result) {
-                       console.log(result);
                        var template = $('#templateListClient').html();
                         Mustache.parse(template);
                         var processedTemplate = Mustache.render(template,{"clients":result});
@@ -97,6 +122,20 @@ function displayChart(){
     $('#pageContentProfil').html(processedTemplate);	
 }
 
+function statFor1Usr(d1,d2,usr){
+     $.ajax({
+           url: "../statServlet",
+           data: {  "action":"client","client":usr,"dateD":d1,"dateF":d2},
+           dataType: "json",
+           success: 
+                   function(result) {
+                        caUsers.push([usr,result]);
+                        statByUser();
+                   },
+           error: showError
+        });
+}
+
 function statByCat(result){
     ca = result;
     google.charts.load('current', {'packages':['corechart']});
@@ -108,10 +147,9 @@ function statByPays(result){
     google.charts.setOnLoadCallback(drawChartPays);
 }
 
-function statByUser(result){
-    ca = result;
+function statByUser(){
     google.charts.load('current', {'packages':['corechart']});
-    google.charts.setOnLoadCallback(drawChartUser);
+    google.charts.setOnLoadCallback(drawChartUsr);
 }
 
 function drawChartCat() {
@@ -139,6 +177,16 @@ function drawChartPays() {
     chart.draw(data);
 }
 
+function drawChartUsr() {
+    var tab =[];
+    tab.push(['Task', 'Hours per Day']);
+    for (var i=0 ; i<caUsers.length;i++){
+            tab.push(caUsers[i]);
+    }
+    var data = google.visualization.arrayToDataTable(tab);
+    var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+    chart.draw(data);
+}
 
 // Fonction qui traite les erreurs de la requête
 function showError(xhr, status, message) {

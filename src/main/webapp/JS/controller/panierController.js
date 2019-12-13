@@ -82,7 +82,6 @@ Panier.prototype.supprimerArticle = function(code)
         
 function ajouter(dataJson)
 {
-    console.log(dataJson);
     var monPanier = new Panier();
     monPanier.ajouterArticle(dataJson.reference,dataJson.nom, 1, dataJson.prix_unitaire,dataJson.quantite_par_unite,dataJson.unites_en_stock);
     remplirPanierAvecStorage(monPanier);
@@ -101,7 +100,6 @@ function supprimer(code){
 function qteUpDate(id,val){
     var monPanier = new Panier();
     remplirPanierAvecStorage(monPanier);
-    console.log(monPanier);
     monPanier.setArticleQte(id,val);
     displayPanier(monPanier);
     localStorage.setItem("MonPanier",JSON.stringify(monPanier.liste));
