@@ -50,7 +50,11 @@ public class ProduitsCategorieServlet extends HttpServlet {
         List<ProduitEntity> data;
         
         try{
-            data = dao.listeProduitsCategorie(categorie);
+            if (actionIs(request, "dispo")){
+                data = dao.listeProduitsCategorieDisponible(categorie);
+            }else{
+                data = dao.listeProduitsCategorie(categorie);
+            }
         }catch(SQLException e){
             throw new SQLException(e);
         }
@@ -62,7 +66,9 @@ public class ProduitsCategorieServlet extends HttpServlet {
             out.println(gsonData);
         }
     }
-
+    private boolean actionIs(HttpServletRequest request, String action) {
+            return action.equals(request.getParameter("action"));
+    }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

@@ -15,7 +15,7 @@ $(document).ready(
 function showProduitByCategorie(cat) {
     $.ajax({
             url: "ProduitsCategorieServlet",
-            data: {categorie: cat},
+            data: {"action":"dispo","categorie": cat},
             dataType: "json",
             success: 
                     function(result) {
