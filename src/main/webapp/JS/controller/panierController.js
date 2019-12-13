@@ -11,13 +11,14 @@ $(document).ready(function(){
 });
 
 // Objet LignePanier
-function LignePanier (code,libelle, qte, prix,quantite_par_unite)
+function LignePanier (code,libelle, qte, prix,quantite_par_unite,unites_en_stock)
 {
     this.codeArticle = code;
     this.libelle = libelle;
     this.qteArticle = qte;
     this.prixArticle = prix;
     this.quantite_par_unite = quantite_par_unite;
+    this.unites_en_stock = unites_en_stock;
     this.prixLigne = this.prixArticle * this.qteArticle;
 }    
 LignePanier.prototype.setQte = function(qte)
@@ -41,10 +42,10 @@ Panier.prototype.getPanier = function(){
     return this.liste;
 };
 
-Panier.prototype.ajouterArticle = function(code, libelle,qte, prix,quantite_par_unite)
+Panier.prototype.ajouterArticle = function(code, libelle,qte, prix,quantite_par_unite,stock)
 { 
     var index = this.getArticle(code);
-    if (index === -1) this.liste.push(new LignePanier(code,libelle, qte, prix,quantite_par_unite));
+    if (index === -1) this.liste.push(new LignePanier(code,libelle, qte, prix,quantite_par_unite,stock));
     else this.liste[index].setQte(qte);
 };
 
@@ -81,8 +82,9 @@ Panier.prototype.supprimerArticle = function(code)
         
 function ajouter(dataJson)
 {
+    console.log(dataJson);
     var monPanier = new Panier();
-    monPanier.ajouterArticle(dataJson.reference,dataJson.nom, 1, dataJson.prix_unitaire,dataJson.quantite_par_unite);
+    monPanier.ajouterArticle(dataJson.reference,dataJson.nom, 1, dataJson.prix_unitaire,dataJson.quantite_par_unite,dataJson.unites_en_stock);
     remplirPanierAvecStorage(monPanier);
     displayPanier(monPanier);
     localStorage.setItem("MonPanier",JSON.stringify(monPanier.liste));
@@ -99,6 +101,7 @@ function supprimer(code){
 function qteUpDate(id,val){
     var monPanier = new Panier();
     remplirPanierAvecStorage(monPanier);
+    console.log(monPanier);
     monPanier.setArticleQte(id,val);
     displayPanier(monPanier);
     localStorage.setItem("MonPanier",JSON.stringify(monPanier.liste));
@@ -116,9 +119,10 @@ function remplirPanierAvecStorage(panier){
             var index = panier.getArticle(obj[i].codeArticle);
             if (index != -1){
                 var qte = parseInt(obj[i].qteArticle)+parseInt(panier.liste[index].qteArticle);
-                panier.ajouterArticle(obj[i].codeArticle,obj[i].libelle,qte,obj[i].prixArticle,obj[i].quantite_par_unite);
-            }else
-            panier.ajouterArticle(obj[i].codeArticle,obj[i].libelle,obj[i].qteArticle,obj[i].prixArticle,obj[i].quantite_par_unite);
+                panier.ajouterArticle(obj[i].codeArticle,obj[i].libelle,qte,obj[i].prixArticle,obj[i].quantite_par_unite,obj[i].unites_en_stock);
+            }
+            else
+            panier.ajouterArticle(obj[i].codeArticle,obj[i].libelle,obj[i].qteArticle,obj[i].prixArticle,obj[i].quantite_par_unite,obj[i].unites_en_stock);
         }
     }
     return panier;
