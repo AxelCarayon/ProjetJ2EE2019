@@ -4,7 +4,14 @@ $(document).ready(
         function () {
             $(document).on('click', '.nav-link-cat', function () {
                 $('h2').addClass('d-none');
-                afficheListeProduit($(this).attr('id'), $(this).text());
+                
+                var template = $('#templateTable').html();
+                Mustache.parse(template);
+                var tab = [{titre: "Réference"}, {titre: "Libelle"},{titre: "Quantité par unité"}, {titre: "En stock"}, {titre: "commandé"}, {titre: "Prix"}, {titre: "Indisponible"}];
+                var processedTemplate = Mustache.render(template, {ths: tab, title: "Produit de la catégorie: " + $(this).text(),idcat:$(this).attr('id'),titlecat:$(this).text()});
+                $('#pageContentProfil').html(processedTemplate);
+                
+                afficheListeProduit($(this).attr('id'));
             });
             $(document).on('click', '.modifierProd', function () {
                 $('h2').removeClass('d-none');
@@ -45,7 +52,7 @@ function displayCat(t,t1) {
     });
 }
 
-function afficheListeProduit(id, cat) {
+function afficheListeProduit(id) {
     if (localStorage.getItem('acces') === 'admin') {
         $.ajax({
             url: "../ProduitsCategorieServlet",
@@ -56,15 +63,9 @@ function afficheListeProduit(id, cat) {
             dataType: "json",
             success:
                     function (result) {
-                        var template = $('#templateTable').html();
-                        Mustache.parse(template);
-                        var tab = [{titre: "Réference"}, {titre: "Libelle"},{titre: "Quantité par unité"}, {titre: "En stock"}, {titre: "commandé"}, {titre: "Prix"}, {titre: "Indisponible"}];
-                        var processedTemplate = Mustache.render(template, {ths: tab, title: "Produit de la catégorie: " + cat});
-                        $('#pageContentProfil').html(processedTemplate);
-
                         var template = $('#templateTbodyLigneProduitAdmin').html();
                         Mustache.parse(template);
-                        var processedTemplate = Mustache.render(template, {lignes: result, idcat: id, titlecat: cat});
+                        var processedTemplate = Mustache.render(template, {lignes: result});
                         $('#tbody').html(processedTemplate);
                     },
             error: showError
@@ -124,8 +125,6 @@ function catActiveProduit(codeCat,listcat){
 }
 
 function supprimerProduit(idprod) {
-    var idcat = $('.infocat').attr('id');
-    var cat = $('.infocat').text();
     if (localStorage.getItem('acces') === 'admin') {
         $.ajax({
             url: "../ProduitTrashServlet",
@@ -177,7 +176,7 @@ function afficherFormAjoutProd(){
 }  
 
 function ajouterProduit(){
-    var champs = ["nom", "fournisseur", "categorie", "quantite_par_unite", "prix_unitaire", "unite_commandees", "niveau_de_reappro","unite_en_stock"];
+    var champs = ["nom", "fournisseur", "categorie", "quantite_par_unite", "prix_unitaire", "unite_en_stock"];
     var data =[];
     
     for (var i = 0; i < champs.length; i++ ) {
@@ -190,21 +189,13 @@ function ajouterProduit(){
         xhrFields: {
             withCredentials: true
         },
-        data: {"action": "add", "nom": data[0],"fournisseur": data[1], "categorie": data[2], "quantite_par_unite": data[3], "prix_unitaire": data[4], "unite_commandees": data[5], "niveau_de_reappro": data[6],"unite_en_stock": data[7]},
-        dataType: "json",
-        success:
-                function (result) {
-                    alert("Produit ajouté.");
-                    var template = $('#templateFormProduitForAdmin').html();
-                    Mustache.parse(template);
-                    var processedTemplate = Mustache.render(template, {produit: result});
-                    $('#pageContentProfil').html(processedTemplate);
-                },
+        data: {"action": "add", "nom": data[0],"fournisseur": data[1], "categorie": data[2], "quantite_par_unite": data[3], "prix_unitaire": data[4],"unite_en_stock": data[5] },
+        success:afficherFormAjoutProd,
         error: showError
     });
 }
 
 // Fonction qui traite les erreurs de la requête
 function showError(xhr, status, message) {
-    alert("Erreur: " + status + " : " + message);
+    alert("Erreur: " + status +" " + message);
 }
