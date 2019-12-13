@@ -10,6 +10,8 @@ import com.google.gson.GsonBuilder;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -43,15 +45,32 @@ public class ClientServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
-        response.setContentType("application/json;charset=UTF-8");
         dataSource = DataSourceFactory.getDataSource();
         dao = new DAOclient(dataSource);
-        String code = "" + request.getParameter("code");
+        String code = request.getParameter("code");
+        ClientEntity data = null;
+        List<ClientEntity> dataList = new ArrayList<>();
+        
+        try{
+            if(code!=null){
+                data = dao.afficherClient(code);
+            }else {
+                dataList = dao.tousLesClients();
+            }
+            
+        }catch(SQLException e){
+            throw new SQLException(e);
+        }
         
         try (PrintWriter out = response.getWriter()) {
-            ClientEntity data = dao.afficherClient(code);
+            response.setContentType("application/json;charset=UTF-8");
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            String gsonData = gson.toJson(data);
+            String gsonData;
+            if (data == null){
+                gsonData = gson.toJson(dataList);
+            }else {
+                gsonData = gson.toJson(data);
+            }
             out.println(gsonData);
         }
     }

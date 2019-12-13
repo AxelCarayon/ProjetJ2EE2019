@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Profil</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link href="../css/svgicons.css" rel="stylesheet">
+        <link href="../css/connexionPage.css" rel="stylesheet">
+        <link href="../css/sb-admin-2.min.css" rel="stylesheet">
+        <!-- Custom fonts for this template -->
+        <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+        <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <div id="body">
+            <!-- Navigation -->
+            <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+                <div class="container-fluid">
+                    <!-- Logo -->
+                    <a href="/ProjetJ2EE2019"><img class="navbar-brand" src="../images/logo.png" /></a>
+                    <!-- Recherche -->
+                    <form class="form-inline my-2 my-lg-0">
+                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                        <!--<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>-->
+                    </form>
+                    <!-- user -->
+                    <div class="nav-item">
+                        <a href="#" class="navbar-icon-link">
+                            <svg class="svg-icon" viewBox="0 0 20 20">
+                            <path d="M12.075,10.812c1.358-0.853,2.242-2.507,2.242-4.037c0-2.181-1.795-4.618-4.198-4.618S5.921,4.594,5.921,6.775c0,1.53,0.884,3.185,2.242,4.037c-3.222,0.865-5.6,3.807-5.6,7.298c0,0.23,0.189,0.42,0.42,0.42h14.273c0.23,0,0.42-0.189,0.42-0.42C17.676,14.619,15.297,11.677,12.075,10.812 M6.761,6.775c0-2.162,1.773-3.778,3.358-3.778s3.359,1.616,3.359,3.778c0,2.162-1.774,3.778-3.359,3.778S6.761,8.937,6.761,6.775 M3.415,17.69c0.218-3.51,3.142-6.297,6.704-6.297c3.562,0,6.486,2.787,6.705,6.297H3.415z"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </nav>
+            <div class="container" id="pageContent">
+            </div>
+        </div>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/0.8.1/mustache.min.js"></script>
+        <script
+        src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+        <script src='../JS/controller/connexionController.js'></script>
+        <script src='../JS/sb-admin-2.min.js'></script>
+        <script src="../JS/controller/commandeController.js"></script>
+        <script src="../JS/controller/userController.js"></script>
+        <script src="../JS/controller/adminController.js"></script>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script src="../JS/controller/statController.js"></script>
+
+         <!-- Block formulaire de connexion -->
+        <script id="templateFormConnexion" type="text/template">
+            <div class="row formconnexion">
+                <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+                  <div class="card bg-dark card-signin my-5">
+                    <div class="card-body">
+                      <h5 class="card-title text-center">Sign In</h5>
+                      <form class="form-signin">
+                        <div class="form-label-group">
+                          <input  id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+                          <label for="inputEmail">Email address</label>
+                        </div>
+
+                        <div class="form-label-group">
+                          <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+                          <label for="inputPassword">Password</label>
+                        </div>
+
+                        <div class="custom-control custom-checkbox mb-3">
+                          <input type="checkbox" class="custom-control-input" id="customCheck1">
+                          <label class="custom-control-label" for="customCheck1">Remember password</label>
+                        </div>
+                          <input class="action d-none" value="connexion">
+                        <button  type="button" onclick="connect()" class="btn btn-lg btn-primary btn-block text-uppercase">Sign in</button>
+                       </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+        </script>
+
+     <!--Block profil -->
+        <script id="templateWelcome" type="text/template">
+            <div class="row">
+
+            </div>
+            <!-- Page Wrapper -->
+      <div id="wrapper">
+
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+          <!-- Sidebar - Brand -->
+          <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/ProjetJ2EE2019">
+          <img class="navbar-brand" src="../images/logo.png" />
+          </a>
+
+          <!-- Divider -->
+          <hr class="sidebar-divider my-0">
+          <div id="showTemplateMenu"></div>
+          
+          <!-- Divider -->
+          <hr class="sidebar-divider d-none d-md-block">
+
+        </ul>
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+          <!-- Main Content -->
+          <div id="content">
+
+            <!-- Topbar -->
+            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                <h1 class="h3 mb-0 text-gray-800">{{titre}}</h1>
+
+<!--               Topbar Search 
+              <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                <div class="input-group">
+                  <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                  <div class="input-group-append">
+                    <button class="btn btn-primary" type="button">
+                      <i class="fas fa-search fa-sm"></i>
+                    </button>
+                  </div>
+                </div>
+              </form>-->
+
+              <!-- Topbar Navbar -->
+              <ul class="navbar-nav ml-auto">
+              <li class="nav-item"><a class="nav-link" href="#" onclick="deconnexionClient()">Se déconnecter</a></li>
+                <div class="topbar-divider d-none d-sm-block"></div>
+                <!-- Nav Item - User Information -->
+                <li class="nav-item dropdown no-arrow">
+                  <a class="nav-link" href="#">
+                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">
+                    Bonjour {{#user}}{{contact}}{{/user}} 
+                </span>
+                    <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
+                  </a>
+                </li>
+              </ul>
+            </nav>
+            <!-- End of Topbar -->
+
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+
+              <!-- Page Heading -->
+              <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                <h2 class="h3 mb-0 text-gray-800"></h2>
+              </div>
+              <!-- Content Row -->
+              <div class="row" id="pageContentProfil"></div>
+            </div>
+        </div>
+             </div>
+             </div>
+             </div>
+
+        </script>
+             
+        <!-- Block menu pour user -->
+        <script id="templateMenuforUser" type="text/template">
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item active">
+              <a class="nav-link" href="#" id="profilInformation"  >
+               <i class="far fa-address-card"></i>
+                <span>Mes informations</span></a>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+            <li class="nav-item">
+                <a class="nav-link" onclick="afficheListeCommandeUser()" href="#">
+                 <i class="fas fa-shopping-cart"></i>
+                 <span>Bon de commande</span></a>
+             </li>
+        </script>
+             
+             
+         <!-- Block formulaire de info perso -->
+        <script id="templateFormInfoUser" type="text/template">
+            <form id="fromInfoUser">
+              {{#user}}
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label for="inputEmail4">Nom</label>
+                      <input class="form-control" id="inputEmail4" placeholder="{{contact}}">
+                    </div>
+                    <div class="form-group col-md-6 ">
+                      <label for="inputAddress">Adresse</label>
+                      <input type="text" class="form-control" id="inputAddress" placeholder="{{adresse}}">
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-4">
+                      <label for="inputCity">Ville</label>
+                      <input type="text" class="form-control" id="inputCity" placeholder="{{ville}}">
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label for="inputRegion">Region</label>
+                      <input type="text" class="form-control" id="inputRegion" placeholder="{{region}}">
+                    </div>
+                    <div class="form-group col-md-2">
+                      <label for="inputCp">Cp</label>
+                      <input type="text" class="form-control" id="inputCp" placeholder="{{code_postal}}">
+                    </div>
+                    <div class="form-group col-md-2">
+                      <label for="inputPays">Pays</label>
+                      <input type="text" class="form-control" id="inputPays" placeholder="{{pays}}">
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label for="inputTel">Téléphone</label>
+                      <input type="number" class="form-control" id="inputTel" placeholder="{{telephone}}">
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label for="inputFax">Fax</label>
+                      <input type="text" class="form-control" id="inputFax" placeholder="{{fax}}">
+                    </div>
+                  </div>  
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label for="inputSociete">Société</label>
+                      <input type="text" class="form-control" id="inputSociete" placeholder="{{societe}}">
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label for="inputFonction">Fonction</label>
+                      <input type="text" class="form-control" id="inputFonction" placeholder="{{fonction}}">
+                    </div>
+                  </div>  
+                {{/user}}
+                <button type="button" onclick="modifierInfoUser()" class="btn btn-primary">Modifier</button>
+            </form>
+        </script>
+
+
+        <!--Block template table-->      
+        <script id="templateTable" type="text/template">
+
+        <!-- DataTales Example -->
+              <div class="card shadow mb-4 col-12">
+                <div class="card-header py-3">
+                  <h6 class="m-0 font-weight-bold text-primary">{{title}}</h6>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                      <thead>
+                        <tr>
+                        {{#ths}}
+                          <th>{{titre}}</th>
+                        {{/ths}}
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tfoot>
+                        <tr>
+                         {{#ths}}
+                          <th>{{titre}}</th>
+                        {{/ths}}
+                          <th></th>
+                        </tr>
+                      </tfoot>
+                      <tbody id="tbody">
+                      
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+    </script> 
+    <!--Block liste ligne-->      
+    <script id="templateLigneCommandeUser" type="text/template">
+            {{#commandes}}
+                <tr>
+                  <td>{{numero}}</td>
+                  <td>{{saisiLe}}</td>
+                  <td>{{envoyeLe}}</td>
+                  <td>{{adresseLivraison}} {{codePostalLivraison}}</td>
+                  <td>{{port}}€</td>
+                  <td class="prixTotalCommande" id="{{numero}}"></td>
+                  <td>
+                    <a  onclick="afficheLigneCommande({{numero}})" href="#"><i class="fas fa-edit"></i></a>
+                    <a  onclick="suppCommande({{numero}})" class="trashProd" id="{{reference}}" href="#"><i class="fas fa-trash-alt"></i></a>
+                  </td>
+                </tr>
+            {{/commandes}}       
+    </script> 
+    <script id="templatePrixTotalCommandeUser" type="text/template">
+            {{prix}}€
+    </script>
+    <!--Block liste ligne-->      
+    <script id="templateTbodyLigneCommandeUser" type="text/template">
+            <div id="numCom" class="d-none">{{id}}</div>
+            {{#lignes}}
+                    <tr>
+                      <td>{{nom}}</td>
+                      <td>{{categorie}}</td>
+                      <td>{{prixUnitaire}}</td>
+                      <td>{{remise}}</td>
+                      <td><input class="majQte" type="number" min="1" id="{{ligne.produit}}" value="{{ligne.quantite}}"></input></td>
+                      <td>{{prixTotal}}</td>
+                      <td><a  class="trashProdCommande" id="{{ligne.produit}}" href="#">
+                        <i class="fas fa-trash-alt"></i>
+                      </td>
+                    </tr>
+            {{/lignes}}    
+    </script>          
+    
+        <!---------------- Block ADMIN ----------->
+        
+        <!-- Block Menu admin -->
+        <script id="templateMenuforAdmin" type="text/template">
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item">
+              <a class="nav-link" href="#" id="link-ca-cat" >
+                <i class="fas fa-chart-pie"></i>
+                <span>C.A by catégorie</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="link-ca-pays" href="#">
+                 <i class="fas fa-chart-pie"></i>
+                 <span>C.A by pays</span></a>
+             </li>
+             <li class="nav-item">
+                <a class="nav-link" id="link-ca-p" href="#">
+                 <i class="fas fa-chart-pie"></i>
+                 <span>C.A by client</span></a>
+             </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+              <!-- Heading -->
+            <div class="sidebar-heading">
+              Produits
+            </div> 
+            <div id="menuListeCategorie"></div>
+        </script>
+         <!-- Block menu catégorie admin -->
+        <script id="templateMenuCatAdmin" type="text/template">
+                <li class="nav-item ">
+                <a class="nav-link link-ajout-prod" href="#">
+                 <i class="far fa-plus-square"></i>
+                 <span>Nouveau produit</span></a>
+             </li> 
+                {{#categories}}    
+               <li class="nav-item ">
+                <a class="nav-link nav-link-cat" id="{{code}}" href="#">
+                 <i class="fas fa-edit"></i>
+                 <span>{{libelle}}</span></a>
+             </li> 
+             {{/categories}}
+        </script>
+
+        <!--Ligne tab produit Admin-->
+        <script id="templateTbodyLigneProduitAdmin" type="text/template">
+            <div class="infoCat d-none" id="{{idcat}}">{{titlecat}}</div>
+            {{#lignes}}
+                    <tr>
+                      <td>{{reference}}</td>
+                      <td>{{nom}}</td>
+                      <td>{{quantite_par_unite}}</td>
+                      <td>{{unites_en_stock}}</td>
+                      <td>{{unites_commandes}}</td>
+                      <td>{{prix_unitaire}}</td>
+                      <td>{{indisponible}}</td>
+                      
+                      <td><a  class="modifierProd" id="{{reference}}" href="#">
+                        <i class="fas fa-edit"></i></a>
+                        <a  class="trashProd" id="{{reference}}" href="#">
+                        <i class="fas fa-trash-alt"></i>
+                      </td>
+                    </tr>
+            {{/lignes}}    
+    </script>   
+
+     <!-- Block formulaire modifier produit -->
+        <script id="templateFormProduitForAdmin" type="text/template">
+            <form class="col-12">
+              {{#produit}}
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label for="nom">Nom</label>
+                      <input class="form-control" id="nom" placeholder="{{nom}}">
+                    </div>
+                    <div class="form-group col-md-6 ">
+                        <label for="categorie">categorie</label>
+                      <select class="form-control form-control-sm" id="categorie">
+                        </select>
+                      <!--<input type="text" class="form-control" id="categorie" placeholder="{{categorie}}">-->
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-3">
+                      <label for="fournisseur">Fournisseur</label>
+                      <input type="number" min="1" class="form-control" id="fournisseur" placeholder="{{fournisseur}}">
+                    </div>
+                    <div class="form-group col-md-5">
+                      <label for="quantite_par_unite">Quantité par unité</label>
+                      <input type="text" class="form-control" id="quantite_par_unite" placeholder="{{quantite_par_unite}}">
+                    </div>
+                    <div class="form-group col-md-2">
+                      <label for="prix_unitaire">prix unitaire</label>
+                      <input type="number" min="0" step="0.01" class="form-control" id="prix_unitaire" placeholder="{{prix_unitaire}}">
+                    </div>
+                    <div class="form-group col-md-2">
+                      <label for="unites_commandes">Unités commandés</label>
+                      <input type="number" min="0" class="form-control" id="unites_commandes" placeholder="{{unites_commandes}}">
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label for="niveau_reaprovis">Ajouter des produit au stock</label>
+                      <input type="number" min="0" class="form-control" id="niveau_reaprovis" >
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label for="unites_en_stock">Unité en stock</label>
+                      <div  class="form-control" id="unites_en_stock" >{{unites_en_stock}}</div>
+                    </div>  
+                  </div> 
+                  <div id="reference" class="d-none ">{{reference}}</div>
+                {{/produit}}
+                <button id="fromModifierProduit"  type="button" class="btn btn-primary">Modifier</button>
+            </form>
+        </script>
+         <!-- Block formulaire ajout produit -->
+        <script id="templateFormAjoutProduit" type="text/template">
+            <form class="col-12">
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label for="nom">Nom</label>
+                      <input class="form-control" id="nom" >
+                    </div>
+                    <div class="form-group col-md-6 ">
+                        <label for="categorie">categorie</label>
+                        <select class="form-control form-control-sm" id="categorie">
+                        </select>
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label for="quantite_par_unite">Quantité par unité</label>
+                      <input type="text" class="form-control" id="quantite_par_unite" >
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label for="prix_unitaire">prix unitaire</label>
+                      <input type="number" min="0"  step="0.01" class="form-control" id="prix_unitaire" >
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label for="fournisseur">Identifiant fournisseur</label>
+                      <input type="number" min="0" class="form-control" id="fournisseur" >
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label for="unite_en_stock">Unité en stock</label>
+                      <input type="number" min="0" class="form-control" id="unite_en_stock" >
+                    </div>
+                  </div> 
+                <button id="fromAjouterProduit"  type="button" class="btn btn-primary">Ajouter</button>
+            </form>
+        </script>
+            
+        <script id="templateOptCat" type="text/template">
+            {{#categories}}
+               <option value="{{code}}">{{libelle}}</option>
+            {{/categories}}
+        </script>
+        <script id="templateOptCatForModif" type="text/template">
+            <option value="{{codeCat}}">{{libCat}}</option>
+            {{#categories}}
+               <option value="{{code}}">{{libelle}}</option>
+            {{/categories}}
+        </script>
+             
+        <script id="templatetitreSection" type="text/template">
+            <i class="fas fa-angle-right"></i>  {{titreSection}}
+        </script>
+        
+        <!--Template piechart-->
+        <script id="templatePieChart" type="text/template">
+                <div class="col-stat col-12">
+                    <div class="form-row col-12 justify-content-center">
+                            <div class="form-group col-4">
+                              <label for="dateD">Date de début</label>
+                              <input type="date" class="dateStat form-control" id="dateD" >
+                            </div>
+                            <div class="form-group col-4">
+                              <label for="dateF">Date de fin</label>
+                              <input type="date" class="dateStat form-control" id="dateF" >
+                            </div>
+                    </div>        
+                    <div id="piechart" class="col-12" style="width: 900px; height: 500px;"></div>
+                </div>
+                <div class="col-4 listeClients"></div>
+        </script>
+        <!--template liste client pour stat--> 
+        <script id="templateListClient" type="text/template">
+            <table class="table table-clients">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Pays</th>
+                    <th scope="col">Ville</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {{#clients}}
+                  <tr>
+                    <td><input type="checkbox" id="{{code}}" class="select"></input></td>
+                    <td>{{contact}}</td>
+                    <td>{{pays}}</td>
+                    <td>{{ville}}</td>
+                  </tr>
+                {{/clients}}
+                </tbody>
+            </table>
+        </script>
+
+    </body>
+</html>

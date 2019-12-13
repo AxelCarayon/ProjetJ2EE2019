@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.sql.DataSource;
 import modele.dao.DAOcommande;
-import modele.dao.DataSourceFactory;
 import modele.entity.CommandeEntity;
 import org.hsqldb.cmdline.SqlFile;
 import org.hsqldb.cmdline.SqlToolError;
@@ -22,7 +21,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import org.junit.Ignore;
 
 /**
  *
@@ -80,13 +78,13 @@ public class DAOcommandeTest {
      */
     @Test
     public void ajouterCommandeTest() throws ParseException, SQLException{
-        CommandeEntity commande = new CommandeEntity(11078, "VINET", "2019-11-01","2019-11-15",400.00,"Magasin osef","51 rue du chat","Albi", "Occitanie","81000","France",0.00);
+        int numero = 0;
         try{
-            dao.ajouterCommande(11078, "VINET", "2019-11-01","2019-11-15",400.00,"Magasin osef","51 rue du chat","Albi", "Occitanie","81000","France",0.00);
+            numero = dao.ajouterCommande("VINET", "2019-11-01","2019-11-15",400.00,"Magasin osef","51 rue du chat","Albi", "Occitanie","81000","France",0.00);
         }catch(Exception e){
             fail(e.getMessage());
         }
-        assertEquals(commande,dao.afficherCommande(11078));
+        assertEquals(11078,numero);
     }
     
     /**
@@ -165,6 +163,21 @@ public class DAOcommandeTest {
         commandes.add(c3);
         commandes.add(c4);
         assertEquals(commandes,dao.listeCommandesClient("ALFKI"));
+    }
+    
+    @Test
+    public void afficherRemiseTest() throws ParseException,SQLException{
+        assertEquals(0.00,dao.afficherRemise(code),0);
+    }
+    
+    @Test
+    public void afficherTotalTest() throws ParseException,SQLException{
+        assertEquals(1260.0+700.0+870.0,dao.prixCommande(code), 0);
+    }
+    
+    @Test
+    public void listePaysAvecCommandeTest() throws SQLException, ParseException{
+        assertEquals(21,dao.listePaysAvecCommande().size());
     }
     
     public static DataSource getDataSource() throws SQLException {

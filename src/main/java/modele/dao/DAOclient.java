@@ -107,7 +107,7 @@ public class DAOclient {
         if (username.equals("admin") && password.equals("admin")) {
             resultat = 2;
         } else {
-            String sql = "SELECT * FROM CLIENT WHERE CONTACT = ? AND CODE = ?";
+            String sql = "SELECT CONTACT,CODE FROM CLIENT WHERE CONTACT = ? AND CODE = ?";
             try (Connection myConnection = myDataSource.getConnection();
                     PreparedStatement statement = myConnection.prepareStatement(sql)) {
                 statement.setString(1, username);

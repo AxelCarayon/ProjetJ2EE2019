@@ -14,8 +14,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.sql.DataSource;
-import modele.entity.ClientEntity;
 import modele.entity.CommandeEntity;
+import modele.entity.LigneCommandeEntity;
 
 /**
  *
@@ -111,7 +111,6 @@ public class DAOcommande {
     /**
      * Ajoute une nouvelle commande dans la bdd
      *
-     * @param numero le numéro de la nouvelle commande
      * @param code_client le nouveau code client
      * @param saisiLe date de saisie de la commande
      * @param envoyeLe date d'envoi de la commande
@@ -123,11 +122,26 @@ public class DAOcommande {
      * @param codePostalLivraison code postal de livraison de la commande
      * @param paysLivraison pays de livraison de la commande
      * @param remise % de remise de la commande
+     * @return le numéro de la nouvelle commande
      */
-    public void ajouterCommande(int numero, String code_client, String saisiLe, String envoyeLe,
+    public int ajouterCommande(String code_client, String saisiLe, String envoyeLe,
             double port, String destinataire, String adresseLivraison, String villeLivraison,
             String regionLivraison, String codePostalLivraison, String paysLivraison, double remise) throws SQLException {
-        String sql = "INSERT INTO COMMANDE VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+        int numero = 0;
+        
+        String sql = "SELECT MAX(NUMERO) AS NUMERO FROM COMMANDE";
+        
+        try (Connection connection = myDataSource.getConnection();
+                PreparedStatement stmt = connection.prepareStatement(sql)) {
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                numero = rs.getInt("NUMERO")+1;
+            }
+        } catch (SQLException e) {
+            throw e;
+        }
+        
+        sql = "INSERT INTO COMMANDE VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
         try (Connection connection = myDataSource.getConnection();
                 PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, numero);
@@ -146,6 +160,7 @@ public class DAOcommande {
         } catch (SQLException e) {
             throw e;
         }
+        return numero;
     }
 
     /**
@@ -172,7 +187,7 @@ public class DAOcommande {
      */
     public String afficherCodeClient(int numero) throws SQLException {
         String resultat = null;
-        String sql = "SELECT * FROM COMMANDE WHERE NUMERO = ?";
+        String sql = "SELECT CLIENT FROM COMMANDE WHERE NUMERO = ?";
         try (Connection connection = myDataSource.getConnection();
                 PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, numero);
@@ -184,6 +199,22 @@ public class DAOcommande {
             throw e;
         }
         return resultat;
+    }
+    
+    public double afficherRemise(int commande) throws SQLException{
+        double remise = 0.;
+        String sql = "SELECT REMISE FROM COMMANDE WHERE REMISE = ?";
+        try (Connection connection = myDataSource.getConnection();
+                PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, commande);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                remise = rs.getDouble("CLIENT");
+            }
+        } catch (SQLException e) {
+            throw e;
+        }
+        return remise;
     }
     
     /**
@@ -221,6 +252,51 @@ public class DAOcommande {
             throw e;
         }
         return resultat;
+    }
+    
+    /**
+     * Affiche la liste de tous les pays ou l'on a déjà eu une commande
+     * @return List<String>
+     * @throws SQLException
+     * @throws ParseException 
+     */
+    public List<String> listePaysAvecCommande() throws SQLException,ParseException{
+        List<String> resultat = new ArrayList<>();
+        String sql = "SELECT DISTINCT PAYS_LIVRAISON FROM COMMANDE";
+        try (Connection connection = myDataSource.getConnection();
+                PreparedStatement stmt = connection.prepareStatement(sql)) {
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                String paysLivraison = rs.getString("PAYS_LIVRAISON");
+                resultat.add(paysLivraison);
+            }
+        } catch (Exception e) {
+            throw e;
+        }
+        return resultat;
+    }
+    
+    /**
+     * Renvoie le prix total d'une commande
+     * @param commande
+     * @return Double prix total de la commande
+     * @throws SQLException
+     * @throws ParseException 
+     */
+    public Double prixCommande(int commande) throws SQLException,ParseException{
+        Double total = 0.;
+        DAOligne dao = new DAOligne(this.myDataSource);
+        List<LigneCommandeEntity> lignes;
+        try{
+            lignes = dao.afficherCommande(commande);
+        }catch (Exception e){
+            throw e;
+        }
+        for (int i = 0;i<lignes.size();i++){
+            total += lignes.get(i).getPrixTotal();
+        }
+        
+        return total;
     }
 
     /**
@@ -329,6 +405,10 @@ public class DAOcommande {
         } catch (SQLException e) {
             throw e;
         }
+    }
+
+    public int ajouterCommande(String code_client, Date date, Date date0, int i, String contact, String adresse, String ville, String region, String code_postal, String pays, int i0) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

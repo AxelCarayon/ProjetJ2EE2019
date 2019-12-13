@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 import modele.dao.DAOligne;
 import modele.dao.DataSourceFactory;
-import modele.entity.LigneEntity;
+import modele.entity.LigneCommandeEntity;
 
 /**
  *
@@ -44,23 +44,45 @@ public class LignesCommandeServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
-        response.setContentType("application/json;charset=UTF-8");
         dataSource = DataSourceFactory.getDataSource();
         dao = new DAOligne(dataSource);
-        int commande = 0;
-        try{
-            commande = Integer.parseInt(request.getParameter("commande"));
-        }catch(Exception e){
+        List<LigneCommandeEntity> data;
+        int commande = Integer.parseInt(request.getParameter("commande"));
+
+        if ( actionIs(request, "majQte")){
+            int produit = Integer.parseInt(request.getParameter("produit"));
+            int qte = Integer.parseInt(request.getParameter("quantite"));
+            try{
+                dao.modifierQuantiteLigne(commande, produit, qte);
+            }catch(SQLException e){
+                throw new SQLException(e);
+            }
+        }
+        if ( actionIs(request, "trashLigne")){
+            int produit = Integer.parseInt(request.getParameter("produit"));
+            try{
+                dao.supprimerLigne(commande, produit);
+            }catch(SQLException e){
+                throw new SQLException(e);
+            }
         }
         
+        try{
+            data = dao.afficherCommande(commande);
+        }catch(SQLException e){
+            throw new SQLException(e);
+        }
         try (PrintWriter out = response.getWriter()) {
-            List<LigneEntity> data = dao.afficherCommande(commande);
+            response.setContentType("application/json;charset=UTF-8");
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
             String gsonData = gson.toJson(data);
             out.println(gsonData);
         }
     }
-
+    
+    private boolean actionIs(HttpServletRequest request, String action) {
+            return action.equals(request.getParameter("action"));
+    }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

@@ -20,7 +20,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import org.junit.Ignore;
 
 /**
  *
@@ -167,6 +166,37 @@ public class DAOproduitTest {
     }
     
     @Test
+    public void listeProduitsCategorieDisponiblesTest() throws SQLException{
+        ProduitEntity p1 = dao.afficherProduit(1);
+        ProduitEntity p2 = dao.afficherProduit(2);
+        ProduitEntity p4 = dao.afficherProduit(34);
+        ProduitEntity p5 = dao.afficherProduit(35);
+        ProduitEntity p6 = dao.afficherProduit(38);
+        ProduitEntity p7 = dao.afficherProduit(39);
+        ProduitEntity p8 = dao.afficherProduit(43);
+        ProduitEntity p9 = dao.afficherProduit(67);
+        ProduitEntity p10 = dao.afficherProduit(70);
+        ProduitEntity p11 = dao.afficherProduit(75);
+        ProduitEntity p12 = dao.afficherProduit(76);
+        
+        List<ProduitEntity> resultat = new ArrayList<ProduitEntity>();
+        resultat.add(p1);
+        resultat.add(p2);
+        resultat.add(p4);
+        resultat.add(p5);
+        resultat.add(p6);
+        resultat.add(p7);
+        resultat.add(p8);
+        resultat.add(p9);
+        resultat.add(p10);
+        resultat.add(p11);
+        resultat.add(p12);
+        
+        assertEquals(resultat,dao.listeProduitsCategorieDisponible(1));
+        
+    }
+    
+    @Test
     public void listeProduitsCategorieTest() throws SQLException{
         ProduitEntity p1 = dao.afficherProduit(1);
         ProduitEntity p2 = dao.afficherProduit(2);
@@ -199,6 +229,108 @@ public class DAOproduitTest {
         
     }
     
+    @Test
+    public void ajouterProduitTest() throws SQLException{
+        ProduitEntity p = new ProduitEntity(78,"machin", 1, 1, "6x25cl", 10.00, 100, 25, 10, 0);
+        ProduitEntity p2 = new ProduitEntity(79,"bidule", 1,2,"quantite",20.00,50,0,0,0);
+        dao.ajouterProduit("machin", 1, 1, "6x25cl", 10.00, 100, 25, 10, false);
+        dao.ajouterProduit("bidule", 1,2,"quantite",20.00,50,0,0,false);
+        assertEquals(dao.afficherProduit(78),p);
+        assertEquals(dao.afficherProduit(79),p2);
+        
+    }
+    
+    @Test
+    public void supprimerProduitTest() throws SQLException{
+        dao.ajouterProduit("machin", 1, 1, "6x25cl", 10.00, 100, 25, 10, false);
+        Boolean supprime = true;
+        try{
+           dao.supprimerProduit(78); 
+        }catch(Exception e){
+            supprime = false;
+        }
+        if (supprime == false){
+            fail();
+        }
+        
+        
+        supprime = true;
+        try{
+            dao.supprimerProduit(1); // un produit utilisé ailleurs
+        }catch(Exception e){
+            supprime = false;
+        }
+        if (supprime == true){
+            fail();
+        }
+    }
+    
+    
+    @Test
+    public void modifierFournisseurTest() throws SQLException{
+        dao.modifierFournisseur(code, 27);
+        assertEquals(dao.afficherProduit(code).getFournisseur(), 27);
+        
+    }
+    
+    @Test
+    public void modifierQuantiteParUniteTest() throws SQLException{
+        dao.modifierQuantiteParUnite(code, "6x6 bouteilles de 25 cl");
+        assertEquals(dao.afficherProduit(code).getQuantite_par_unite(),"6x6 bouteilles de 25 cl");
+    }
+    
+    @Test
+    public void modifierNomProduitTest() throws SQLException{
+        dao.modifierNomProduit(code, "bidule");
+        assertEquals(dao.afficherProduit(code).getNom(),"bidule");
+        
+    }
+    
+    @Test
+    public void modifierCategorieTest() throws SQLException{
+        dao.modifierCategorie(code, 8);
+        assertEquals(dao.afficherProduit(code).getCategorie(),8);
+    }
+    
+    @Test
+    public void modifierPrixUnitaireTest() throws SQLException{
+        dao.modifierPrixUnitaire(code, 147.);
+        assertEquals(dao.afficherProduit(code).getPrix_unitaire(),147.,0);
+        
+        boolean modifie = true;
+        try{
+            dao.modifierPrixUnitaire(code, -1.);
+        }catch(Exception e){
+            modifie = false;
+        }
+        if (modifie == true){
+            fail();
+        }
+        
+    }
+    
+    @Test
+    public void modifierNiveauDeReapproTest() throws SQLException{
+        dao.modifierNiveauDeReappro(code, 50);
+        assertEquals(50,dao.niveauReaprovisionnement(code));
+    }
+    
+    @Test
+    public void remettreEnStockTest() throws SQLException{
+        dao.remettreEnStock(code, 11);
+        assertEquals(dao.afficherProduit(code).getUnites_en_stock(),50);
+        
+        boolean modifie = true;
+        try{
+            dao.remettreEnStock(code, -1);
+        }catch(Exception e){
+            modifie = false;
+        }
+        if (modifie == true){
+            fail();
+        }
+        
+    }
     
     
     

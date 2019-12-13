@@ -48,16 +48,32 @@ public class CommandesClientServlet extends HttpServlet {
         response.setContentType("application/json;charset=UTF-8");
         dataSource = DataSourceFactory.getDataSource();
         dao = new DAOcommande(dataSource);
-        String client = "" + request.getParameter("client");
+        List<CommandeEntity> data;
         
+        if (actionIs(request, "trash")){
+            int code = Integer.parseInt(request.getParameter("code"));
+            try{
+                dao.supprimerCommande(code);
+            }catch(SQLException e){
+                throw new SQLException(e);
+            }
+        } 
+        
+        try {
+            String client = request.getSession().getAttribute("id").toString();
+            data = dao.listeCommandesClient(client);
+        } catch (SQLException e) {
+            throw new SQLException(e);
+        }
         try (PrintWriter out = response.getWriter()) {
-            List<CommandeEntity> data = dao.listeCommandesClient(client);
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
             String gsonData = gson.toJson(data);
             out.println(gsonData);
         }
     }
-
+    private boolean actionIs(HttpServletRequest request, String action) {
+        return action.equals(request.getParameter("action"));
+    }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -72,11 +88,9 @@ public class CommandesClientServlet extends HttpServlet {
             throws ServletException, IOException {
         try {
             processRequest(request, response);
-        } catch (SQLException ex) {
+        } catch (SQLException | ParseException ex) {
             Logger.getLogger(CommandesClientServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(CommandesClientServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } 
     }
 
     /**
@@ -92,11 +106,9 @@ public class CommandesClientServlet extends HttpServlet {
             throws ServletException, IOException {
         try {
             processRequest(request, response);
-        } catch (SQLException ex) {
+        } catch (SQLException | ParseException ex) {
             Logger.getLogger(CommandesClientServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(CommandesClientServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } 
     }
 
     /**

@@ -2,18 +2,18 @@
   --input-padding-x: 1.5rem;
   --input-padding-y: .75rem;
 }
-
-body {
-  background: #007bff;
-  background: linear-gradient(to right, #8DC63F, #007BFF);
-}
-
+/*//body*/
 .container{
     margin-top: 10%;
 }
+/*navbar*/
 img.navbar-brand{
   width: 10%;
 }
+.sidebar-brand.d-flex.align-items-center.justify-content-center img.navbar-brand{
+  width: 25%;
+}
+/*Connexion*/
 .card-signin {
   border: 0;
   border-radius: 1rem;
@@ -42,7 +42,7 @@ img.navbar-brand{
   padding: 1rem;
   transition: all 0.2s;
 }
-
+/*.*/
 .form-label-group {
   position: relative;
   margin-bottom: 1rem;
@@ -107,6 +107,11 @@ img.navbar-brand{
 @media (max-width:800px){
     .container{
     margin-top: 20%;
+    }
+}
+@media (max-width:767px){
+    .sidebar-brand.d-flex.align-items-center.justify-content-center img.navbar-brand{
+        width: 55%;
 }
 }
 /* Fallback for Edge
