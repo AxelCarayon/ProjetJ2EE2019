@@ -46,6 +46,7 @@ public class StatServlet extends HttpServlet {
         dataSource = DataSourceFactory.getDataSource();
         dAOstats = new DAOstats(dataSource);
         Map<String,Double> ca =new HashMap();
+        Double caClient = -1.;
         try{
             String dateD = request.getParameter("dateD");
             String dateF = request.getParameter("dateF");
@@ -56,9 +57,10 @@ public class StatServlet extends HttpServlet {
             if(actionIs(request, "pays")){
                 ca = dAOstats.CAtousLesPays(dateD, dateF);
             }
-//            if(actionIs(request, "client")){
-//                ca = dAOstats.(client, dateD, dateF);
-//            }
+            if(actionIs(request, "client")){
+                String client = request.getParameter("client");
+                caClient = dAOstats.CAparClient(client, dateD, dateF);
+            }
               
             
         }catch(SQLException e){
@@ -67,7 +69,12 @@ public class StatServlet extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             response.setContentType("application/json;charset=UTF-8");
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            String gsonData = gson.toJson(ca);
+            String gsonData;
+            if (caClient != -1.){
+                gsonData = gson.toJson(caClient);
+            }else{
+                gsonData = gson.toJson(ca);
+            }
             out.println(gsonData);
         }
     }

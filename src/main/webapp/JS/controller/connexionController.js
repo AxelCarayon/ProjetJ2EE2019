@@ -63,7 +63,6 @@ function connexionClient(mail,pw,action) {
 }
 
 function connectSuccess(){
-    sessionStorage.removeItem('MonPanier');
     testConnexionForAfficherPage();
 }
 
