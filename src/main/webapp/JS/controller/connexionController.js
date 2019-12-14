@@ -79,6 +79,7 @@ function deconnexionClient() {
             },
             error: showError
     });	
+    window.location.replace("/");
 }
 
 function testConnexionForAfficherPage(){
