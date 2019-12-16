@@ -1,6 +1,7 @@
 /* global Mustache */
 $(document).ready(function () {
-    testConnexionForAfficherPage();
+    isAdmin();
+    $(document).on('click', '#deconnexion',deconnexionClient); 
 });
 
 function connect(){
@@ -18,7 +19,7 @@ function isConnected(){
             success: 
                     function(result) {
                         localStorage.setItem('acces', result);
-                        show(result);
+                        afficherPage(result);
                     },
             error: showError
     });	
@@ -38,32 +39,23 @@ function isAdmin(){
                            isConnected();
                         }else{
                             localStorage.setItem('acces', 'admin');
-                            show('admin');
+                            afficherPage('admin');
                         }
                     },
             error: showError
     });	
 }
 
-function show(rep){
-    afficherPage(rep);
-}
-
 function connexionClient(mail,pw,action) {
-    console.log(mail,pw,action);
     $.ajax({
             url: "../ConnexionServlet",
             xhrFields: {
                 withCredentials: true
             },
             data: { "email" : mail, "pw" : pw , "action":action},
-            success: connectSuccess,
+            success:  isAdmin,
             error: showError
     });				
-}
-
-function connectSuccess(){
-    testConnexionForAfficherPage();
 }
 
 function deconnexionClient() {
@@ -75,14 +67,10 @@ function deconnexionClient() {
             data: { "action":"deconnexion"},
             success: function(){
                 localStorage.removeItem(("MonPanier"));
-                connectSuccess();
+                isAdmin();
             },
             error: showError
     });	
-}
-
-function testConnexionForAfficherPage(){
-    isAdmin();
 }
 
 function afficherPage(status){
@@ -90,7 +78,7 @@ function afficherPage(status){
         var template = $('#templateFormConnexion').html();
         Mustache.parse(template);
         var processedTemplate = Mustache.render(template);
-        $('#pageContent').html(processedTemplate);	
+        $('#body').html(processedTemplate);	
     }
     if (status == 'admin'){
         $.ajax({

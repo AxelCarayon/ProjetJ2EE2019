@@ -138,6 +138,7 @@ function displayPanier(monPanier){
     $('#displayprixTotal').html(processedTemplate);
     $('#prixTotalMobile').html(processedTemplate);
     
+    $('#panierMob').removeClass('d-none');
     var templateMob = $('#templateItemPanierMobile').html();
     Mustache.parse(templateMob);
     var processedTemplate = Mustache.render(templateMob, {items: monPanier.getPanier()});
