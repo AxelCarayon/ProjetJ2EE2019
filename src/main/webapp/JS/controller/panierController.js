@@ -106,7 +106,7 @@ function qteUpDate(id,val){
 }
 
 //E : Panier panier
-// Parcour les élément du DOM -> panier 
+// Parcour les élément localStorage 'MonPanier' 
 // ajoute les articles à panier
 // S : panier
 function remplirPanierAvecStorage(panier){
@@ -184,11 +184,7 @@ function isConnected(){
             },
             data: {  "action":"isconected"},
             dataType: "json",
-            success: 
-                    function(result) {
-                        localStorage.setItem('acces', result);
-                        show(result);
-                    },
+            success: show,
             error: showError
     });	
 }

@@ -4,6 +4,7 @@ var categorie = [];
 var ca;
 var  pays;
 var caUsers = [];
+var users = [];
 
 $(document).ready(function () {
     $.get("../ClientPays",getPays,"json");
@@ -46,8 +47,8 @@ $(document).ready(function () {
             var client = $(this).attr("id");
             var dateD = $('#dateD').val();
             var dateF = $('#dateF').val();
-            
             if(this.checked) {
+                getNameUser(client);
                 if (dateD != "" && dateF!= ""){
                     statFor1Usr(dateD,dateF,client);
                 }else{
@@ -55,13 +56,14 @@ $(document).ready(function () {
                 }
             } 
             else {
+                var name = getNameUserInList(client);
                 var newT = [];
                 for (var i=0; i<caUsers.length; i++){
-                    if (caUsers[i][0]!=client){
+                    if (caUsers[i][0]!=name){
                         newT.push(caUsers[i]);
                     }
                 }
-                caUsers = newT;
+               caUsers=newT;
                 if (dateD != "" && dateF!= ""){
                     statByUser();
                 }
@@ -73,7 +75,8 @@ $(document).ready(function () {
             if (dateD != "" && dateF!= "" && caUsers.length>0){
                 while(caUsers.length>0){
                     var max = caUsers.length-1;
-                    statFor1Usr(dateD,dateF,caUsers[max][0]);
+                    var id = getIdUserInList(caUsers[max][0]);
+                    statFor1Usr(dateD,dateF,id);
                     caUsers.pop();
                 }
             }
@@ -90,6 +93,39 @@ function getPays(result){
     pays = result;
 }
 
+function getNameUser(code){
+    if (getNameUserInList(code)===-1){
+        $.ajax({
+           url: "../ClientServlet",
+           data: {  "code": code},
+           dataType: "json",
+           success: addClientInList,
+           error: showError
+        });	
+    }
+}
+
+function addClientInList(user){
+    users.push([user.code,user.contact]);
+}
+
+function getNameUserInList(code){
+    for (var i=0; i<users.length;i++){
+        if (users[i][0]==code){
+            return users[i][1];
+        }
+    }
+    return -1;
+}
+function getIdUserInList(name){
+    for (var i=0; i<users.length;i++){
+        if (users[i][1]==name){
+            return users[i][0];
+        }
+    }
+    return -1;
+}
+
 function displayTitre(msg){
     var template = $('#templatetitreSection').html();
     Mustache.parse(template);
@@ -100,7 +136,6 @@ function displayTitre(msg){
 function displayListeClients(){
     $.ajax({
            url: "../ClientServlet",
-           data: {  "action": "commande"},
            dataType: "json",
            success: 
                    function(result) {
@@ -129,7 +164,7 @@ function statFor1Usr(d1,d2,usr){
            dataType: "json",
            success: 
                    function(result) {
-                        caUsers.push([usr,result]);
+                        caUsers.push([getNameUserInList(usr),result]);
                         statByUser();
                    },
            error: showError
